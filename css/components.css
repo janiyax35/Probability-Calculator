@@ -1,0 +1,610 @@
+/* 
+   Random Variables & Probability Distributions
+   Component Styles - Dark Theme
+   Created by Janith Deshan
+*/
+
+/* Calculator Form Components */
+.calculator-form {
+    background-color: var(--surface);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.calculator-form .form-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.calculator-form .form-control,
+.calculator-form .form-select {
+    background-color: var(--surface-lighter);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+}
+
+.calculator-form .form-control:focus,
+.calculator-form .form-select:focus {
+    background-color: var(--surface-lighter);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(138, 180, 248, 0.25);
+    color: var(--text-primary);
+}
+
+.calculator-form .form-text {
+    color: var(--text-secondary);
+}
+
+.calculator-form .btn-calculate {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--background);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.calculator-form .btn-calculate:hover {
+    background-color: #6A9AE8;
+    border-color: #6A9AE8;
+    transform: translateY(-2px);
+}
+
+.calculator-form .btn-reset {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.calculator-form .btn-reset:hover {
+    background-color: var(--surface-lighter);
+    color: var(--text-primary);
+}
+
+/* Range Slider */
+.range-slider {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.range-slider input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background: var(--border-color);
+    outline: none;
+}
+
+.range-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.range-slider input[type="range"]::-webkit-slider-thumb:hover {
+    background: #6A9AE8;
+    transform: scale(1.1);
+}
+
+.range-value-display {
+    color: var(--primary);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+/* Results Container */
+.results-container {
+    background-color: var(--surface);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.results-container h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.result-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.result-explanation {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Chart Container */
+.chart-container {
+    background-color: var(--surface);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.chart-container h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 300px;
+    margin-bottom: 1rem;
+}
+
+/* Distribution Parameters Display */
+.distribution-params {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.param-item {
+    background-color: var(--surface-lighter);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.param-name {
+    font-weight: 600;
+    color: var(--primary);
+    margin-right: 0.5rem;
+}
+
+.param-value {
+    color: var(--text-primary);
+}
+
+/* Step-by-Step Solution */
+.solution-steps {
+    background-color: var(--surface-lighter);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.solution-steps h4 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.step {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.step:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.step-number {
+    background-color: var(--primary);
+    color: var(--background);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    margin-right: 1rem;
+}
+
+.step-content {
+    display: inline;
+}
+
+.step-formula {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(138, 180, 248, 0.1);
+    border-radius: 5px;
+    font-family: 'STIX Two Math', serif;
+}
+
+/* Tabs Component */
+.custom-tabs {
+    margin-bottom: 2rem;
+}
+
+.custom-tabs .nav-tabs {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-tabs .nav-item .nav-link {
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-item .nav-link:hover {
+    color: var(--text-primary);
+}
+
+.custom-tabs .nav-item .nav-link.active {
+    background-color: transparent;
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+
+.custom-tabs .tab-content {
+    padding: 2rem 0;
+}
+
+/* Theory Block */
+.theory-block {
+    background-color: var(--surface);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.theory-block h3 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.formula-display {
+    background-color: rgba(138, 180, 248, 0.1);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-family: 'STIX Two Math', serif;
+}
+
+.formula-description {
+    color: var(--text-secondary);
+    margin-top: 1rem;
+}
+
+/* Example Block */
+.example-block {
+    background-color: var(--surface-lighter);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-left: 4px solid var(--accent);
+}
+
+.example-block h4 {
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.example-problem {
+    margin-bottom: 1.5rem;
+}
+
+.example-solution {
+    color: var(--text-secondary);
+}
+
+/* Quiz/Practice Component */
+.quiz-card {
+    background-color: var(--surface);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.quiz-card h4 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.quiz-question {
+    margin-bottom: 1.5rem;
+}
+
+.quiz-options {
+    margin-bottom: 1.5rem;
+}
+
+.quiz-option {
+    background-color: var(--surface-lighter);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    background-color: rgba(138, 180, 248, 0.1);
+}
+
+.quiz-option.selected {
+    background-color: rgba(138, 180, 248, 0.2);
+    border-color: var(--primary);
+}
+
+.quiz-option.correct {
+    background-color: rgba(3, 218, 198, 0.2);
+    border-color: var(--accent);
+}
+
+.quiz-option.incorrect {
+    background-color: rgba(207, 102, 121, 0.2);
+    border-color: var(--error);
+}
+
+.quiz-feedback {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    display: none;
+}
+
+.quiz-feedback.correct {
+    background-color: rgba(3, 218, 198, 0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    display: block;
+}
+
+.quiz-feedback.incorrect {
+    background-color: rgba(207, 102, 121, 0.1);
+    border: 1px solid var(--error);
+    color: var(--error);
+    display: block;
+}
+
+/* Tooltips */
+.custom-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    border-bottom: 1px dotted var(--primary);
+}
+
+.custom-tooltip .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--surface);
+    color: var(--text-primary);
+    text-align: center;
+    border-radius: 5px;
+    padding: 0.75rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.875rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Alert Components */
+.custom-alert {
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.custom-alert i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.custom-alert.info {
+    background-color: rgba(138, 180, 248, 0.1);
+    border-left: 4px solid var(--primary);
+    color: var(--primary);
+}
+
+.custom-alert.warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid #FFC107;
+    color: #FFC107;
+}
+
+.custom-alert.error {
+    background-color: rgba(207, 102, 121, 0.1);
+    border-left: 4px solid var(--error);
+    color: var(--error);
+}
+
+.custom-alert.success {
+    background-color: rgba(3, 218, 198, 0.1);
+    border-left: 4px solid var(--accent);
+    color: var(--accent);
+}
+
+/* Card Grid */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Table Styles */
+.custom-table {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.custom-table thead th {
+    background-color: var(--surface-lighter);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.custom-table tbody tr:nth-child(odd) {
+    background-color: rgba(45, 45, 45, 0.5);
+}
+
+.custom-table tbody tr:hover {
+    background-color: rgba(138, 180, 248, 0.1);
+}
+
+/* Badge Components */
+.custom-badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+}
+
+.badge-primary {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+.badge-secondary {
+    background-color: var(--secondary);
+    color: var(--background);
+}
+
+.badge-accent {
+    background-color: var(--accent);
+    color: var(--background);
+}
+
+/* Modal Component */
+.custom-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1050;
+    display: none;
+}
+
+.custom-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--surface);
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 90%;
+    width: 500px;
+    z-index: 1060;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.custom-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.custom-modal-title {
+    margin: 0;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.custom-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.custom-modal-body {
+    margin-bottom: 1.5rem;
+}
+
+.custom-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Responsive Components */
+@media (max-width: 767.98px) {
+    .calculator-form,
+    .results-container,
+    .chart-container,
+    .theory-block,
+    .example-block,
+    .quiz-card {
+        padding: 1.5rem;
+    }
+    
+    .custom-tabs .nav-item .nav-link {
+        padding: 0.75rem 1rem;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .distribution-params {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

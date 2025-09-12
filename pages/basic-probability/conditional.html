@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Probability | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item active" href="conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="../random-variables/overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Conditional Probability</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Understanding how probabilities change when we have additional information.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="main-content py-5">
+        <div class="container">
+            <!-- Introduction -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">What is Conditional Probability?</h2>
+                        <p>Conditional probability is the probability of an event occurring given that another event has already occurred. It represents how probabilities change when we have additional information.</p>
+                        
+                        <div class="custom-alert info mt-4">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Definition:</strong> The conditional probability of event A given that event B has occurred is denoted by P(A|B) and is calculated as:
+                            </div>
+                        </div>
+                        
+                        <div class="formula-display my-4">
+                            P(A|B) = \frac{P(A \cap B)}{P(B)}
+                        </div>
+                        
+                        <p>where:</p>
+                        <ul>
+                            <li>P(A|B) is the conditional probability of event A given event B has occurred</li>
+                            <li>P(A ∩ B) is the probability of both events A and B occurring (intersection)</li>
+                            <li>P(B) is the probability of event B occurring (which must be greater than zero)</li>
+                        </ul>
+                        
+                        <h3 class="mt-5 mb-3">Intuitive Understanding</h3>
+                        <p>Conditional probability helps us update our beliefs when we receive new information. If we know that event B has occurred, we're no longer considering the entire sample space—we're restricting our attention to only those outcomes where B occurred. Within this restricted sample space, we want to find the proportion of outcomes where A also occurs.</p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <h4>Before Knowledge</h4>
+                                    <p>Without any additional information, we calculate P(A) using the entire sample space.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-filter"></i>
+                                    </div>
+                                    <h4>After Knowledge</h4>
+                                    <p>With the knowledge that B has occurred, we calculate P(A|B) using only the part of the sample space where B occurred.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visual Explanation -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Visual Representation</h2>
+                        <p>Conditional probability can be visualized using Venn diagrams, which help us understand the relationship between events.</p>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="chart-container text-center">
+                                    <h3 class="mb-4">Venn Diagram for Conditional Probability</h3>
+                                    <div class="venn-diagram mb-4">
+                                        <!-- Using styled divs to create a simple Venn diagram -->
+                                        <div class="venn-container position-relative mx-auto" style="width: 300px; height: 200px;">
+                                            <div class="venn-circle circle-b position-absolute" style="width: 150px; height: 150px; border-radius: 50%; background-color: rgba(187, 134, 252, 0.3); border: 2px solid #BB86FC; left: 40px; top: 25px;"></div>
+                                            <div class="venn-circle circle-a position-absolute" style="width: 150px; height: 150px; border-radius: 50%; background-color: rgba(138, 180, 248, 0.3); border: 2px solid #8AB4F8; left: 110px; top: 25px;"></div>
+                                            <div class="venn-intersection position-absolute" style="width: 80px; height: 80px; background-color: rgba(3, 218, 198, 0.5); border-radius: 50%; left: 110px; top: 60px;"></div>
+                                            <div class="venn-label position-absolute" style="left: 70px; top: 5px;">B</div>
+                                            <div class="venn-label position-absolute" style="left: 190px; top: 5px;">A</div>
+                                            <div class="venn-label position-absolute" style="left: 140px; top: 90px;">A∩B</div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3">For P(A|B), we are calculating: <span class="text-accent">P(A|B) = P(A∩B) / P(B)</span></p>
+                                    <p>This is the ratio of the green intersection area (A∩B) to the purple circle area (B).</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Properties of Conditional Probability</h3>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="card bg-dark">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Multiplicative Rule</h4>
+                                        <p class="card-text">We can rewrite the conditional probability formula to get:</p>
+                                        <div class="formula-display">
+                                            P(A \cap B) = P(B) \cdot P(A|B)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-dark">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Chain Rule</h4>
+                                        <p class="card-text">For multiple events, we can extend the multiplicative rule:</p>
+                                        <div class="formula-display">
+                                            P(A \cap B \cap C) = P(A) \cdot P(B|A) \cdot P(C|A \cap B)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Examples -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Examples of Conditional Probability</h2>
+                        
+                        <div class="example-block">
+                            <h4>Example 1: Card Drawing</h4>
+                            <div class="example-problem">
+                                <p>Consider drawing a card from a standard deck of 52 cards.</p>
+                                <p><strong>Question:</strong> What is the probability of drawing a king given that the card drawn is a face card?</p>
+                                <p>Let's define our events:</p>
+                                <ul>
+                                    <li>A = "drawing a king" (there are 4 kings in the deck)</li>
+                                    <li>B = "drawing a face card" (there are 12 face cards: jacks, queens, and kings)</li>
+                                </ul>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>We need to find P(A|B), which is the probability of drawing a king given that we've drawn a face card.</p>
+                                <p>Using the conditional probability formula:</p>
+                                <div class="formula-display">
+                                    P(A|B) = \frac{P(A \cap B)}{P(B)}
+                                </div>
+                                <p>First, let's calculate P(A ∩ B):</p>
+                                <ul>
+                                    <li>A ∩ B = "drawing a card that is both a king and a face card"</li>
+                                    <li>All kings are face cards, so A ∩ B = A</li>
+                                    <li>P(A ∩ B) = P(A) = 4/52 = 1/13</li>
+                                </ul>
+                                <p>Next, let's calculate P(B):</p>
+                                <ul>
+                                    <li>P(B) = 12/52 = 3/13</li>
+                                </ul>
+                                <p>Now, we can calculate P(A|B):</p>
+                                <div class="formula-display">
+                                    P(A|B) = \frac{1/13}{3/13} = \frac{1}{3}
+                                </div>
+                                <p>Therefore, the probability of drawing a king given that the card is a face card is 1/3 or approximately 0.333.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="example-block mt-5">
+                            <h4>Example 2: Medical Testing</h4>
+                            <div class="example-problem">
+                                <p>Consider a medical test for a disease that affects 1% of the population. The test has the following characteristics:</p>
+                                <ul>
+                                    <li>If a person has the disease, the test will be positive 95% of the time (sensitivity).</li>
+                                    <li>If a person does not have the disease, the test will be negative 90% of the time (specificity).</li>
+                                </ul>
+                                <p><strong>Question:</strong> If a person tests positive, what is the probability that they actually have the disease?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>Let's define our events:</p>
+                                <ul>
+                                    <li>D = "person has the disease"</li>
+                                    <li>T = "test is positive"</li>
+                                </ul>
+                                <p>We need to find P(D|T), which is the probability the person has the disease given that they tested positive.</p>
+                                <p>Using the conditional probability formula:</p>
+                                <div class="formula-display">
+                                    P(D|T) = \frac{P(D \cap T)}{P(T)}
+                                </div>
+                                <p>We know:</p>
+                                <ul>
+                                    <li>P(D) = 0.01 (1% of the population has the disease)</li>
+                                    <li>P(T|D) = 0.95 (sensitivity)</li>
+                                    <li>P(T|D<sup>c</sup>) = 0.10 (1 - specificity)</li>
+                                </ul>
+                                <p>First, let's calculate P(D ∩ T) using the multiplication rule:</p>
+                                <div class="formula-display">
+                                    P(D \cap T) = P(D) \cdot P(T|D) = 0.01 \cdot 0.95 = 0.0095
+                                </div>
+                                <p>Next, let's calculate P(T) using the law of total probability:</p>
+                                <div class="formula-display">
+                                    P(T) = P(D) \cdot P(T|D) + P(D^c) \cdot P(T|D^c)
+                                </div>
+                                <div class="formula-display">
+                                    P(T) = 0.01 \cdot 0.95 + 0.99 \cdot 0.10 = 0.0095 + 0.099 = 0.1085
+                                </div>
+                                <p>Now, we can calculate P(D|T):</p>
+                                <div class="formula-display">
+                                    P(D|T) = \frac{0.0095}{0.1085} \approx 0.0876
+                                </div>
+                                <p>Therefore, the probability that a person has the disease given a positive test result is approximately 0.0876 or 8.76%.</p>
+                                <p>This example illustrates the importance of considering the base rate (prior probability) in interpreting test results, especially for rare conditions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calculator Section -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="calculator-form" data-aos="fade-up" data-calculator-type="conditional" data-results-container="conditionalResults">
+                        <h2 class="mb-4">Conditional Probability Calculator</h2>
+                        
+                        <div class="custom-tabs mb-4">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="basic-tab" data-bs-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic Calculator</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="medical-tab" data-bs-toggle="tab" href="#medical" role="tab" aria-controls="medical" aria-selected="false">Medical Test Calculator</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="custom-tab" data-bs-toggle="tab" href="#custom" role="tab" aria-controls="custom" aria-selected="false">Custom Events</a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content">
+                                <!-- Basic Calculator Tab -->
+                                <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                                    <form id="basicConditionalForm">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="pA" class="form-label">P(A) - Probability of Event A</label>
+                                                <input type="number" class="form-control" id="pA" min="0" max="1" step="0.01" value="0.5" required>
+                                                <div class="form-text">Enter a value between 0 and 1.</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="pB" class="form-label">P(B) - Probability of Event B</label>
+                                                <input type="number" class="form-control" id="pB" min="0" max="1" step="0.01" value="0.3" required>
+                                                <div class="form-text">Enter a value between 0 and 1.</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pAandB" class="form-label">P(A∩B) - Probability of both A and B</label>
+                                            <input type="number" class="form-control" id="pAandB" min="0" max="1" step="0.01" value="0.15" required>
+                                            <div class="form-text">Enter a value between 0 and min(P(A), P(B)).</div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Calculate:</label>
+                                            <select class="form-select" id="conditionalType">
+                                                <option value="AgivenB">P(A|B) - Probability of A given B</option>
+                                                <option value="BgivenA">P(B|A) - Probability of B given A</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-calculate">Calculate</button>
+                                            <button type="reset" class="btn btn-reset">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Medical Test Calculator Tab -->
+                                <div class="tab-pane fade" id="medical" role="tabpanel" aria-labelledby="medical-tab">
+                                    <form id="medicalTestForm">
+                                        <div class="mb-3">
+                                            <label for="prevalence" class="form-label">Prevalence (P(D) - Probability of having the disease)</label>
+                                            <input type="number" class="form-control" id="prevalence" min="0" max="1" step="0.001" value="0.01" required>
+                                            <div class="form-text">Enter a value between 0 and 1.</div>
+                                        </div>
+                                        
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="sensitivity" class="form-label">Sensitivity (P(T|D) - True Positive Rate)</label>
+                                                <input type="number" class="form-control" id="sensitivity" min="0" max="1" step="0.01" value="0.95" required>
+                                                <div class="form-text">Probability of positive test given disease.</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="specificity" class="form-label">Specificity (P(T'|D') - True Negative Rate)</label>
+                                                <input type="number" class="form-control" id="specificity" min="0" max="1" step="0.01" value="0.90" required>
+                                                <div class="form-text">Probability of negative test given no disease.</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Calculate:</label>
+                                            <select class="form-select" id="medicalCalculationType">
+                                                <option value="positivePredictive">P(D|T) - Positive Predictive Value</option>
+                                                <option value="negativePredictive">P(D'|T') - Negative Predictive Value</option>
+                                                <option value="falsePositive">P(D'|T) - False Discovery Rate</option>
+                                                <option value="falseNegative">P(D|T') - False Omission Rate</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-calculate">Calculate</button>
+                                            <button type="reset" class="btn btn-reset">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Custom Events Tab -->
+                                <div class="tab-pane fade" id="custom" role="tabpanel" aria-labelledby="custom-tab">
+                                    <form id="customEventsForm">
+                                        <div class="mb-3">
+                                            <label for="totalOutcomes" class="form-label">Total Number of Outcomes</label>
+                                            <input type="number" class="form-control" id="totalOutcomes" min="1" value="100" required>
+                                        </div>
+                                        
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="eventAOutcomes" class="form-label">Number of Outcomes in Event A</label>
+                                                <input type="number" class="form-control" id="eventAOutcomes" min="0" value="40" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="eventBOutcomes" class="form-label">Number of Outcomes in Event B</label>
+                                                <input type="number" class="form-control" id="eventBOutcomes" min="0" value="30" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="intersectionOutcomes" class="form-label">Number of Outcomes in both A and B (Intersection)</label>
+                                            <input type="number" class="form-control" id="intersectionOutcomes" min="0" value="15" required>
+                                            <div class="form-text">Must be less than or equal to both event A and event B outcomes.</div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Calculate:</label>
+                                            <select class="form-select" id="customCalculationType">
+                                                <option value="AgivenB">P(A|B) - Probability of A given B</option>
+                                                <option value="BgivenA">P(B|A) - Probability of B given A</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-calculate">Calculate</button>
+                                            <button type="reset" class="btn btn-reset">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div id="conditionalResults" class="results-container" style="display: none;" data-aos="fade-up">
+                        <h3>Calculation Results</h3>
+                        
+                        <div class="input-summary mb-4">
+                            <h4>Input Values</h4>
+                            <div id="inputSummary" class="p-3 bg-dark rounded"></div>
+                        </div>
+                        
+                        <div class="result-calculation">
+                            <h4>Conditional Probability</h4>
+                            <div class="formula-display" id="conditionalFormula"></div>
+                            <div class="result-value" id="conditionalResult"></div>
+                            <p id="resultInterpretation" class="mt-3"></p>
+                        </div>
+                        
+                        <button class="btn btn-outline-primary mt-3" id="showStepsBtn" onclick="toggleSteps(this)" data-target="#solutionSteps">Show Steps</button>
+                        
+                        <div class="solution-steps mt-4" id="solutionSteps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="solutionStepsList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Practice Problems -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Practice Problems</h2>
+                        <p>Test your understanding of conditional probability with these practice problems.</p>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 1</h4>
+                            <div class="quiz-question">
+                                <p>A family has two children. What is the probability that both children are girls, given that at least one of them is a girl?</p>
+                                <p>Assume that boys and girls are equally likely and that the gender of the second child is independent of the first.</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="a"> 1/2
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q1" value="b"> 1/3
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="c"> 1/4
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="d"> 2/3
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> Let A be the event "both children are girls" and B be the event "at least one child is a girl". The sample space consists of four equally likely outcomes: {(boy,boy), (boy,girl), (girl,boy), (girl,girl)}. The event A contains only (girl,girl), so P(A) = 1/4. The event B contains (boy,girl), (girl,boy), and (girl,girl), so P(B) = 3/4. The intersection A∩B contains only (girl,girl), so P(A∩B) = 1/4. Therefore, P(A|B) = P(A∩B)/P(B) = (1/4)/(3/4) = 1/3.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> Let A be the event "both children are girls" and B be the event "at least one child is a girl". The sample space consists of four equally likely outcomes: {(boy,boy), (boy,girl), (girl,boy), (girl,girl)}. The event A contains only (girl,girl), so P(A) = 1/4. The event B contains (boy,girl), (girl,boy), and (girl,girl), so P(B) = 3/4. The intersection A∩B contains only (girl,girl), so P(A∩B) = 1/4. Therefore, P(A|B) = P(A∩B)/P(B) = (1/4)/(3/4) = 1/3.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q1">Check Answer</button>
+                        </div>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 2</h4>
+                            <div class="quiz-question">
+                                <p>In a certain population, 5% of people have a particular disease. A test for this disease has a sensitivity of 90% (P(positive test | disease)) and a specificity of 80% (P(negative test | no disease)). If a person tests positive, what is the probability that they actually have the disease?</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="a"> 0.90
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="b"> 0.80
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="c"> 0.05
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q2" value="d"> 0.19
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> Let D be the event "has disease" and T be the event "tests positive". We know P(D) = 0.05, P(T|D) = 0.90, and P(T|D') = 0.20 (since specificity is 0.80). We need to find P(D|T) using Bayes' theorem:</p>
+                                <p>P(D|T) = [P(T|D) × P(D)] / [P(T|D) × P(D) + P(T|D') × P(D')]</p>
+                                <p>P(D|T) = [0.90 × 0.05] / [0.90 × 0.05 + 0.20 × 0.95]</p>
+                                <p>P(D|T) = 0.045 / (0.045 + 0.19) = 0.045 / 0.235 ≈ 0.19</p>
+                                <p>This example illustrates the "base rate fallacy" - even with a good test, if the disease is rare, a positive test result still might not indicate a high probability of having the disease.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> Let D be the event "has disease" and T be the event "tests positive". We know P(D) = 0.05, P(T|D) = 0.90, and P(T|D') = 0.20 (since specificity is 0.80). We need to find P(D|T) using Bayes' theorem:</p>
+                                <p>P(D|T) = [P(T|D) × P(D)] / [P(T|D) × P(D) + P(T|D') × P(D')]</p>
+                                <p>P(D|T) = [0.90 × 0.05] / [0.90 × 0.05 + 0.20 × 0.95]</p>
+                                <p>P(D|T) = 0.045 / (0.045 + 0.19) = 0.045 / 0.235 ≈ 0.19</p>
+                                <p>This example illustrates the "base rate fallacy" - even with a good test, if the disease is rare, a positive test result still might not indicate a high probability of having the disease.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q2">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Law of Total Probability and Bayes' Theorem Preview -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Related Concepts</h2>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Law of Total Probability</h4>
+                                        <p class="card-text">If events B₁, B₂, ..., Bₙ form a partition of the sample space (they are mutually exclusive and exhaustive), then for any event A:</p>
+                                        <div class="formula-display">
+                                            P(A) = \sum_{i=1}^{n} P(A|B_i) \cdot P(B_i)
+                                        </div>
+                                        <p class="card-text mt-3">This is useful for calculating the total probability of an event that can occur in multiple ways.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bayes' Theorem</h4>
+                                        <p class="card-text">Bayes' theorem allows us to reverse the conditioning in conditional probability:</p>
+                                        <div class="formula-display">
+                                            P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}
+                                        </div>
+                                        <p class="card-text mt-3">This is particularly useful when we know P(B|A) but need to find P(A|B), such as in medical diagnosis where we know the sensitivity of a test but need to find the probability of disease given a positive test.</p>
+                                        <a href="bayes-theorem.html" class="btn btn-outline-primary mt-3">Learn more about Bayes' Theorem</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Further Reading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Further Reading</h2>
+                        <p>To deepen your understanding of conditional probability and related concepts, explore these topics:</p>
+                        
+                        <div class="row g-4 mt-2">
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Sample Space & Events</h4>
+                                        <p class="card-text">Learn about the foundation of probability theory and how to define events.</p>
+                                        <a href="sample-space.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Bayes' Theorem</h4>
+                                        <p class="card-text">Discover how to update probabilities based on new evidence.</p>
+                                        <a href="bayes-theorem.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Independence</h4>
+                                        <p class="card-text">Understand when events don't affect each other's probabilities.</p>
+                                        <a href="independence.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="sample-space.html">Basic Probability</a></li>
+                        <li><a href="../discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    
+    <!-- Form Handling Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Basic Conditional Form Handler
+            document.getElementById('basicConditionalForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateBasicConditional();
+            });
+            
+            // Medical Test Form Handler
+            document.getElementById('medicalTestForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateMedicalTest();
+            });
+            
+            // Custom Events Form Handler
+            document.getElementById('customEventsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateCustomEvents();
+            });
+            
+            // Quiz functionality
+            document.querySelectorAll('.check-answer-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const questionName = this.getAttribute('data-question');
+                    const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                    
+                    if (!selectedOption) {
+                        alert('Please select an answer first.');
+                        return;
+                    }
+                    
+                    const optionContainer = selectedOption.closest('.quiz-option');
+                    const isCorrect = optionContainer.getAttribute('data-correct') === 'true';
+                    
+                    // Hide all feedback first
+                    const questionCard = this.closest('.quiz-card');
+                    questionCard.querySelector('.quiz-feedback.correct').style.display = 'none';
+                    questionCard.querySelector('.quiz-feedback.incorrect').style.display = 'none';
+                    
+                    // Show appropriate feedback
+                    if (isCorrect) {
+                        questionCard.querySelector('.quiz-feedback.correct').style.display = 'block';
+                    } else {
+                        questionCard.querySelector('.quiz-feedback.incorrect').style.display = 'block';
+                    }
+                    
+                    // Scroll to feedback
+                    questionCard.querySelector('.quiz-feedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            });
+        });
+        
+        // Basic Conditional Probability Calculator
+        function calculateBasicConditional() {
+            const pA = parseFloat(document.getElementById('pA').value);
+            const pB = parseFloat(document.getElementById('pB').value);
+            const pAandB = parseFloat(document.getElementById('pAandB').value);
+            const conditionalType = document.getElementById('conditionalType').value;
+            
+            // Validate inputs
+            if (pA < 0 || pA > 1 || pB < 0 || pB > 1 || pAandB < 0 || pAandB > 1) {
+                alert('All probabilities must be between 0 and 1.');
+                return;
+            }
+            
+            if (pAandB > Math.min(pA, pB)) {
+                alert('P(A∩B) cannot be greater than both P(A) and P(B).');
+                return;
+            }
+            
+            let result, formula, interpretation;
+            
+            if (conditionalType === 'AgivenB') {
+                // P(A|B) = P(A∩B) / P(B)
+                if (pB === 0) {
+                    alert('P(B) cannot be zero for calculating P(A|B).');
+                    return;
+                }
+                
+                result = pAandB / pB;
+                formula = `P(A|B) = \\frac{P(A \\cap B)}{P(B)} = \\frac{${pAandB}}{${pB}} = ${result.toFixed(6)}`;
+                interpretation = `The probability of event A occurring given that event B has occurred is ${(result * 100).toFixed(2)}%.`;
+            } else {
+                // P(B|A) = P(A∩B) / P(A)
+                if (pA === 0) {
+                    alert('P(A) cannot be zero for calculating P(B|A).');
+                    return;
+                }
+                
+                result = pAandB / pA;
+                formula = `P(B|A) = \\frac{P(A \\cap B)}{P(A)} = \\frac{${pAandB}}{${pA}} = ${result.toFixed(6)}`;
+                interpretation = `The probability of event B occurring given that event A has occurred is ${(result * 100).toFixed(2)}%.`;
+            }
+            
+            // Prepare solution steps
+            const steps = [
+                `Step 1: Identify the values from the input.`,
+                `P(A) = ${pA}`,
+                `P(B) = ${pB}`,
+                `P(A∩B) = ${pAandB}`,
+                `Step 2: Apply the conditional probability formula.`,
+                conditionalType === 'AgivenB' 
+                    ? `P(A|B) = P(A∩B) / P(B)`
+                    : `P(B|A) = P(A∩B) / P(A)`,
+                `Step 3: Substitute the values into the formula.`,
+                conditionalType === 'AgivenB'
+                    ? `P(A|B) = ${pAandB} / ${pB} = ${result.toFixed(6)}`
+                    : `P(B|A) = ${pAandB} / ${pA} = ${result.toFixed(6)}`
+            ];
+            
+            // Display results
+            displayResults({
+                inputSummary: `P(A) = ${pA}, P(B) = ${pB}, P(A∩B) = ${pAandB}`,
+                formula: formula,
+                result: result,
+                interpretation: interpretation,
+                steps: steps
+            });
+        }
+        
+        // Medical Test Calculator
+        function calculateMedicalTest() {
+            const prevalence = parseFloat(document.getElementById('prevalence').value);
+            const sensitivity = parseFloat(document.getElementById('sensitivity').value);
+            const specificity = parseFloat(document.getElementById('specificity').value);
+            const calculationType = document.getElementById('medicalCalculationType').value;
+            
+            // Validate inputs
+            if (prevalence < 0 || prevalence > 1 || sensitivity < 0 || sensitivity > 1 || specificity < 0 || specificity > 1) {
+                alert('All probabilities must be between 0 and 1.');
+                return;
+            }
+            
+            // Calculate probabilities
+            const pD = prevalence; // P(D) - probability of disease
+            const pNotD = 1 - pD; // P(D') - probability of no disease
+            const pTgivenD = sensitivity; // P(T|D) - probability of positive test given disease
+            const pNotTgivenNotD = specificity; // P(T'|D') - probability of negative test given no disease
+            const pTgivenNotD = 1 - pNotTgivenNotD; // P(T|D') - probability of positive test given no disease
+            const pNotTgivenD = 1 - pTgivenD; // P(T'|D) - probability of negative test given disease
+            
+            // Calculate P(T) - probability of positive test
+            const pT = pTgivenD * pD + pTgivenNotD * pNotD;
+            // Calculate P(T') - probability of negative test
+            const pNotT = pNotTgivenD * pD + pNotTgivenNotD * pNotD;
+            
+            let result, formula, interpretation;
+            
+            switch(calculationType) {
+                case 'positivePredictive':
+                    // P(D|T) - Positive Predictive Value
+                    result = (pTgivenD * pD) / pT;
+                    formula = `P(D|T) = \\frac{P(T|D) \\cdot P(D)}{P(T)} = \\frac{${pTgivenD} \\cdot ${pD}}{${pT.toFixed(6)}} = ${result.toFixed(6)}`;
+                    interpretation = `The probability that a person has the disease given a positive test result is ${(result * 100).toFixed(2)}%.`;
+                    break;
+                case 'negativePredictive':
+                    // P(D'|T') - Negative Predictive Value
+                    result = (pNotTgivenNotD * pNotD) / pNotT;
+                    formula = `P(D'|T') = \\frac{P(T'|D') \\cdot P(D')}{P(T')} = \\frac{${pNotTgivenNotD} \\cdot ${pNotD}}{${pNotT.toFixed(6)}} = ${result.toFixed(6)}`;
+                    interpretation = `The probability that a person does not have the disease given a negative test result is ${(result * 100).toFixed(2)}%.`;
+                    break;
+                case 'falsePositive':
+                    // P(D'|T) - False Discovery Rate
+                    result = (pTgivenNotD * pNotD) / pT;
+                    formula = `P(D'|T) = \\frac{P(T|D') \\cdot P(D')}{P(T)} = \\frac{${pTgivenNotD} \\cdot ${pNotD}}{${pT.toFixed(6)}} = ${result.toFixed(6)}`;
+                    interpretation = `The probability that a person does not have the disease despite a positive test result is ${(result * 100).toFixed(2)}%.`;
+                    break;
+                case 'falseNegative':
+                    // P(D|T') - False Omission Rate
+                    result = (pNotTgivenD * pD) / pNotT;
+                    formula = `P(D|T') = \\frac{P(T'|D) \\cdot P(D)}{P(T')} = \\frac{${pNotTgivenD} \\cdot ${pD}}{${pNotT.toFixed(6)}} = ${result.toFixed(6)}`;
+                    interpretation = `The probability that a person has the disease despite a negative test result is ${(result * 100).toFixed(2)}%.`;
+                    break;
+            }
+            
+            // Prepare solution steps
+            const steps = [
+                `Step 1: Identify the values from the input.`,
+                `P(D) = ${pD} (Prevalence)`,
+                `P(T|D) = ${pTgivenD} (Sensitivity)`,
+                `P(T'|D') = ${pNotTgivenNotD} (Specificity)`,
+                `Step 2: Calculate additional probabilities.`,
+                `P(D') = 1 - P(D) = 1 - ${pD} = ${pNotD}`,
+                `P(T|D') = 1 - P(T'|D') = 1 - ${pNotTgivenNotD} = ${pTgivenNotD}`,
+                `P(T'|D) = 1 - P(T|D) = 1 - ${pTgivenD} = ${pNotTgivenD}`,
+                `Step 3: Calculate the total probability of a positive test.`,
+                `P(T) = P(T|D) · P(D) + P(T|D') · P(D')`,
+                `P(T) = ${pTgivenD} · ${pD} + ${pTgivenNotD} · ${pNotD} = ${pT.toFixed(6)}`,
+                `Step 4: Calculate the total probability of a negative test.`,
+                `P(T') = P(T'|D) · P(D) + P(T'|D') · P(D')`,
+                `P(T') = ${pNotTgivenD} · ${pD} + ${pNotTgivenNotD} · ${pNotD} = ${pNotT.toFixed(6)}`,
+                `Step 5: Apply Bayes' theorem to calculate the desired probability.`
+            ];
+            
+            // Add the specific calculation based on type
+            switch(calculationType) {
+                case 'positivePredictive':
+                    steps.push(`P(D|T) = [P(T|D) · P(D)] / P(T)`);
+                    steps.push(`P(D|T) = [${pTgivenD} · ${pD}] / ${pT.toFixed(6)} = ${result.toFixed(6)}`);
+                    break;
+                case 'negativePredictive':
+                    steps.push(`P(D'|T') = [P(T'|D') · P(D')] / P(T')`);
+                    steps.push(`P(D'|T') = [${pNotTgivenNotD} · ${pNotD}] / ${pNotT.toFixed(6)} = ${result.toFixed(6)}`);
+                    break;
+                case 'falsePositive':
+                    steps.push(`P(D'|T) = [P(T|D') · P(D')] / P(T)`);
+                    steps.push(`P(D'|T) = [${pTgivenNotD} · ${pNotD}] / ${pT.toFixed(6)} = ${result.toFixed(6)}`);
+                    break;
+                case 'falseNegative':
+                    steps.push(`P(D|T') = [P(T'|D) · P(D)] / P(T')`);
+                    steps.push(`P(D|T') = [${pNotTgivenD} · ${pD}] / ${pNotT.toFixed(6)} = ${result.toFixed(6)}`);
+                    break;
+            }
+            
+            // Display results
+            displayResults({
+                inputSummary: `Prevalence = ${prevalence}, Sensitivity = ${sensitivity}, Specificity = ${specificity}`,
+                formula: formula,
+                result: result,
+                interpretation: interpretation,
+                steps: steps
+            });
+        }
+        
+        // Custom Events Calculator
+        function calculateCustomEvents() {
+            const totalOutcomes = parseInt(document.getElementById('totalOutcomes').value);
+            const eventAOutcomes = parseInt(document.getElementById('eventAOutcomes').value);
+            const eventBOutcomes = parseInt(document.getElementById('eventBOutcomes').value);
+            const intersectionOutcomes = parseInt(document.getElementById('intersectionOutcomes').value);
+            const calculationType = document.getElementById('customCalculationType').value;
+            
+            // Validate inputs
+            if (totalOutcomes <= 0) {
+                alert('Total outcomes must be positive.');
+                return;
+            }
+            
+            if (eventAOutcomes < 0 || eventAOutcomes > totalOutcomes) {
+                alert('Event A outcomes must be between 0 and total outcomes.');
+                return;
+            }
+            
+            if (eventBOutcomes < 0 || eventBOutcomes > totalOutcomes) {
+                alert('Event B outcomes must be between 0 and total outcomes.');
+                return;
+            }
+            
+            if (intersectionOutcomes < 0 || intersectionOutcomes > Math.min(eventAOutcomes, eventBOutcomes)) {
+                alert('Intersection outcomes must be between 0 and the minimum of event A and event B outcomes.');
+                return;
+            }
+            
+            // Calculate probabilities
+            const pA = eventAOutcomes / totalOutcomes;
+            const pB = eventBOutcomes / totalOutcomes;
+            const pAandB = intersectionOutcomes / totalOutcomes;
+            
+            let result, formula, interpretation;
+            
+            if (calculationType === 'AgivenB') {
+                // P(A|B) = P(A∩B) / P(B)
+                if (eventBOutcomes === 0) {
+                    alert('Event B outcomes cannot be zero for calculating P(A|B).');
+                    return;
+                }
+                
+                result = intersectionOutcomes / eventBOutcomes;
+                formula = `P(A|B) = \\frac{P(A \\cap B)}{P(B)} = \\frac{${pAandB}}{${pB}} = \\frac{${intersectionOutcomes}}{${eventBOutcomes}} = ${result.toFixed(6)}`;
+                interpretation = `The probability of event A occurring given that event B has occurred is ${(result * 100).toFixed(2)}%.`;
+            } else {
+                // P(B|A) = P(A∩B) / P(A)
+                if (eventAOutcomes === 0) {
+                    alert('Event A outcomes cannot be zero for calculating P(B|A).');
+                    return;
+                }
+                
+                result = intersectionOutcomes / eventAOutcomes;
+                formula = `P(B|A) = \\frac{P(A \\cap B)}{P(A)} = \\frac{${pAandB}}{${pA}} = \\frac{${intersectionOutcomes}}{${eventAOutcomes}} = ${result.toFixed(6)}`;
+                interpretation = `The probability of event B occurring given that event A has occurred is ${(result * 100).toFixed(2)}%.`;
+            }
+            
+            // Prepare solution steps
+            const steps = [
+                `Step 1: Identify the values from the input.`,
+                `Total outcomes = ${totalOutcomes}`,
+                `Event A outcomes = ${eventAOutcomes}`,
+                `Event B outcomes = ${eventBOutcomes}`,
+                `Intersection (A∩B) outcomes = ${intersectionOutcomes}`,
+                `Step 2: Calculate the probabilities.`,
+                `P(A) = Event A outcomes / Total outcomes = ${eventAOutcomes} / ${totalOutcomes} = ${pA.toFixed(6)}`,
+                `P(B) = Event B outcomes / Total outcomes = ${eventBOutcomes} / ${totalOutcomes} = ${pB.toFixed(6)}`,
+                `P(A∩B) = Intersection outcomes / Total outcomes = ${intersectionOutcomes} / ${totalOutcomes} = ${pAandB.toFixed(6)}`,
+                `Step 3: Apply the conditional probability formula.`,
+                calculationType === 'AgivenB' 
+                    ? `P(A|B) = P(A∩B) / P(B) = Intersection outcomes / Event B outcomes`
+                    : `P(B|A) = P(A∩B) / P(A) = Intersection outcomes / Event A outcomes`,
+                `Step 4: Substitute the values into the formula.`,
+                calculationType === 'AgivenB'
+                    ? `P(A|B) = ${intersectionOutcomes} / ${eventBOutcomes} = ${result.toFixed(6)}`
+                    : `P(B|A) = ${intersectionOutcomes} / ${eventAOutcomes} = ${result.toFixed(6)}`
+            ];
+            
+            // Display results
+            displayResults({
+                inputSummary: `Total outcomes = ${totalOutcomes}, Event A outcomes = ${eventAOutcomes}, Event B outcomes = ${eventBOutcomes}, Intersection outcomes = ${intersectionOutcomes}`,
+                formula: formula,
+                result: result,
+                interpretation: interpretation,
+                steps: steps
+            });
+        }
+        
+        // Helper function to display results
+        function displayResults(data) {
+            // Show results container
+            const resultsContainer = document.getElementById('conditionalResults');
+            resultsContainer.style.display = 'block';
+            
+            // Update results
+            document.getElementById('inputSummary').textContent = data.inputSummary;
+            document.getElementById('conditionalFormula').textContent = data.formula;
+            document.getElementById('conditionalResult').textContent = data.result.toFixed(6);
+            document.getElementById('resultInterpretation').textContent = data.interpretation;
+            
+            // Update solution steps
+            const stepsHTML = data.steps.map((step, index) => {
+                // Check if the step is a header (starting with "Step")
+                if (step.startsWith('Step')) {
+                    return `
+                    <div class="step">
+                        <span class="step-number">${index + 1}</span>
+                        <div class="step-content"><strong>${step}</strong></div>
+                    </div>
+                    `;
+                } else {
+                    return `
+                    <div class="step" style="padding-left: 20px;">
+                        <div class="step-content">${step}</div>
+                    </div>
+                    `;
+                }
+            }).join('');
+            
+            document.getElementById('solutionStepsList').innerHTML = stepsHTML;
+            
+            // Typeset the math with MathJax
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise([document.getElementById('conditionalFormula')]).catch(function (err) {
+                    console.log('Error typesetting math:', err);
+                });
+            }
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

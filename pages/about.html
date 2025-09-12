@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../pages/discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../pages/discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../pages/discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../pages/discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">About This Project</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Learn about the motivation, features, and the creator behind the Random Variables & Probability Distributions calculator.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-content py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h2 class="mb-4">Project Overview</h2>
+                        <p>The Random Variables & Probability Distributions calculator is a comprehensive web-based tool designed to help students, educators, and professionals solve probability problems quickly and accurately. This project aims to make probability theory more accessible by providing interactive calculators, visualizations, and educational resources.</p>
+                        
+                        <h3 class="mt-5 mb-3">Why This Project?</h3>
+                        <p>Probability theory and statistics can be challenging subjects for many students. The abstract concepts, complex formulas, and diverse distributions often create barriers to understanding. This project was created to address these challenges by providing:</p>
+                        
+                        <ul class="mb-4">
+                            <li><strong>Visual Learning</strong> - Interactive graphs that help visualize probability distributions</li>
+                            <li><strong>Step-by-Step Solutions</strong> - Detailed calculation breakdowns that show the process, not just the answer</li>
+                            <li><strong>Comprehensive Coverage</strong> - Tools for all major probability distributions and concepts</li>
+                            <li><strong>Accessible Explanations</strong> - Clear theory sections with practical examples</li>
+                            <li><strong>Practice Opportunities</strong> - Problems with immediate feedback to reinforce learning</li>
+                        </ul>
+                        
+                        <h3 class="mt-5 mb-3">Features & Capabilities</h3>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <h4>Probability Calculators</h4>
+                                    <p>Interactive tools for calculating probabilities across various distributions with step-by-step solutions.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h4>Visualization Tools</h4>
+                                    <p>Dynamic graphs that illustrate probability mass/density functions and cumulative distribution functions.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-book-open"></i>
+                                    </div>
+                                    <h4>Educational Content</h4>
+                                    <p>Concise theory sections that explain key concepts, formulas, and applications.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-random"></i>
+                                    </div>
+                                    <h4>Random Variable Simulation</h4>
+                                    <p>Tools to generate and visualize random samples from various probability distributions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Technologies Used</h3>
+                        <p>This project was built using modern web technologies to ensure accessibility, performance, and a great user experience:</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-6 col-md-3 text-center">
+                                <div class="tech-item">
+                                    <i class="fab fa-html5 fa-3x mb-3" style="color: #E34F26;"></i>
+                                    <h5>HTML5</h5>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 text-center">
+                                <div class="tech-item">
+                                    <i class="fab fa-css3-alt fa-3x mb-3" style="color: #1572B6;"></i>
+                                    <h5>CSS3</h5>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 text-center">
+                                <div class="tech-item">
+                                    <i class="fab fa-js fa-3x mb-3" style="color: #F7DF1E;"></i>
+                                    <h5>JavaScript</h5>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 text-center">
+                                <div class="tech-item">
+                                    <i class="fab fa-bootstrap fa-3x mb-3" style="color: #7952B3;"></i>
+                                    <h5>Bootstrap 5</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p>Additional libraries used include Chart.js for visualizations, MathJax for mathematical notation, jStat for statistical calculations, and Particles.js for background animations.</p>
+                        
+                        <h3 class="mt-5 mb-3">Future Development</h3>
+                        <p>This project is continuously evolving. Future updates plan to include:</p>
+                        <ul>
+                            <li>More advanced distributions and multivariate analysis tools</li>
+                            <li>Enhanced simulation capabilities</li>
+                            <li>Mobile application version</li>
+                            <li>Integration with popular statistical software</li>
+                            <li>Community features for sharing problems and solutions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-left">
+                    <div class="creator-profile mb-4">
+                        <div class="creator-header text-center">
+                            <div class="creator-avatar mb-3">
+                                <i class="fas fa-user-circle fa-6x"></i>
+                            </div>
+                            <h3>Janith Deshan</h3>
+                            <p class="text-muted">Creator & Developer</p>
+                        </div>
+                        <div class="creator-bio mt-4">
+                            <p>Hello! I'm Janith Deshan, a passionate developer with a strong interest in mathematics, statistics, and educational technology. I created this probability calculator to help students better understand complex probability concepts through interactive tools and visualizations.</p>
+                            <p>My goal was to build a resource that I wish I had when I was first learning probability theory - something that makes abstract concepts concrete and provides immediate feedback on calculations.</p>
+                        </div>
+                        <div class="creator-skills mt-4">
+                            <h4 class="mb-3">Skills & Expertise</h4>
+                            <div class="skill-badges">
+                                <span class="badge bg-primary me-2 mb-2">Web Development</span>
+                                <span class="badge bg-primary me-2 mb-2">JavaScript</span>
+                                <span class="badge bg-primary me-2 mb-2">Mathematics</span>
+                                <span class="badge bg-primary me-2 mb-2">Data Visualization</span>
+                                <span class="badge bg-primary me-2 mb-2">Statistics</span>
+                                <span class="badge bg-primary me-2 mb-2">UI/UX Design</span>
+                            </div>
+                        </div>
+                        <div class="creator-connect mt-4">
+                            <h4 class="mb-3">Connect With Me</h4>
+                            <div class="social-links">
+                                <a href="mailto:janithmihijaya123@gmail.com" class="me-3" title="Email"><i class="fas fa-envelope"></i></a>
+                                <a href="https://www.facebook.com/janith.deshan.186" class="me-3" title="Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="https://www.linkedin.com/in/janithdeshan/" class="me-3" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/janiyax35" class="me-3" title="GitHub"><i class="fab fa-github"></i></a>
+                                <a href="https://www.instagram.com/janith_deshan11/" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-card" data-aos="fade-up">
+                        <h4 class="mb-3">Feedback Welcome!</h4>
+                        <p>I'm always looking to improve this project. If you have suggestions, found a bug, or want to request a new feature, please reach out through the contact page or directly via email.</p>
+                        <a href="contact.html" class="btn btn-primary mt-2">Send Feedback</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section py-5 my-5">
+        <div class="container text-center" data-aos="zoom-in">
+            <div class="quote-content">
+                <i class="fas fa-quote-left fa-3x mb-4 text-primary opacity-50"></i>
+                <blockquote class="blockquote">
+                    <p class="lead mb-4">"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding."</p>
+                </blockquote>
+                <p class="blockquote-footer text-light">William Paul Thurston</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+</body>
+</html>
