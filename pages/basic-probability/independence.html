@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independence | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item active" href="independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="../random-variables/overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Independence</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Understanding when events don't influence each other's occurrence.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="main-content py-5">
+        <div class="container">
+            <!-- Calculator Section (Placed First) -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="calculator-form" data-aos="fade-up" data-calculator-type="independence" data-results-container="independenceResults">
+                        <h2 class="mb-4">Independence Calculator</h2>
+                        
+                        <div class="custom-tabs mb-4">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="two-events-tab" data-bs-toggle="tab" href="#two-events" role="tab" aria-controls="two-events" aria-selected="true">Two Events</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="three-events-tab" data-bs-toggle="tab" href="#three-events" role="tab" aria-controls="three-events" aria-selected="false">Three Events</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="contingency-tab" data-bs-toggle="tab" href="#contingency" role="tab" aria-controls="contingency" aria-selected="false">Contingency Table</a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content">
+                                <!-- Two Events Tab -->
+                                <div class="tab-pane fade show active" id="two-events" role="tabpanel" aria-labelledby="two-events-tab">
+                                    <form id="twoEventsForm">
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <label for="pA" class="form-label">P(A) - Probability of Event A</label>
+                                                <input type="number" class="form-control" id="pA" min="0" max="1" step="0.01" value="0.40" required>
+                                                <div class="form-text">Enter a value between 0 and 1.</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="pB" class="form-label">P(B) - Probability of Event B</label>
+                                                <input type="number" class="form-control" id="pB" min="0" max="1" step="0.01" value="0.30" required>
+                                                <div class="form-text">Enter a value between 0 and 1.</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="pAandB" class="form-label">P(A∩B) - Probability of both A and B</label>
+                                                <input type="number" class="form-control" id="pAandB" min="0" max="1" step="0.01" value="0.12" required>
+                                                <div class="form-text">Enter a value between 0 and min(P(A), P(B)).</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-calculate">Check Independence</button>
+                                            <button type="reset" class="btn btn-reset">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Three Events Tab -->
+                                <div class="tab-pane fade" id="three-events" role="tabpanel" aria-labelledby="three-events-tab">
+                                    <form id="threeEventsForm">
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <label for="pA_three" class="form-label">P(A)</label>
+                                                <input type="number" class="form-control" id="pA_three" min="0" max="1" step="0.01" value="0.40" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="pB_three" class="form-label">P(B)</label>
+                                                <input type="number" class="form-control" id="pB_three" min="0" max="1" step="0.01" value="0.30" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="pC_three" class="form-label">P(C)</label>
+                                                <input type="number" class="form-control" id="pC_three" min="0" max="1" step="0.01" value="0.20" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <label for="pAandB_three" class="form-label">P(A∩B)</label>
+                                                <input type="number" class="form-control" id="pAandB_three" min="0" max="1" step="0.01" value="0.12" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="pAandC_three" class="form-label">P(A∩C)</label>
+                                                <input type="number" class="form-control" id="pAandC_three" min="0" max="1" step="0.01" value="0.08" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="pBandC_three" class="form-label">P(B∩C)</label>
+                                                <input type="number" class="form-control" id="pBandC_three" min="0" max="1" step="0.01" value="0.06" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pAandBandC" class="form-label">P(A∩B∩C)</label>
+                                            <input type="number" class="form-control" id="pAandBandC" min="0" max="1" step="0.01" value="0.024" required>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-calculate">Check Independence</button>
+                                            <button type="reset" class="btn btn-reset">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Contingency Table Tab -->
+                                <div class="tab-pane fade" id="contingency" role="tabpanel" aria-labelledby="contingency-tab">
+                                    <form id="contingencyTableForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Contingency Table (Frequency Counts)</label>
+                                            <p class="text-secondary">Enter frequency counts for the joint occurrences of two events.</p>
+                                            
+                                            <div class="table-responsive">
+                                                <table class="custom-table contingency-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Event B Occurs</th>
+                                                            <th>Event B Does Not Occur</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Event A Occurs</th>
+                                                            <td><input type="number" id="a_and_b" class="form-control contingency-input" min="0" value="25"></td>
+                                                            <td><input type="number" id="a_not_b" class="form-control contingency-input" min="0" value="25"></td>
+                                                            <td id="row1_total">50</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Event A Does Not Occur</th>
+                                                            <td><input type="number" id="not_a_and_b" class="form-control contingency-input" min="0" value="25"></td>
+                                                            <td><input type="number" id="not_a_not_b" class="form-control contingency-input" min="0" value="50"></td>
+                                                            <td id="row2_total">75</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total</th>
+                                                            <td id="col1_total">50</td>
+                                                            <td id="col2_total">75</td>
+                                                            <td id="grand_total">125</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-calculate">Check Independence</button>
+                                            <button type="reset" class="btn btn-reset">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div id="independenceResults" class="results-container" style="display: none;" data-aos="fade-up">
+                        <h3>Independence Test Results</h3>
+                        
+                        <div class="input-summary mb-4">
+                            <h4>Input Values</h4>
+                            <div id="inputSummary" class="p-3 bg-dark rounded"></div>
+                        </div>
+                        
+                        <div class="result-calculation">
+                            <h4>Independence Test</h4>
+                            <div class="formula-display" id="independenceFormula"></div>
+                            <div class="result-value" id="independenceResult"></div>
+                            <p id="resultInterpretation" class="mt-3"></p>
+                        </div>
+                        
+                        <!-- Chi-Square Test Results for Contingency Table -->
+                        <div id="chiSquareResults" style="display: none;" class="mt-4">
+                            <h4>Chi-Square Test for Independence</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-dark rounded mb-3">
+                                        <h5>Expected Frequency Table</h5>
+                                        <div class="table-responsive">
+                                            <table class="custom-table" id="expectedFrequencyTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>B</th>
+                                                        <th>Not B</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>A</th>
+                                                        <td id="exp_a_and_b">0</td>
+                                                        <td id="exp_a_not_b">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Not A</th>
+                                                        <td id="exp_not_a_and_b">0</td>
+                                                        <td id="exp_not_a_not_b">0</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-dark rounded mb-3">
+                                        <h5>Chi-Square Calculation</h5>
+                                        <p id="chiSquareFormula"></p>
+                                        <p>Chi-Square Statistic: <span id="chiSquareValue" class="fw-bold"></span></p>
+                                        <p>Degrees of Freedom: <span id="degreesOfFreedom" class="fw-bold"></span></p>
+                                        <p>p-value: <span id="pValue" class="fw-bold"></span></p>
+                                        <p id="chiSquareInterpretation"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-outline-primary mt-3" id="showStepsBtn" onclick="toggleSteps(this)" data-target="#solutionSteps">Show Steps</button>
+                        
+                        <div class="solution-steps mt-4" id="solutionSteps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="solutionStepsList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Introduction to Independence -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">What is Independence?</h2>
+                        <p>In probability theory, two events are <strong>independent</strong> if the occurrence of one event does not affect the probability of the other event. In other words, knowing that one event has occurred doesn't change the probability of the other event occurring.</p>
+                        
+                        <div class="custom-alert info mt-4">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Definition:</strong> Events A and B are independent if and only if the probability of their intersection equals the product of their individual probabilities.
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Mathematical Definition</h3>
+                        <p>Two events A and B are independent if and only if:</p>
+                        
+                        <div class="formula-display my-4">
+                            P(A \cap B) = P(A) \times P(B)
+                        </div>
+                        
+                        <p>Equivalently, A and B are independent if:</p>
+                        
+                        <div class="formula-display my-4">
+                            P(A|B) = P(A) \quad \text{and} \quad P(B|A) = P(B)
+                        </div>
+                        
+                        <p>where P(A|B) is the conditional probability of A given B.</p>
+                        
+                        <h3 class="mt-5 mb-3">Types of Independence</h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-not-equal"></i>
+                                    </div>
+                                    <h4>Pairwise Independence</h4>
+                                    <p>Events are pairwise independent if every pair of events is independent. For three events A, B, and C, this means A and B are independent, A and C are independent, and B and C are independent.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    <h4>Mutual Independence</h4>
+                                    <p>Events are mutually independent if the probability of any combination of events equals the product of their individual probabilities. Mutual independence is stronger than pairwise independence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visual Representation -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Visual Representation of Independence</h2>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="chart-container text-center">
+                                    <h3 class="mb-4">Venn Diagrams for Independent vs. Dependent Events</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="p-3">
+                                                <h5>Independent Events</h5>
+                                                <div class="independence-diagram mb-4">
+                                                    <div class="position-relative mx-auto" style="width: 200px; height: 150px;">
+                                                        <div class="position-absolute" style="width: 100%; height: 100%; border: 2px solid #333; border-radius: 5px; background-color: rgba(200, 200, 200, 0.1);">
+                                                            <div class="position-absolute" style="top: 5px; left: 50%; transform: translateX(-50%);">Sample Space</div>
+                                                        </div>
+                                                        
+                                                        <div class="position-absolute" style="width: 80px; height: 120px; left: 20px; top: 15px; background-color: rgba(138, 180, 248, 0.3); border: 2px solid #8AB4F8; border-radius: 5px;">
+                                                            <div class="position-absolute" style="top: 5px; width: 100%; text-align: center;">A</div>
+                                                        </div>
+                                                        
+                                                        <div class="position-absolute" style="width: 80px; height: 120px; right: 20px; top: 15px; background-color: rgba(187, 134, 252, 0.3); border: 2px solid #BB86FC; border-radius: 5px;">
+                                                            <div class="position-absolute" style="top: 5px; width: 100%; text-align: center;">B</div>
+                                                        </div>
+                                                        
+                                                        <div class="position-absolute" style="left: 50%; transform: translateX(-50%); bottom: 10px; width: 90%; text-align: center;">
+                                                            <span style="font-size: 0.9rem;">P(A∩B) = P(A)×P(B)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-2">Events A and B occupy separate areas within the sample space, with their intersection proportional to the product of their individual probabilities.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="p-3">
+                                                <h5>Dependent Events</h5>
+                                                <div class="dependence-diagram mb-4">
+                                                    <div class="position-relative mx-auto" style="width: 200px; height: 150px;">
+                                                        <div class="position-absolute" style="width: 100%; height: 100%; border: 2px solid #333; border-radius: 5px; background-color: rgba(200, 200, 200, 0.1);">
+                                                            <div class="position-absolute" style="top: 5px; left: 50%; transform: translateX(-50%);">Sample Space</div>
+                                                        </div>
+                                                        
+                                                        <div class="position-absolute" style="width: 100px; height: 120px; left: 20px; top: 15px; background-color: rgba(138, 180, 248, 0.3); border: 2px solid #8AB4F8; border-radius: 50%;">
+                                                            <div class="position-absolute" style="top: 30px; width: 100%; text-align: center;">A</div>
+                                                        </div>
+                                                        
+                                                        <div class="position-absolute" style="width: 100px; height: 120px; right: 20px; top: 15px; background-color: rgba(187, 134, 252, 0.3); border: 2px solid #BB86FC; border-radius: 50%;">
+                                                            <div class="position-absolute" style="top: 30px; width: 100%; text-align: center;">B</div>
+                                                        </div>
+                                                        
+                                                        <div class="position-absolute" style="left: 50%; transform: translateX(-50%); bottom: 10px; width: 90%; text-align: center;">
+                                                            <span style="font-size: 0.9rem;">P(A∩B) ≠ P(A)×P(B)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-2">Events A and B have an intersection that is either larger or smaller than the product of their individual probabilities, indicating dependency.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Independence in Multiple Events</h3>
+                        <p>For three events A, B, and C to be mutually independent, all of the following conditions must be satisfied:</p>
+                        
+                        <div class="formula-display my-4">
+                            \begin{align}
+                            P(A \cap B) &= P(A) \times P(B) \\
+                            P(A \cap C) &= P(A) \times P(C) \\
+                            P(B \cap C) &= P(B) \times P(C) \\
+                            P(A \cap B \cap C) &= P(A) \times P(B) \times P(C)
+                            \end{align}
+                        </div>
+                        
+                        <p>Note that pairwise independence (satisfying the first three conditions) does not guarantee mutual independence. The fourth condition about the triple intersection is also required.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Examples -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Examples of Independence</h2>
+                        
+                        <div class="example-block">
+                            <h4>Example 1: Coin Tosses</h4>
+                            <div class="example-problem">
+                                <p>Consider tossing a fair coin twice.</p>
+                                <p><strong>Question:</strong> Are the outcomes of the first and second tosses independent events?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>Let's define our events:</p>
+                                <ul>
+                                    <li>A = "getting heads on the first toss"</li>
+                                    <li>B = "getting heads on the second toss"</li>
+                                </ul>
+                                <p>For a fair coin:</p>
+                                <ul>
+                                    <li>P(A) = 1/2</li>
+                                    <li>P(B) = 1/2</li>
+                                </ul>
+                                <p>The sample space consists of four equally likely outcomes: {(H,H), (H,T), (T,H), (T,T)}.</p>
+                                <p>The event A∩B (getting heads on both tosses) corresponds to the outcome (H,H), so:</p>
+                                <ul>
+                                    <li>P(A∩B) = 1/4</li>
+                                </ul>
+                                <p>Now, let's check for independence:</p>
+                                <div class="formula-display">
+                                    P(A) \times P(B) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4}
+                                </div>
+                                <p>Since P(A∩B) = P(A) × P(B), events A and B are independent.</p>
+                                <p>This makes intuitive sense because the outcome of the first coin toss doesn't affect the outcome of the second toss.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="example-block mt-5">
+                            <h4>Example 2: Card Drawing</h4>
+                            <div class="example-problem">
+                                <p>Consider drawing two cards from a standard deck of 52 cards without replacement.</p>
+                                <p><strong>Question:</strong> Are the events "first card is a heart" and "second card is a heart" independent?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>Let's define our events:</p>
+                                <ul>
+                                    <li>A = "first card is a heart"</li>
+                                    <li>B = "second card is a heart"</li>
+                                </ul>
+                                <p>For a standard deck:</p>
+                                <ul>
+                                    <li>P(A) = 13/52 = 1/4</li>
+                                </ul>
+                                <p>To find P(B), we need to consider what happens after the first card is drawn:</p>
+                                <ul>
+                                    <li>P(B) = 13/52 = 1/4 (considering all possibilities before knowing the first card)</li>
+                                </ul>
+                                <p>Now, let's calculate P(A∩B):</p>
+                                <ul>
+                                    <li>P(A∩B) = P(A) × P(B|A) = (13/52) × (12/51) = (13 × 12)/(52 × 51) = 156/2652 = 0.0588</li>
+                                </ul>
+                                <p>Check for independence:</p>
+                                <div class="formula-display">
+                                    P(A) \times P(B) = \frac{1}{4} \times \frac{1}{4} = \frac{1}{16} = 0.0625
+                                </div>
+                                <p>Since P(A∩B) ≠ P(A) × P(B), events A and B are not independent.</p>
+                                <p>This makes sense intuitively because if the first card drawn is a heart, there are fewer hearts left in the deck, which reduces the probability of drawing a heart on the second draw.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="example-block mt-5">
+                            <h4>Example 3: Rolling a Die</h4>
+                            <div class="example-problem">
+                                <p>Consider rolling a fair six-sided die once.</p>
+                                <p><strong>Question:</strong> Are the events "rolling an even number" and "rolling a number greater than 3" independent?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>Let's define our events:</p>
+                                <ul>
+                                    <li>A = "rolling an even number" = {2, 4, 6}</li>
+                                    <li>B = "rolling a number greater than 3" = {4, 5, 6}</li>
+                                </ul>
+                                <p>For a fair die:</p>
+                                <ul>
+                                    <li>P(A) = 3/6 = 1/2</li>
+                                    <li>P(B) = 3/6 = 1/2</li>
+                                </ul>
+                                <p>The intersection of these events is:</p>
+                                <ul>
+                                    <li>A∩B = {4, 6}</li>
+                                    <li>P(A∩B) = 2/6 = 1/3</li>
+                                </ul>
+                                <p>Check for independence:</p>
+                                <div class="formula-display">
+                                    P(A) \times P(B) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4} = 0.25
+                                </div>
+                                <p>Since P(A∩B) = 1/3 ≈ 0.333 ≠ 0.25 = P(A) × P(B), the events are not independent.</p>
+                                <p>This example shows that even with a single random experiment, different events defined on the outcome can be dependent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testing Independence -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Testing for Independence</h2>
+                        <p>There are several ways to test whether events are independent:</p>
+                        
+                        <h3 class="mt-4 mb-3">1. Direct Probability Comparison</h3>
+                        <p>Compare P(A∩B) with P(A) × P(B). If they're equal, the events are independent.</p>
+                        
+                        <h3 class="mt-4 mb-3">2. Conditional Probability Test</h3>
+                        <p>Check if P(A|B) = P(A) or if P(B|A) = P(B). If either equality holds, the events are independent.</p>
+                        
+                        <h3 class="mt-4 mb-3">3. Chi-Square Test of Independence</h3>
+                        <p>For categorical data organized in a contingency table, the chi-square test can determine if there's a significant association between variables.</p>
+                        
+                        <div class="custom-alert info mt-4">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Chi-Square Formula:</strong> The test statistic is calculated as:
+                                <div class="mt-2">
+                                    χ² = ∑ [(Observed - Expected)² / Expected]
+                                </div>
+                                <div class="mt-2">
+                                    where Expected = (Row Total × Column Total) / Grand Total
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-4">The calculated chi-square value is compared to a critical value from the chi-square distribution with (r-1)(c-1) degrees of freedom, where r is the number of rows and c is the number of columns in the contingency table.</p>
+                        
+                        <h3 class="mt-4 mb-3">4. Correlation Coefficient (for Numeric Variables)</h3>
+                        <p>For numeric random variables, independence implies zero correlation. However, zero correlation doesn't necessarily imply independence (it only confirms linear independence).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Applications of Independence -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Applications of Independence</h2>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-dice me-2"></i> Probability Calculations</h4>
+                                        <p class="card-text">Independence allows us to multiply probabilities, which greatly simplifies calculations for multiple events.</p>
+                                        <p class="card-text mt-2">Example: In a sequence of independent coin tosses, P(HTTH) = P(H) × P(T) × P(T) × P(H) = (1/2)⁴ = 1/16.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-chart-line me-2"></i> Statistical Modeling</h4>
+                                        <p class="card-text">Many statistical methods assume independence between observations. Violating this assumption can lead to incorrect results.</p>
+                                        <p class="card-text mt-2">Example: Linear regression assumes that errors are independent of each other.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-robot me-2"></i> Machine Learning</h4>
+                                        <p class="card-text">Naive Bayes classifiers assume conditional independence between features, which simplifies the model but may not always hold true.</p>
+                                        <p class="card-text mt-2">Example: Text classification using Naive Bayes assumes words appear independently.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-file-signature me-2"></i> Risk Assessment</h4>
+                                        <p class="card-text">Independence is crucial for correctly assessing risk when multiple factors are involved.</p>
+                                        <p class="card-text mt-2">Example: Insurance companies need to know if risks are independent when pricing policies covering multiple hazards.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-heartbeat me-2"></i> Medical Studies</h4>
+                                        <p class="card-text">Medical researchers must determine if risk factors are independent or if they interact when studying disease occurrence.</p>
+                                        <p class="card-text mt-2">Example: Assessing whether smoking and family history independently contribute to heart disease risk.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-project-diagram me-2"></i> Network Reliability</h4>
+                                        <p class="card-text">Network designers use independence assumptions when analyzing system reliability and redundancy.</p>
+                                        <p class="card-text mt-2">Example: Calculating the probability of a network remaining operational when component failures are independent.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Practice Problems -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Practice Problems</h2>
+                        <p>Test your understanding of independence with these practice problems.</p>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 1</h4>
+                            <div class="quiz-question">
+                                <p>A standard deck of 52 cards has 26 red cards and 26 black cards. If you draw two cards without replacement, are the events "first card is red" and "second card is red" independent?</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="a"> Yes, they are independent
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q1" value="b"> No, they are not independent
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> These events are not independent. Let R₁ = "first card is red" and R₂ = "second card is red".</p>
+                                <p>P(R₁) = 26/52 = 1/2</p>
+                                <p>P(R₂) = 26/52 = 1/2</p>
+                                <p>P(R₁ ∩ R₂) = P(R₁) × P(R₂|R₁) = (26/52) × (25/51) = 650/2652 = 325/1326 ≈ 0.245</p>
+                                <p>P(R₁) × P(R₂) = (1/2) × (1/2) = 1/4 = 0.25</p>
+                                <p>Since P(R₁ ∩ R₂) ≠ P(R₁) × P(R₂), the events are not independent. This makes sense because drawing a red card first changes the composition of the remaining deck, affecting the probability of drawing another red card.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> These events are not independent. Let R₁ = "first card is red" and R₂ = "second card is red".</p>
+                                <p>P(R₁) = 26/52 = 1/2</p>
+                                <p>P(R₂) = 26/52 = 1/2</p>
+                                <p>P(R₁ ∩ R₂) = P(R₁) × P(R₂|R₁) = (26/52) × (25/51) = 650/2652 = 325/1326 ≈ 0.245</p>
+                                <p>P(R₁) × P(R₂) = (1/2) × (1/2) = 1/4 = 0.25</p>
+                                <p>Since P(R₁ ∩ R₂) ≠ P(R₁) × P(R₂), the events are not independent. This makes sense because drawing a red card first changes the composition of the remaining deck, affecting the probability of drawing another red card.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q1">Check Answer</button>
+                        </div>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 2</h4>
+                            <div class="quiz-question">
+                                <p>In a certain college, 30% of students are business majors, 25% play a varsity sport, and 10% are both business majors and play a varsity sport. Are the events "being a business major" and "playing a varsity sport" independent?</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="a"> Yes, they are independent
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q2" value="b"> No, they are not independent
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> Let B = "being a business major" and S = "playing a varsity sport".</p>
+                                <p>P(B) = 0.30</p>
+                                <p>P(S) = 0.25</p>
+                                <p>P(B ∩ S) = 0.10</p>
+                                <p>P(B) × P(S) = 0.30 × 0.25 = 0.075</p>
+                                <p>Since P(B ∩ S) = 0.10 ≠ 0.075 = P(B) × P(S), the events are not independent.</p>
+                                <p>The probability of the intersection (0.10) is greater than the product of individual probabilities (0.075), which means business majors are more likely to play varsity sports than the general student population.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> Let B = "being a business major" and S = "playing a varsity sport".</p>
+                                <p>P(B) = 0.30</p>
+                                <p>P(S) = 0.25</p>
+                                <p>P(B ∩ S) = 0.10</p>
+                                <p>P(B) × P(S) = 0.30 × 0.25 = 0.075</p>
+                                <p>Since P(B ∩ S) = 0.10 ≠ 0.075 = P(B) × P(S), the events are not independent.</p>
+                                <p>The probability of the intersection (0.10) is greater than the product of individual probabilities (0.075), which means business majors are more likely to play varsity sports than the general student population.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q2">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Further Reading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Further Reading</h2>
+                        <p>To deepen your understanding of independence and related concepts, explore these topics:</p>
+                        
+                        <div class="row g-4 mt-2">
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Conditional Probability</h4>
+                                        <p class="card-text">Understand how probabilities change with additional information.</p>
+                                        <a href="conditional.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Bayes' Theorem</h4>
+                                        <p class="card-text">Discover how to update probabilities based on new evidence.</p>
+                                        <a href="bayes-theorem.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Random Variables</h4>
+                                        <p class="card-text">Learn about independent random variables and their properties.</p>
+                                        <a href="../random-variables/overview.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="sample-space.html">Basic Probability</a></li>
+                        <li><a href="../discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- MathJax for Mathematical Notation with improved configuration -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript">
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    
+    <!-- Form Handling Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Two Events Independence Test Form Handler
+            document.getElementById('twoEventsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                checkTwoEventsIndependence();
+            });
+            
+            // Three Events Independence Test Form Handler
+            document.getElementById('threeEventsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                checkThreeEventsIndependence();
+            });
+            
+            // Contingency Table Form Handler
+            document.getElementById('contingencyTableForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                checkContingencyTableIndependence();
+            });
+            
+            // Update contingency table totals when inputs change
+            document.querySelectorAll('.contingency-input').forEach(input => {
+                input.addEventListener('input', updateContingencyTotals);
+            });
+            
+            // Initialize contingency table totals
+            updateContingencyTotals();
+            
+            // Quiz functionality
+            document.querySelectorAll('.check-answer-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const questionName = this.getAttribute('data-question');
+                    const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                    
+                    if (!selectedOption) {
+                        alert('Please select an answer first.');
+                        return;
+                    }
+                    
+                    const optionContainer = selectedOption.closest('.quiz-option');
+                    const isCorrect = optionContainer.getAttribute('data-correct') === 'true';
+                    
+                    // Hide all feedback first
+                    const questionCard = this.closest('.quiz-card');
+                    questionCard.querySelector('.quiz-feedback.correct').style.display = 'none';
+                    questionCard.querySelector('.quiz-feedback.incorrect').style.display = 'none';
+                    
+                    // Show appropriate feedback
+                    if (isCorrect) {
+                        questionCard.querySelector('.quiz-feedback.correct').style.display = 'block';
+                    } else {
+                        questionCard.querySelector('.quiz-feedback.incorrect').style.display = 'block';
+                    }
+                    
+                    // Scroll to feedback
+                    questionCard.querySelector('.quiz-feedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            });
+        });
+        
+        // Two Events Independence Test
+        function checkTwoEventsIndependence() {
+            const pA = parseFloat(document.getElementById('pA').value);
+            const pB = parseFloat(document.getElementById('pB').value);
+            const pAandB = parseFloat(document.getElementById('pAandB').value);
+            
+            // Validate inputs
+            if (pA < 0 || pA > 1 || pB < 0 || pB > 1 || pAandB < 0 || pAandB > 1) {
+                alert('All probabilities must be between 0 and 1.');
+                return;
+            }
+            
+            if (pAandB > Math.min(pA, pB)) {
+                alert('P(A∩B) cannot be greater than both P(A) and P(B).');
+                return;
+            }
+            
+            // Calculate expected intersection probability if independent
+            const expectedIntersection = pA * pB;
+            
+            // Determine if events are independent
+            const epsilon = 0.000001; // Small tolerance for floating-point comparison
+            const isIndependent = Math.abs(pAandB - expectedIntersection) < epsilon;
+            
+            // Calculate conditional probabilities
+            const pAgivenB = pB > 0 ? pAandB / pB : NaN;
+            const pBgivenA = pA > 0 ? pAandB / pA : NaN;
+            
+            // Prepare input summary
+            const inputSummary = `P(A) = ${pA}
+P(B) = ${pB}
+P(A∩B) = ${pAandB}`;
+            
+            // Prepare formula display
+            const formula = `P(A \\cap B) = ${pAandB}
+P(A) \\times P(B) = ${pA} \\times ${pB} = ${expectedIntersection.toFixed(6)}`;
+            
+            // Prepare interpretation
+            let interpretation;
+            if (isIndependent) {
+                interpretation = `The events A and B are independent because P(A∩B) = P(A) × P(B).`;
+            } else if (pAandB > expectedIntersection) {
+                interpretation = `The events A and B are not independent. The actual intersection probability (${pAandB}) is greater than expected (${expectedIntersection.toFixed(6)}), indicating a positive association.`;
+            } else {
+                interpretation = `The events A and B are not independent. The actual intersection probability (${pAandB}) is less than expected (${expectedIntersection.toFixed(6)}), indicating a negative association.`;
+            }
+            
+            // Prepare solution steps
+            const steps = [
+                `Step 1: Identify the values from the input.`,
+                `P(A) = ${pA}`,
+                `P(B) = ${pB}`,
+                `P(A∩B) = ${pAandB}`,
+                `Step 2: Calculate the expected intersection probability if the events were independent.`,
+                `P(A) × P(B) = ${pA} × ${pB} = ${expectedIntersection.toFixed(6)}`,
+                `Step 3: Compare the actual intersection probability with the expected value.`,
+                `P(A∩B) ${isIndependent ? '=' : isNaN(expectedIntersection) ? 'cannot be compared with' : pAandB > expectedIntersection ? '>' : '<'} P(A) × P(B)`,
+                `Step 4: Calculate conditional probabilities to verify independence.`,
+                `P(A|B) = P(A∩B) / P(B) = ${pAandB} / ${pB} = ${isNaN(pAgivenB) ? 'undefined (division by zero)' : pAgivenB.toFixed(6)}`,
+                `P(B|A) = P(A∩B) / P(A) = ${pAandB} / ${pA} = ${isNaN(pBgivenA) ? 'undefined (division by zero)' : pBgivenA.toFixed(6)}`,
+                `Step 5: Check if conditional probabilities equal the marginal probabilities.`,
+                `P(A|B) ${isNaN(pAgivenB) ? 'cannot be compared with' : Math.abs(pAgivenB - pA) < epsilon ? '=' : '≠'} P(A)`,
+                `P(B|A) ${isNaN(pBgivenA) ? 'cannot be compared with' : Math.abs(pBgivenA - pB) < epsilon ? '=' : '≠'} P(B)`,
+                `Step 6: Conclusion:`,
+                isIndependent 
+                    ? `The events A and B are independent because P(A∩B) = P(A) × P(B).`
+                    : `The events A and B are not independent because P(A∩B) ≠ P(A) × P(B).`
+            ];
+            
+            // Display results
+            displayResults({
+                inputSummary: inputSummary,
+                formula: formula,
+                result: isIndependent ? 'Independent' : 'Not Independent',
+                interpretation: interpretation,
+                steps: steps
+            });
+            
+            // Hide chi-square results
+            document.getElementById('chiSquareResults').style.display = 'none';
+        }
+        
+        // Three Events Independence Test
+        function checkThreeEventsIndependence() {
+            const pA = parseFloat(document.getElementById('pA_three').value);
+            const pB = parseFloat(document.getElementById('pB_three').value);
+            const pC = parseFloat(document.getElementById('pC_three').value);
+            const pAandB = parseFloat(document.getElementById('pAandB_three').value);
+            const pAandC = parseFloat(document.getElementById('pAandC_three').value);
+            const pBandC = parseFloat(document.getElementById('pBandC_three').value);
+            const pAandBandC = parseFloat(document.getElementById('pAandBandC').value);
+            
+            // Validate inputs
+            if (pA < 0 || pA > 1 || pB < 0 || pB > 1 || pC < 0 || pC > 1 || 
+                pAandB < 0 || pAandB > 1 || pAandC < 0 || pAandC > 1 || pBandC < 0 || pBandC > 1 || 
+                pAandBandC < 0 || pAandBandC > 1) {
+                alert('All probabilities must be between 0 and 1.');
+                return;
+            }
+            
+            if (pAandB > Math.min(pA, pB) || pAandC > Math.min(pA, pC) || pBandC > Math.min(pB, pC) || 
+                pAandBandC > Math.min(pAandB, pC) || pAandBandC > Math.min(pAandC, pB) || pAandBandC > Math.min(pBandC, pA)) {
+                alert('Intersection probabilities must satisfy logical constraints.');
+                return;
+            }
+            
+            // Calculate expected intersection probabilities if independent
+            const expectedAB = pA * pB;
+            const expectedAC = pA * pC;
+            const expectedBC = pB * pC;
+            const expectedABC = pA * pB * pC;
+            
+            // Small tolerance for floating-point comparison
+            const epsilon = 0.000001;
+            
+            // Check pairwise independence
+            const isABindependent = Math.abs(pAandB - expectedAB) < epsilon;
+            const isACindependent = Math.abs(pAandC - expectedAC) < epsilon;
+            const isBCindependent = Math.abs(pBandC - expectedBC) < epsilon;
+            
+            // Check mutual independence
+            const isABCindependent = Math.abs(pAandBandC - expectedABC) < epsilon;
+            
+            // Check for overall independence
+            const isPairwiseIndependent = isABindependent && isACindependent && isBCindependent;
+            const isMutuallyIndependent = isPairwiseIndependent && isABCindependent;
+            
+            // Prepare input summary
+            const inputSummary = `P(A) = ${pA}
+P(B) = ${pB}
+P(C) = ${pC}
+P(A∩B) = ${pAandB}
+P(A∩C) = ${pAandC}
+P(B∩C) = ${pBandC}
+P(A∩B∩C) = ${pAandBandC}`;
+            
+            // Prepare formula display
+            const formula = `For pairwise independence:
+P(A \\cap B) = ${pAandB}, P(A) \\times P(B) = ${expectedAB.toFixed(6)}
+P(A \\cap C) = ${pAandC}, P(A) \\times P(C) = ${expectedAC.toFixed(6)}
+P(B \\cap C) = ${pBandC}, P(B) \\times P(C) = ${expectedBC.toFixed(6)}
+
+For mutual independence:
+P(A \\cap B \\cap C) = ${pAandBandC}, P(A) \\times P(B) \\times P(C) = ${expectedABC.toFixed(6)}`;
+            
+            // Prepare interpretation
+            let interpretation;
+            if (isMutuallyIndependent) {
+                interpretation = `The events A, B, and C are mutually independent. All pairwise intersections and the three-way intersection satisfy the independence condition.`;
+            } else if (isPairwiseIndependent) {
+                interpretation = `The events A, B, and C are pairwise independent but not mutually independent. All pairwise intersections satisfy the independence condition, but the three-way intersection does not.`;
+            } else {
+                interpretation = `The events A, B, and C are not independent. Not all pairwise intersections satisfy the independence condition.`;
+            }
+            
+            // Prepare solution steps
+            const steps = [
+                `Step 1: Identify the values from the input.`,
+                `P(A) = ${pA}, P(B) = ${pB}, P(C) = ${pC}`,
+                `P(A∩B) = ${pAandB}, P(A∩C) = ${pAandC}, P(B∩C) = ${pBandC}`,
+                `P(A∩B∩C) = ${pAandBandC}`,
+                `Step 2: Check pairwise independence by comparing each pair of events.`,
+                `For A and B: P(A∩B) = ${pAandB}, P(A) × P(B) = ${pA} × ${pB} = ${expectedAB.toFixed(6)}`,
+                `A and B are ${isABindependent ? 'independent' : 'not independent'}.`,
+                `For A and C: P(A∩C) = ${pAandC}, P(A) × P(C) = ${pA} × ${pC} = ${expectedAC.toFixed(6)}`,
+                `A and C are ${isACindependent ? 'independent' : 'not independent'}.`,
+                `For B and C: P(B∩C) = ${pBandC}, P(B) × P(C) = ${pB} × ${pC} = ${expectedBC.toFixed(6)}`,
+                `B and C are ${isBCindependent ? 'independent' : 'not independent'}.`,
+                `Step 3: Check mutual independence by examining the three-way intersection.`,
+                `P(A∩B∩C) = ${pAandBandC}, P(A) × P(B) × P(C) = ${pA} × ${pB} × ${pC} = ${expectedABC.toFixed(6)}`,
+                `The three events are ${isABCindependent ? 'mutually independent' : 'not mutually independent'}.`,
+                `Step 4: Conclusion:`,
+                isMutuallyIndependent
+                    ? `The events A, B, and C are mutually independent.`
+                    : isPairwiseIndependent
+                        ? `The events A, B, and C are pairwise independent but not mutually independent.`
+                        : `The events A, B, and C are not independent.`
+            ];
+            
+            // Display results
+            displayResults({
+                inputSummary: inputSummary,
+                formula: formula,
+                result: isMutuallyIndependent ? 'Mutually Independent' : isPairwiseIndependent ? 'Pairwise Independent Only' : 'Not Independent',
+                interpretation: interpretation,
+                steps: steps
+            });
+            
+            // Hide chi-square results
+            document.getElementById('chiSquareResults').style.display = 'none';
+        }
+        
+        // Contingency Table Independence Test
+        function checkContingencyTableIndependence() {
+            // Get values from contingency table
+            const a_and_b = parseInt(document.getElementById('a_and_b').value) || 0;
+            const a_not_b = parseInt(document.getElementById('a_not_b').value) || 0;
+            const not_a_and_b = parseInt(document.getElementById('not_a_and_b').value) || 0;
+            const not_a_not_b = parseInt(document.getElementById('not_a_not_b').value) || 0;
+            
+            // Calculate row and column totals
+            const row1_total = a_and_b + a_not_b;
+            const row2_total = not_a_and_b + not_a_not_b;
+            const col1_total = a_and_b + not_a_and_b;
+            const col2_total = a_not_b + not_a_not_b;
+            const grand_total = row1_total + row2_total;
+            
+            // Validate input
+            if (grand_total === 0) {
+                alert('The total count cannot be zero.');
+                return;
+            }
+            
+            // Calculate probabilities
+            const pA = row1_total / grand_total;
+            const pB = col1_total / grand_total;
+            const pAandB = a_and_b / grand_total;
+            
+            // Calculate expected intersection probability if independent
+            const expectedIntersection = pA * pB;
+            const expectedAandB = expectedIntersection * grand_total;
+            
+            // Calculate expected frequencies
+            const exp_a_and_b = (row1_total * col1_total) / grand_total;
+            const exp_a_not_b = (row1_total * col2_total) / grand_total;
+            const exp_not_a_and_b = (row2_total * col1_total) / grand_total;
+            const exp_not_a_not_b = (row2_total * col2_total) / grand_total;
+            
+            // Calculate Chi-Square statistic
+            const chiSquare = 
+                Math.pow(a_and_b - exp_a_and_b, 2) / exp_a_and_b +
+                Math.pow(a_not_b - exp_a_not_b, 2) / exp_a_not_b +
+                Math.pow(not_a_and_b - exp_not_a_and_b, 2) / exp_not_a_and_b +
+                Math.pow(not_a_not_b - exp_not_a_not_b, 2) / exp_not_a_not_b;
+            
+            // Degrees of freedom = (rows-1) * (columns-1)
+            const df = 1;
+            
+            // Approximate p-value using chi-square distribution (simplified for df=1)
+            // Note: For a complete implementation, we would need a proper chi-square CDF function
+            // This is a simplified approximation for df=1
+            const pValue = 1 - chiSquareCDF(chiSquare, df);
+            
+            // Determine if events are independent based on chi-square test
+            const isIndependent = pValue > 0.05; // Using 5% significance level
+            
+            // Determine if events are independent based on direct comparison
+            const epsilon = 0.000001;
+            const isDirectIndependent = Math.abs(pAandB - expectedIntersection) < epsilon;
+            
+            // Update expected frequency table
+            document.getElementById('exp_a_and_b').textContent = exp_a_and_b.toFixed(2);
+            document.getElementById('exp_a_not_b').textContent = exp_a_not_b.toFixed(2);
+            document.getElementById('exp_not_a_and_b').textContent = exp_not_a_and_b.toFixed(2);
+            document.getElementById('exp_not_a_not_b').textContent = exp_not_a_not_b.toFixed(2);
+            
+            // Update chi-square calculation
+            document.getElementById('chiSquareFormula').textContent = 
+                `χ² = Σ[(Observed - Expected)² / Expected]
+                = (${a_and_b} - ${exp_a_and_b.toFixed(2)})²/${exp_a_and_b.toFixed(2)} + (${a_not_b} - ${exp_a_not_b.toFixed(2)})²/${exp_a_not_b.toFixed(2)} + (${not_a_and_b} - ${exp_not_a_and_b.toFixed(2)})²/${exp_not_a_and_b.toFixed(2)} + (${not_a_not_b} - ${exp_not_a_not_b.toFixed(2)})²/${exp_not_a_not_b.toFixed(2)}`;
+            
+            document.getElementById('chiSquareValue').textContent = chiSquare.toFixed(4);
+            document.getElementById('degreesOfFreedom').textContent = df;
+            document.getElementById('pValue').textContent = pValue.toFixed(4);
+            
+            const chiSquareInterpretation = isIndependent 
+                ? `Since the p-value (${pValue.toFixed(4)}) is greater than 0.05, we fail to reject the null hypothesis. There is not sufficient evidence to conclude that the variables are dependent.`
+                : `Since the p-value (${pValue.toFixed(4)}) is less than 0.05, we reject the null hypothesis. There is sufficient evidence to conclude that the variables are dependent.`;
+            
+            document.getElementById('chiSquareInterpretation').textContent = chiSquareInterpretation;
+            
+            // Show chi-square results
+            document.getElementById('chiSquareResults').style.display = 'block';
+            
+            // Prepare input summary
+            const inputSummary = `Contingency Table:
+A∩B: ${a_and_b}, A∩¬B: ${a_not_b}
+¬A∩B: ${not_a_and_b}, ¬A∩¬B: ${not_a_not_b}
+Total count: ${grand_total}`;
+            
+            // Prepare formula display
+            const formula = `P(A) = ${row1_total}/${grand_total} = ${pA.toFixed(6)}
+P(B) = ${col1_total}/${grand_total} = ${pB.toFixed(6)}
+P(A∩B) = ${a_and_b}/${grand_total} = ${pAandB.toFixed(6)}
+P(A) × P(B) = ${pA.toFixed(6)} × ${pB.toFixed(6)} = ${expectedIntersection.toFixed(6)}`;
+            
+            // Prepare interpretation
+            let interpretation;
+            if (isDirectIndependent) {
+                interpretation = `The events A and B appear to be independent because P(A∩B) ≈ P(A) × P(B).
+Using the Chi-Square test with χ² = ${chiSquare.toFixed(4)} and p-value = ${pValue.toFixed(4)}, we ${isIndependent ? 'do not' : ''} reject the hypothesis of independence at the 5% significance level.`;
+            } else {
+                interpretation = `The events A and B appear to be dependent because P(A∩B) ≠ P(A) × P(B).
+Using the Chi-Square test with χ² = ${chiSquare.toFixed(4)} and p-value = ${pValue.toFixed(4)}, we ${isIndependent ? 'do not' : ''} reject the hypothesis of independence at the 5% significance level.`;
+            }
+            
+            // Prepare solution steps
+            const steps = [
+                `Step 1: Extract probability information from the contingency table.`,
+                `P(A) = ${row1_total}/${grand_total} = ${pA.toFixed(6)}`,
+                `P(B) = ${col1_total}/${grand_total} = ${pB.toFixed(6)}`,
+                `P(A∩B) = ${a_and_b}/${grand_total} = ${pAandB.toFixed(6)}`,
+                `Step 2: Check for independence by comparing P(A∩B) with P(A) × P(B).`,
+                `P(A) × P(B) = ${pA.toFixed(6)} × ${pB.toFixed(6)} = ${expectedIntersection.toFixed(6)}`,
+                `P(A∩B) ${isDirectIndependent ? '≈' : '≠'} P(A) × P(B)`,
+                `Step 3: Calculate expected frequencies under the assumption of independence.`,
+                `Expected(A∩B) = ${row1_total} × ${col1_total} / ${grand_total} = ${exp_a_and_b.toFixed(2)}`,
+                `Expected(A∩¬B) = ${row1_total} × ${col2_total} / ${grand_total} = ${exp_a_not_b.toFixed(2)}`,
+                `Expected(¬A∩B) = ${row2_total} × ${col1_total} / ${grand_total} = ${exp_not_a_and_b.toFixed(2)}`,
+                `Expected(¬A∩¬B) = ${row2_total} × ${col2_total} / ${grand_total} = ${exp_not_a_not_b.toFixed(2)}`,
+                `Step 4: Calculate the Chi-Square statistic.`,
+                `χ² = Σ[(Observed - Expected)² / Expected]`,
+                `χ² = ${chiSquare.toFixed(4)}`,
+                `Step 5: Determine the p-value with ${df} degree of freedom.`,
+                `p-value = ${pValue.toFixed(6)}`,
+                `Step 6: Conclusion:`,
+                isIndependent
+                    ? `Since p-value > 0.05, we fail to reject the null hypothesis of independence.`
+                    : `Since p-value < 0.05, we reject the null hypothesis and conclude the variables are dependent.`
+            ];
+            
+            // Display results
+            displayResults({
+                inputSummary: inputSummary,
+                formula: formula,
+                result: isIndependent ? 'Independent (Chi-Square Test)' : 'Not Independent (Chi-Square Test)',
+                interpretation: interpretation,
+                steps: steps
+            });
+        }
+        
+        // Update contingency table totals
+        function updateContingencyTotals() {
+            // Get values from inputs
+            const a_and_b = parseInt(document.getElementById('a_and_b').value) || 0;
+            const a_not_b = parseInt(document.getElementById('a_not_b').value) || 0;
+            const not_a_and_b = parseInt(document.getElementById('not_a_and_b').value) || 0;
+            const not_a_not_b = parseInt(document.getElementById('not_a_not_b').value) || 0;
+            
+            // Calculate row and column totals
+            const row1_total = a_and_b + a_not_b;
+            const row2_total = not_a_and_b + not_a_not_b;
+            const col1_total = a_and_b + not_a_and_b;
+            const col2_total = a_not_b + not_a_not_b;
+            const grand_total = row1_total + row2_total;
+            
+            // Update table cells
+            document.getElementById('row1_total').textContent = row1_total;
+            document.getElementById('row2_total').textContent = row2_total;
+            document.getElementById('col1_total').textContent = col1_total;
+            document.getElementById('col2_total').textContent = col2_total;
+            document.getElementById('grand_total').textContent = grand_total;
+        }
+        
+        // Chi-square CDF approximation (for df=1)
+        function chiSquareCDF(x, df) {
+            if (df !== 1) {
+                console.warn('This chi-square approximation is only accurate for df=1');
+            }
+            
+            // For df=1, chi-square is related to normal distribution
+            // We use the complement of the error function
+            return 1 - Math.exp(-x/2) * (1 + Math.sqrt(x/2) - x/4 + Math.pow(x,2)/96) / Math.sqrt(2 * Math.PI * x);
+        }
+        
+        // Helper function to display results
+        function displayResults(data) {
+            // Show results container
+            const resultsContainer = document.getElementById('independenceResults');
+            resultsContainer.style.display = 'block';
+            
+            // Update results
+            document.getElementById('inputSummary').textContent = data.inputSummary;
+            document.getElementById('independenceFormula').textContent = data.formula;
+            document.getElementById('independenceResult').textContent = data.result;
+            document.getElementById('resultInterpretation').textContent = data.interpretation;
+            
+            // Update solution steps
+            const stepsHTML = data.steps.map((step, index) => {
+                // Check if the step is a header (starting with "Step")
+                if (step.startsWith('Step')) {
+                    return `
+                    <div class="step">
+                        <span class="step-number">${Math.floor(index/2) + 1}</span>
+                        <div class="step-content"><strong>${step}</strong></div>
+                    </div>
+                    `;
+                } else {
+                    return `
+                    <div class="step" style="padding-left: 20px;">
+                        <div class="step-content">${step}</div>
+                    </div>
+                    `;
+                }
+            }).join('');
+            
+            document.getElementById('solutionStepsList').innerHTML = stepsHTML;
+            
+            // Typeset the math with MathJax
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise([document.getElementById('independenceFormula')]).catch(function (err) {
+                    console.log('Error typesetting math:', err);
+                });
+            }
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Toggle solution steps visibility
+        function toggleSteps(button) {
+            const targetId = button.getAttribute('data-target');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement.style.display === 'none') {
+                targetElement.style.display = 'block';
+                button.textContent = 'Hide Steps';
+            } else {
+                targetElement.style.display = 'none';
+                button.textContent = 'Show Steps';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bernoulli Distribution | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="../random-variables/overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="../random-variables/variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item active" href="bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Bernoulli Distribution</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">The simplest discrete probability distribution - modeling a single trial with two possible outcomes.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="main-content py-5">
+        <div class="container">
+            <!-- Calculator Section (Placed First) -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="calculator-form" data-aos="fade-up" data-calculator-type="bernoulli" data-results-container="bernoulliResults">
+                        <h2 class="mb-4">Bernoulli Distribution Calculator</h2>
+                        
+                        <form id="bernoulliForm">
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="successProb" class="form-label">Success Probability (p)</label>
+                                    <input type="number" class="form-control" id="successProb" min="0" max="1" step="0.01" value="0.5" required>
+                                    <div class="form-text">Enter a value between 0 and 1.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="calculationType" class="form-label">Calculate</label>
+                                    <select class="form-select" id="calculationType" required>
+                                        <option value="pmf">Probability Mass Function (PMF)</option>
+                                        <option value="cdf">Cumulative Distribution Function (CDF)</option>
+                                        <option value="mean">Mean (Expected Value)</option>
+                                        <option value="variance">Variance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- PMF Input Options -->
+                            <div id="pmfInputs" class="calculator-options mb-4">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="kValue" class="form-label">Value of k</label>
+                                        <select class="form-select" id="kValue">
+                                            <option value="0">0 (Failure)</option>
+                                            <option value="1" selected>1 (Success)</option>
+                                        </select>
+                                        <div class="form-text">For Bernoulli distribution, k can only be 0 or 1.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- CDF Input Options -->
+                            <div id="cdfInputs" class="calculator-options mb-4" style="display: none;">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="xValue" class="form-label">Value of x</label>
+                                        <input type="number" class="form-control" id="xValue" step="0.1" value="0.5">
+                                        <div class="form-text">The CDF gives P(X ≤ x).</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-calculate">Calculate</button>
+                                <button type="reset" class="btn btn-reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div id="bernoulliResults" class="results-container mt-4" style="display: none;" data-aos="fade-up">
+                        <h3>Bernoulli Distribution Results</h3>
+                        
+                        <div class="input-summary mb-4">
+                            <h4>Input Values</h4>
+                            <div id="inputSummary" class="p-3 bg-dark rounded"></div>
+                        </div>
+                        
+                        <div class="result-calculation">
+                            <h4>Result</h4>
+                            <div class="formula-display" id="bernoulliFormula"></div>
+                            <div class="result-value" id="bernoulliResult"></div>
+                            <p id="resultInterpretation" class="mt-3"></p>
+                        </div>
+                        
+                        <div class="distribution-properties mt-4">
+                            <h4>Distribution Properties</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <h5>Mean (Expected Value)</h5>
+                                        <div class="formula-display">E[X] = p</div>
+                                        <div class="property-value" id="meanValue"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <h5>Variance</h5>
+                                        <div class="formula-display">Var(X) = p(1-p)</div>
+                                        <div class="property-value" id="varianceValue"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <h5>Standard Deviation</h5>
+                                        <div class="formula-display">σ = \sqrt{p(1-p)}</div>
+                                        <div class="property-value" id="stdDevValue"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <h5>Skewness</h5>
+                                        <div class="formula-display">Skew(X) = \frac{1-2p}{\sqrt{p(1-p)}}</div>
+                                        <div class="property-value" id="skewnessValue"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="visualization-container mt-4">
+                            <h4>Probability Distribution</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="chart-container">
+                                        <h5 class="text-center">Probability Mass Function (PMF)</h5>
+                                        <canvas id="pmfChart" width="400" height="300"></canvas>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="chart-container">
+                                        <h5 class="text-center">Cumulative Distribution Function (CDF)</h5>
+                                        <canvas id="cdfChart" width="400" height="300"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-outline-primary mt-3" id="showStepsBtn" onclick="toggleSteps(this)" data-target="#solutionSteps">Show Steps</button>
+                        
+                        <div class="solution-steps mt-4" id="solutionSteps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="solutionStepsList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Introduction to Bernoulli Distribution -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">What is the Bernoulli Distribution?</h2>
+                        <p>The <strong>Bernoulli distribution</strong> is the simplest discrete probability distribution in statistics. It models a single trial (or experiment) that can result in exactly one of two possible outcomes: "success" or "failure".</p>
+                        
+                        <div class="custom-alert info mt-4">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Definition:</strong> A random variable X follows a Bernoulli distribution if it takes only two values, 0 and 1 (representing failure and success, respectively), with probability p of success.
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Mathematical Formulation</h3>
+                        <p>Let X be a Bernoulli random variable with parameter p (where 0 ≤ p ≤ 1). Then:</p>
+                        
+                        <div class="formula-card my-4">
+                            <div class="formula-title">Probability Mass Function (PMF)</div>
+                            <div class="formula-display">
+                                P(X = k) = 
+                                \begin{cases}
+                                p, & \text{if}\ k = 1 \\
+                                1-p, & \text{if}\ k = 0 \\
+                                0, & \text{otherwise}
+                                \end{cases}
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card my-4">
+                            <div class="formula-title">Cumulative Distribution Function (CDF)</div>
+                            <div class="formula-display">
+                                F(x) = P(X \leq x) = 
+                                \begin{cases}
+                                0, & \text{if}\ x < 0 \\
+                                1-p, & \text{if}\ 0 \leq x < 1 \\
+                                1, & \text{if}\ x \geq 1
+                                \end{cases}
+                            </div>
+                        </div>
+                        
+                        <p>The Bernoulli distribution is often written as X ~ Bernoulli(p) or X ~ Bern(p).</p>
+                        
+                        <h3 class="mt-5 mb-3">Key Properties</h3>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-bullseye"></i>
+                                    </div>
+                                    <h4>Mean (Expected Value)</h4>
+                                    <div class="formula-display my-2">
+                                        E[X] = p
+                                    </div>
+                                    <p>The average outcome over many trials is simply the probability of success.</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-arrows-alt-h"></i>
+                                    </div>
+                                    <h4>Variance</h4>
+                                    <div class="formula-display my-2">
+                                        Var(X) = p(1-p)
+                                    </div>
+                                    <p>The variance is maximized at p = 0.5, where Var(X) = 0.25.</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </div>
+                                    <h4>Skewness</h4>
+                                    <div class="formula-display my-2">
+                                        Skew(X) = \frac{1-2p}{\sqrt{p(1-p)}}
+                                    </div>
+                                    <p>The distribution is symmetric when p = 0.5, positively skewed when p < 0.5, and negatively skewed when p > 0.5.</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <div class="icon-wrapper">
+                                        <i class="fas fa-mountain"></i>
+                                    </div>
+                                    <h4>Kurtosis</h4>
+                                    <div class="formula-display my-2">
+                                        Kurt(X) = \frac{1-6p(1-p)}{p(1-p)}
+                                    </div>
+                                    <p>The kurtosis measures the "tailedness" of the distribution, though this is less intuitive for the two-point Bernoulli distribution.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Moment Generating Function</h3>
+                        <p>The moment generating function (MGF) of a Bernoulli distribution is:</p>
+                        <div class="formula-display my-3">
+                            M_X(t) = E[e^{tX}] = (1-p) + pe^t
+                        </div>
+                        <p>This can be used to derive moments (such as mean, variance) of the distribution.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visual Representation -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Visual Representation</h2>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                <div class="chart-container text-center">
+                                    <h3 class="mb-4">Probability Mass Function for Different Values of p</h3>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="p-3">
+                                                <h5>p = 0.2</h5>
+                                                <canvas id="pmfChart1" width="220" height="180"></canvas>
+                                                <p class="mt-2">Low probability of success</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="p-3">
+                                                <h5>p = 0.5</h5>
+                                                <canvas id="pmfChart2" width="220" height="180"></canvas>
+                                                <p class="mt-2">Equal probability of success and failure</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="p-3">
+                                                <h5>p = 0.8</h5>
+                                                <canvas id="pmfChart3" width="220" height="180"></canvas>
+                                                <p class="mt-2">High probability of success</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-md-10">
+                                <div class="chart-container text-center">
+                                    <h3 class="mb-4">Cumulative Distribution Function for Different Values of p</h3>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="p-3">
+                                                <h5>p = 0.2</h5>
+                                                <canvas id="cdfChart1" width="220" height="180"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="p-3">
+                                                <h5>p = 0.5</h5>
+                                                <canvas id="cdfChart2" width="220" height="180"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="p-3">
+                                                <h5>p = 0.8</h5>
+                                                <canvas id="cdfChart3" width="220" height="180"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">Variance as a Function of p</h3>
+                        <p>The variance of a Bernoulli distribution, p(1-p), has an interesting parabolic shape. It reaches its maximum value of 0.25 when p = 0.5, and approaches 0 as p approaches either 0 or 1.</p>
+                        
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-md-8">
+                                <div class="chart-container text-center">
+                                    <canvas id="varianceChart" width="500" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real-World Applications -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Real-World Applications</h2>
+                        <p>The Bernoulli distribution appears in many real-world scenarios where we're interested in the outcome of a single trial with two possible results:</p>
+                        
+                        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+                            <div class="col">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-coins me-2"></i> Coin Flips</h4>
+                                        <p class="card-text">A fair coin has p = 0.5, but biased coins can be modeled with different values of p.</p>
+                                        <p class="card-text mt-2">Example: In a weighted coin, p = 0.6 means there's a 60% chance of getting heads on a single flip.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-poll me-2"></i> Surveys</h4>
+                                        <p class="card-text">Yes/no questions in surveys follow a Bernoulli distribution for each respondent.</p>
+                                        <p class="card-text mt-2">Example: When asking "Do you own a car?", p might be 0.7, meaning 70% of the population owns a car.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-user-md me-2"></i> Medical Testing</h4>
+                                        <p class="card-text">Each individual test for a disease can be modeled as a Bernoulli trial.</p>
+                                        <p class="card-text mt-2">Example: A test for a rare disease might have p = 0.02, representing the 2% probability of a positive result.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-basketball-ball me-2"></i> Sports</h4>
+                                        <p class="card-text">Each shot, swing, or attempt in many sports can be modeled as a Bernoulli trial.</p>
+                                        <p class="card-text mt-2">Example: A basketball player with a 75% free throw success rate has p = 0.75 for each free throw attempt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-envelope me-2"></i> Email</h4>
+                                        <p class="card-text">The classification of an email as spam or not spam follows a Bernoulli distribution.</p>
+                                        <p class="card-text mt-2">Example: If 30% of all emails are spam, then p = 0.3 for each incoming email being classified as spam.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-dice me-2"></i> Quality Control</h4>
+                                        <p class="card-text">Each manufactured item can be classified as defective or non-defective.</p>
+                                        <p class="card-text mt-2">Example: A manufacturing process with a 1% defect rate has p = 0.01 for each item being defective.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Relationship to Other Distributions -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Relationship to Other Distributions</h2>
+                        <p>The Bernoulli distribution is the foundation for several other important probability distributions:</p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-4">
+                                <div class="relationship-card">
+                                    <h3><i class="fas fa-link me-2"></i> Binomial Distribution</h3>
+                                    <p>The sum of n independent and identically distributed Bernoulli random variables follows a Binomial distribution with parameters n and p.</p>
+                                    <div class="formula-display my-3">
+                                        X_1, X_2, \ldots, X_n \sim \text{Bernoulli}(p) \\
+                                        Y = \sum_{i=1}^n X_i \sim \text{Binomial}(n, p)
+                                    </div>
+                                    <a href="binomial.html" class="btn btn-outline-primary mt-2">Learn More about Binomial Distribution</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="relationship-card">
+                                    <h3><i class="fas fa-link me-2"></i> Geometric Distribution</h3>
+                                    <p>If we count the number of Bernoulli trials until the first success occurs, we get a Geometric distribution with parameter p.</p>
+                                    <div class="formula-display my-3">
+                                        X_i \sim \text{Bernoulli}(p) \\
+                                        Y = \min\{n : X_n = 1\} \sim \text{Geometric}(p)
+                                    </div>
+                                    <a href="geometric.html" class="btn btn-outline-primary mt-2">Learn More about Geometric Distribution</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="relationship-card">
+                                    <h3><i class="fas fa-link me-2"></i> Negative Binomial Distribution</h3>
+                                    <p>If we count the number of Bernoulli trials until the r-th success occurs, we get a Negative Binomial distribution with parameters r and p.</p>
+                                    <div class="formula-display my-3">
+                                        X_i \sim \text{Bernoulli}(p) \\
+                                        Y = \min\{n : \sum_{i=1}^n X_i = r\} \sim \text{NegativeBinomial}(r, p)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="relationship-card">
+                                    <h3><i class="fas fa-link me-2"></i> Indicator Random Variables</h3>
+                                    <p>Bernoulli random variables are often used as indicator variables in probability and statistics to simplify calculations involving events.</p>
+                                    <div class="formula-display my-3">
+                                        I_A(x) = 
+                                        \begin{cases}
+                                        1, & \text{if}\ x \in A \\
+                                        0, & \text{if}\ x \notin A
+                                        \end{cases}
+                                    </div>
+                                    <p>Where A is an event and I<sub>A</sub> is an indicator random variable for event A.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Examples -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Examples</h2>
+                        
+                        <div class="example-block">
+                            <h4>Example 1: Coin Flip</h4>
+                            <div class="example-problem">
+                                <p>Suppose you flip a fair coin once. Let X = 1 if the outcome is heads and X = 0 if the outcome is tails.</p>
+                                <p><strong>Question:</strong> What is the probability mass function (PMF) of X? What are the mean and variance of X?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>Since the coin is fair, the probability of heads is p = 0.5.</p>
+                                <p>The PMF of X is:</p>
+                                <div class="formula-display my-3">
+                                    P(X = 1) = p = 0.5 \\
+                                    P(X = 0) = 1-p = 1 - 0.5 = 0.5
+                                </div>
+                                <p>The mean (expected value) of X is:</p>
+                                <div class="formula-display my-3">
+                                    E[X] = p = 0.5
+                                </div>
+                                <p>The variance of X is:</p>
+                                <div class="formula-display my-3">
+                                    Var(X) = p(1-p) = 0.5 \times 0.5 = 0.25
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-block mt-5">
+                            <h4>Example 2: Medical Test</h4>
+                            <div class="example-problem">
+                                <p>A medical test for a certain disease has a 99% accuracy. Let X = 1 if the test gives the correct result and X = 0 if it gives the incorrect result.</p>
+                                <p><strong>Question:</strong> What is the cumulative distribution function (CDF) of X? What is P(X = 1)?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>The probability of a correct result is p = 0.99.</p>
+                                <p>The CDF of X is:</p>
+                                <div class="formula-display my-3">
+                                    F(x) = 
+                                    \begin{cases}
+                                    0, & \text{if}\ x < 0 \\
+                                    1-p = 1-0.99 = 0.01, & \text{if}\ 0 \leq x < 1 \\
+                                    1, & \text{if}\ x \geq 1
+                                    \end{cases}
+                                </div>
+                                <p>The probability P(X = 1) is simply:</p>
+                                <div class="formula-display my-3">
+                                    P(X = 1) = p = 0.99
+                                </div>
+                                <p>This means there's a 99% chance of getting a correct test result.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="example-block mt-5">
+                            <h4>Example 3: Email Classification</h4>
+                            <div class="example-problem">
+                                <p>An email spam filter has a probability of 0.95 of correctly classifying an email. Let X = 1 if an email is correctly classified and X = 0 otherwise.</p>
+                                <p><strong>Question:</strong> What are the skewness and kurtosis of this distribution?</p>
+                            </div>
+                            <div class="example-solution mt-4">
+                                <p><strong>Solution:</strong></p>
+                                <p>The probability of a correct classification is p = 0.95.</p>
+                                <p>The skewness of a Bernoulli distribution is:</p>
+                                <div class="formula-display my-3">
+                                    Skew(X) = \frac{1-2p}{\sqrt{p(1-p)}}
+                                </div>
+                                <p>Substituting p = 0.95:</p>
+                                <div class="formula-display my-3">
+                                    Skew(X) = \frac{1-2 \times 0.95}{\sqrt{0.95 \times 0.05}} = \frac{1-1.9}{\sqrt{0.0475}} = \frac{-0.9}{0.218} \approx -4.13
+                                </div>
+                                <p>The negative skewness indicates that the distribution is skewed to the left, which makes sense since the probability mass is concentrated at X = 1.</p>
+                                <p>The kurtosis of a Bernoulli distribution is:</p>
+                                <div class="formula-display my-3">
+                                    Kurt(X) = \frac{1-6p(1-p)}{p(1-p)}
+                                </div>
+                                <p>Substituting p = 0.95:</p>
+                                <div class="formula-display my-3">
+                                    Kurt(X) = \frac{1-6 \times 0.95 \times 0.05}{0.95 \times 0.05} = \frac{1-0.285}{0.0475} \approx 15.05
+                                </div>
+                                <p>This high kurtosis value indicates a very peaked distribution, which is characteristic of Bernoulli distributions with p close to 0 or 1.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Practice Problems -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Practice Problems</h2>
+                        <p>Test your understanding of the Bernoulli distribution with these practice problems.</p>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 1</h4>
+                            <div class="quiz-question">
+                                <p>A basketball player makes a free throw with probability 0.8. Let X = 1 if the player makes the free throw and X = 0 otherwise. What is the variance of X?</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="a"> 0.8
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="b"> 0.2
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q1" value="c"> 0.16
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q1" value="d"> 0.64
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> The variance of a Bernoulli distribution is p(1-p). With p = 0.8, the variance is 0.8 × (1 - 0.8) = 0.8 × 0.2 = 0.16.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> The variance of a Bernoulli distribution is p(1-p). With p = 0.8, the variance is 0.8 × (1 - 0.8) = 0.8 × 0.2 = 0.16.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q1">Check Answer</button>
+                        </div>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 2</h4>
+                            <div class="quiz-question">
+                                <p>The probability of a website visitor making a purchase is 0.05. Let X = 1 if a visitor makes a purchase and X = 0 otherwise. What is the expected value (mean) of X?</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q2" value="a"> 0.05
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="b"> 0.95
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="c"> 0.0475
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q2" value="d"> 0.5
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> The expected value (mean) of a Bernoulli distribution is p. With p = 0.05, the expected value is 0.05.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> The expected value (mean) of a Bernoulli distribution is p. With p = 0.05, the expected value is 0.05.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q2">Check Answer</button>
+                        </div>
+                        
+                        <div class="quiz-card mt-4">
+                            <h4>Problem 3</h4>
+                            <div class="quiz-question">
+                                <p>A biased coin has a 0.6 probability of landing heads. Let X = 1 if the coin lands heads and X = 0 if it lands tails. What is the standard deviation of X?</p>
+                            </div>
+                            
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q3" value="a"> 0.6
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q3" value="b"> 0.24
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="true">
+                                    <label>
+                                        <input type="radio" name="q3" value="c"> 0.49
+                                    </label>
+                                </div>
+                                <div class="quiz-option" data-correct="false">
+                                    <label>
+                                        <input type="radio" name="q3" value="d"> 0.36
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-feedback correct" style="display: none;">
+                                <p><strong>Correct!</strong> The standard deviation is the square root of the variance. For a Bernoulli distribution, Var(X) = p(1-p) = 0.6 × 0.4 = 0.24. Therefore, the standard deviation is √0.24 ≈ 0.49.</p>
+                            </div>
+                            
+                            <div class="quiz-feedback incorrect" style="display: none;">
+                                <p><strong>Incorrect.</strong> The standard deviation is the square root of the variance. For a Bernoulli distribution, Var(X) = p(1-p) = 0.6 × 0.4 = 0.24. Therefore, the standard deviation is √0.24 ≈ 0.49.</p>
+                            </div>
+                            
+                            <button class="btn btn-primary mt-3 check-answer-btn" data-question="q3">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Further Reading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Further Reading</h2>
+                        <p>To deepen your understanding of the Bernoulli distribution and related concepts, explore these topics:</p>
+                        
+                        <div class="row g-4 mt-2">
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Binomial Distribution</h4>
+                                        <p class="card-text">The generalization of the Bernoulli distribution to multiple trials.</p>
+                                        <a href="binomial.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Geometric Distribution</h4>
+                                        <p class="card-text">Models the number of Bernoulli trials until the first success.</p>
+                                        <a href="geometric.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-dark h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="fas fa-link me-2"></i> Indicator Random Variables</h4>
+                                        <p class="card-text">Using Bernoulli random variables to simplify complex probability problems.</p>
+                                        <a href="../random-variables/expected-value.html" class="btn btn-outline-primary mt-auto">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    
+    <!-- Calculator Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS animations
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            });
+            
+            // Initialize example visualizations
+            initializeExampleVisualizations();
+            
+            // Handle calculator form submission
+            document.getElementById('bernoulliForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateBernoulli();
+            });
+            
+            // Handle calculation type change
+            document.getElementById('calculationType').addEventListener('change', function() {
+                updateCalculatorOptions();
+            });
+            
+            // Quiz functionality
+            document.querySelectorAll('.check-answer-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const questionName = this.getAttribute('data-question');
+                    const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                    
+                    if (!selectedOption) {
+                        alert('Please select an answer first.');
+                        return;
+                    }
+                    
+                    const optionContainer = selectedOption.closest('.quiz-option');
+                    const isCorrect = optionContainer.getAttribute('data-correct') === 'true';
+                    
+                    // Hide all feedback first
+                    const questionCard = this.closest('.quiz-card');
+                    questionCard.querySelector('.quiz-feedback.correct').style.display = 'none';
+                    questionCard.querySelector('.quiz-feedback.incorrect').style.display = 'none';
+                    
+                    // Show appropriate feedback
+                    if (isCorrect) {
+                        questionCard.querySelector('.quiz-feedback.correct').style.display = 'block';
+                    } else {
+                        questionCard.querySelector('.quiz-feedback.incorrect').style.display = 'block';
+                    }
+                });
+            });
+        });
+        
+        // Update calculator options based on calculation type
+        function updateCalculatorOptions() {
+            const calculationType = document.getElementById('calculationType').value;
+            
+            // Hide all calculator option sections
+            document.querySelectorAll('.calculator-options').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the appropriate section
+            if (calculationType === 'pmf') {
+                document.getElementById('pmfInputs').style.display = 'block';
+            } else if (calculationType === 'cdf') {
+                document.getElementById('cdfInputs').style.display = 'block';
+            }
+        }
+        
+        // Calculate Bernoulli distribution
+        function calculateBernoulli() {
+            // Get input values
+            const p = parseFloat(document.getElementById('successProb').value);
+            const calculationType = document.getElementById('calculationType').value;
+            
+            // Validate input
+            if (p < 0 || p > 1 || isNaN(p)) {
+                alert('Success probability p must be between 0 and 1.');
+                return;
+            }
+            
+            // Calculate distribution properties
+            const mean = p;
+            const variance = p * (1 - p);
+            const stdDev = Math.sqrt(variance);
+            const skewness = (1 - 2 * p) / Math.sqrt(p * (1 - p));
+            const kurtosis = (1 - 6 * p * (1 - p)) / (p * (1 - p));
+            
+            // Initialize result variables
+            let result, formula, interpretation, steps;
+            
+            // Calculate based on calculation type
+            switch (calculationType) {
+                case 'pmf':
+                    const k = parseInt(document.getElementById('kValue').value);
+                    
+                    if (k === 1) {
+                        result = p;
+                        formula = `P(X = 1) = p = ${p}`;
+                        interpretation = `The probability of a success is ${result.toFixed(4)} or ${(result * 100).toFixed(2)}%.`;
+                    } else {
+                        result = 1 - p;
+                        formula = `P(X = 0) = 1 - p = 1 - ${p} = ${result}`;
+                        interpretation = `The probability of a failure is ${result.toFixed(4)} or ${(result * 100).toFixed(2)}%.`;
+                    }
+                    
+                    steps = [
+                        `Step 1: Identify the Bernoulli distribution parameter.`,
+                        `p = ${p} (probability of success)`,
+                        `Step 2: Use the PMF formula for the Bernoulli distribution.`,
+                        `For X = 1 (success): P(X = 1) = p = ${p}`,
+                        `For X = 0 (failure): P(X = 0) = 1 - p = 1 - ${p} = ${(1-p).toFixed(4)}`
+                    ];
+                    
+                    if (k === 1) {
+                        steps.push(`Step 3: Since we want P(X = 1), the result is p = ${p}`);
+                    } else {
+                        steps.push(`Step 3: Since we want P(X = 0), the result is 1 - p = ${(1-p).toFixed(4)}`);
+                    }
+                    break;
+                    
+                case 'cdf':
+                    const x = parseFloat(document.getElementById('xValue').value);
+                    
+                    if (x < 0) {
+                        result = 0;
+                        formula = `F(${x}) = 0 \\text{ (since ${x} < 0)}`;
+                        interpretation = `The probability P(X ≤ ${x}) is 0, since X cannot be less than 0 in a Bernoulli distribution.`;
+                    } else if (x < 1) {
+                        result = 1 - p;
+                        formula = `F(${x}) = P(X \\leq ${x}) = P(X = 0) = 1 - p = 1 - ${p} = ${result}`;
+                        interpretation = `The probability P(X ≤ ${x}) is ${result.toFixed(4)} or ${(result * 100).toFixed(2)}%, which is the probability of failure.`;
+                    } else {
+                        result = 1;
+                        formula = `F(${x}) = P(X \\leq ${x}) = 1 \\text{ (since ${x} \\geq 1)}`;
+                        interpretation = `The probability P(X ≤ ${x}) is 1 or 100%, since X cannot exceed 1 in a Bernoulli distribution.`;
+                    }
+                    
+                    steps = [
+                        `Step 1: Identify the Bernoulli distribution parameter.`,
+                        `p = ${p} (probability of success)`,
+                        `Step 2: Use the CDF formula for the Bernoulli distribution.`,
+                        `F(x) = P(X ≤ x) = 
+                        \begin{cases}
+                        0, & \text{if}\ x < 0 \\
+                        1-p, & \text{if}\ 0 \leq x < 1 \\
+                        1, & \text{if}\ x \geq 1
+                        \end{cases}`
+                    ];
+                    
+                    if (x < 0) {
+                        steps.push(`Step 3: Since ${x} < 0, F(${x}) = 0`);
+                    } else if (x < 1) {
+                        steps.push(`Step 3: Since 0 ≤ ${x} < 1, F(${x}) = 1 - p = 1 - ${p} = ${(1-p).toFixed(4)}`);
+                    } else {
+                        steps.push(`Step 3: Since ${x} ≥ 1, F(${x}) = 1`);
+                    }
+                    break;
+                    
+                case 'mean':
+                    result = mean;
+                    formula = `E[X] = p = ${p}`;
+                    interpretation = `The mean (expected value) of the Bernoulli distribution is ${result.toFixed(4)}.`;
+                    
+                    steps = [
+                        `Step 1: Identify the Bernoulli distribution parameter.`,
+                        `p = ${p} (probability of success)`,
+                        `Step 2: Use the formula for the mean of a Bernoulli distribution.`,
+                        `E[X] = p = ${p}`
+                    ];
+                    break;
+                    
+                case 'variance':
+                    result = variance;
+                    formula = `Var(X) = p(1-p) = ${p} \\times (1-${p}) = ${p} \\times ${(1-p).toFixed(4)} = ${result}`;
+                    interpretation = `The variance of the Bernoulli distribution is ${result.toFixed(4)}.`;
+                    
+                    steps = [
+                        `Step 1: Identify the Bernoulli distribution parameter.`,
+                        `p = ${p} (probability of success)`,
+                        `Step 2: Use the formula for the variance of a Bernoulli distribution.`,
+                        `Var(X) = p(1-p) = ${p} × (1-${p}) = ${p} × ${(1-p).toFixed(4)} = ${variance.toFixed(4)}`
+                    ];
+                    break;
+            }
+            
+            // Display results
+            document.getElementById('bernoulliResults').style.display = 'block';
+            
+            // Update input summary
+            document.getElementById('inputSummary').textContent = `Success probability (p): ${p}`;
+            
+            // Update formula and result
+            document.getElementById('bernoulliFormula').textContent = formula;
+            document.getElementById('bernoulliResult').textContent = result.toFixed(4);
+            document.getElementById('resultInterpretation').textContent = interpretation;
+            
+            // Update distribution properties
+            document.getElementById('meanValue').textContent = mean.toFixed(4);
+            document.getElementById('varianceValue').textContent = variance.toFixed(4);
+            document.getElementById('stdDevValue').textContent = stdDev.toFixed(4);
+            document.getElementById('skewnessValue').textContent = skewness.toFixed(4);
+            
+            // Generate solution steps
+            const stepsHTML = steps.map(step => `<div class="step-item">${step}</div>`).join('');
+            document.getElementById('solutionStepsList').innerHTML = stepsHTML;
+            
+            // Create visualizations
+            createBernoulliVisualizations(p);
+            
+            // Scroll to results
+            document.getElementById('bernoulliResults').scrollIntoView({behavior: 'smooth'});
+            
+            // Typeset formulas with MathJax
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise([document.getElementById('bernoulliFormula')]).catch(function (err) {
+                    console.log('Error typesetting math:', err);
+                });
+            }
+        }
+        
+        // Create Bernoulli distribution visualizations
+        function createBernoulliVisualizations(p) {
+            // Create PMF chart
+            const pmfCtx = document.getElementById('pmfChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (window.pmfChart) {
+                window.pmfChart.destroy();
+            }
+            
+            window.pmfChart = new Chart(pmfCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['0 (Failure)', '1 (Success)'],
+                    datasets: [{
+                        label: 'Probability',
+                        data: [1-p, p],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Bernoulli PMF (p = ${p})`,
+                            color: '#ffffff'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Probability: ${context.raw.toFixed(4)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 1,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Create CDF chart
+            const cdfCtx = document.getElementById('cdfChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (window.cdfChart) {
+                window.cdfChart.destroy();
+            }
+            
+            window.cdfChart = new Chart(cdfCtx, {
+                type: 'line',
+                data: {
+                    labels: ['-0.5', '0', '0.5', '1', '1.5'],
+                    datasets: [{
+                        label: 'Cumulative Probability',
+                        data: [0, 1-p, 1-p, 1, 1],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        pointRadius: 5,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        steppedLine: 'before'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Bernoulli CDF (p = ${p})`,
+                            color: '#ffffff'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Probability: ${context.raw.toFixed(4)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'x',
+                                color: '#ffffff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 1.1,
+                            title: {
+                                display: true,
+                                text: 'F(x)',
+                                color: '#ffffff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize example visualizations
+        function initializeExampleVisualizations() {
+            // Create PMF examples
+            createPMFExample('pmfChart1', 0.2);
+            createPMFExample('pmfChart2', 0.5);
+            createPMFExample('pmfChart3', 0.8);
+            
+            // Create CDF examples
+            createCDFExample('cdfChart1', 0.2);
+            createCDFExample('cdfChart2', 0.5);
+            createCDFExample('cdfChart3', 0.8);
+            
+            // Create variance chart
+            createVarianceChart();
+        }
+        
+        // Create PMF example chart
+        function createPMFExample(canvasId, p) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['0', '1'],
+                    datasets: [{
+                        label: 'Probability',
+                        data: [1-p, p],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Probability: ${context.raw.toFixed(4)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 1,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff',
+                                callback: function(value) {
+                                    return value.toFixed(1);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create CDF example chart
+        function createCDFExample(canvasId, p) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['-0.5', '0', '0.5', '1', '1.5'],
+                    datasets: [{
+                        label: 'Cumulative Probability',
+                        data: [0, 1-p, 1-p, 1, 1],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 1,
+                        steppedLine: 'before'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Probability: ${context.raw.toFixed(4)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 1.1,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff',
+                                callback: function(value) {
+                                    return value.toFixed(1);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create variance as a function of p chart
+        function createVarianceChart() {
+            const ctx = document.getElementById('varianceChart').getContext('2d');
+            
+            // Generate data points for variance = p(1-p)
+            const dataPoints = [];
+            for (let p = 0; p <= 1; p += 0.01) {
+                dataPoints.push({
+                    x: p,
+                    y: p * (1 - p)
+                });
+            }
+            
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Variance = p(1-p)',
+                        data: dataPoints,
+                        showLine: true,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Variance as a Function of p',
+                            color: '#ffffff'
+                        },
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: 0,
+                            max: 1,
+                            title: {
+                                display: true,
+                                text: 'p (probability of success)',
+                                color: '#ffffff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            min: 0,
+                            max: 0.3,
+                            title: {
+                                display: true,
+                                text: 'Variance = p(1-p)',
+                                color: '#ffffff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Function to toggle solution steps visibility
+        function toggleSteps(button) {
+            const targetId = button.getAttribute('data-target');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement.style.display === 'none') {
+                targetElement.style.display = 'block';
+                button.textContent = 'Hide Steps';
+            } else {
+                targetElement.style.display = 'none';
+                button.textContent = 'Show Steps';
+            }
+        }
+    </script>
+</body>
+</html>
