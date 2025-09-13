@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expected Value | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item active" href="expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Expected Value</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Calculate and visualize the expected value (mean) for discrete and continuous random variables</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Calculator Form -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="calculator-form" id="expected-value-calculator">
+                        <h2 class="mb-4">Expected Value Calculator</h2>
+                        
+                        <!-- Distribution Type Selection -->
+                        <div class="mb-4">
+                            <label for="distribution-type" class="form-label">Select Distribution Type:</label>
+                            <select class="form-select" id="distribution-type">
+                                <option value="discrete">Discrete Distribution</option>
+                                <option value="continuous">Continuous Distribution</option>
+                                <option value="custom">Custom Probability Distribution</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Discrete Distributions -->
+                        <div id="discrete-distributions">
+                            <div class="mb-4">
+                                <label for="discrete-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="discrete-distribution">
+                                    <option value="bernoulli">Bernoulli Distribution</option>
+                                    <option value="binomial">Binomial Distribution</option>
+                                    <option value="geometric">Geometric Distribution</option>
+                                    <option value="poisson">Poisson Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated) -->
+                            <div id="discrete-params">
+                                <!-- Bernoulli Parameters -->
+                                <div id="bernoulli-params">
+                                    <div class="mb-3">
+                                        <label for="bernoulli-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="bernoulli-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Binomial Parameters (initially hidden) -->
+                                <div id="binomial-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="binomial-n" class="form-label">Number of Trials (n):</label>
+                                        <input type="number" class="form-control" id="binomial-n" min="1" step="1" value="10">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="binomial-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="binomial-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Geometric Parameters (initially hidden) -->
+                                <div id="geometric-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="geometric-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="geometric-p" min="0.01" max="1" step="0.01" value="0.3">
+                                    </div>
+                                </div>
+                                
+                                <!-- Poisson Parameters (initially hidden) -->
+                                <div id="poisson-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="poisson-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="poisson-lambda" min="0.1" step="0.1" value="2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Continuous Distributions (initially hidden) -->
+                        <div id="continuous-distributions" style="display: none;">
+                            <div class="mb-4">
+                                <label for="continuous-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="continuous-distribution">
+                                    <option value="uniform">Uniform Distribution</option>
+                                    <option value="normal">Normal Distribution</option>
+                                    <option value="exponential">Exponential Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated) -->
+                            <div id="continuous-params">
+                                <!-- Uniform Parameters -->
+                                <div id="uniform-params">
+                                    <div class="mb-3">
+                                        <label for="uniform-a" class="form-label">Lower Bound (a):</label>
+                                        <input type="number" class="form-control" id="uniform-a" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uniform-b" class="form-label">Upper Bound (b):</label>
+                                        <input type="number" class="form-control" id="uniform-b" step="0.1" value="1">
+                                    </div>
+                                </div>
+                                
+                                <!-- Normal Parameters (initially hidden) -->
+                                <div id="normal-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="normal-mean" class="form-label">Mean (μ):</label>
+                                        <input type="number" class="form-control" id="normal-mean" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="normal-sd" class="form-label">Standard Deviation (σ):</label>
+                                        <input type="number" class="form-control" id="normal-sd" min="0.01" step="0.1" value="1">
+                                    </div>
+                                </div>
+                                
+                                <!-- Exponential Parameters (initially hidden) -->
+                                <div id="exponential-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="exponential-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="exponential-lambda" min="0.01" step="0.1" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Distribution (initially hidden) -->
+                        <div id="custom-distribution" style="display: none;">
+                            <div class="mb-3">
+                                <label for="custom-type" class="form-label">Type of Custom Distribution:</label>
+                                <select class="form-select" id="custom-type">
+                                    <option value="discrete">Discrete</option>
+                                    <option value="continuous">Continuous</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-discrete">
+                                <div class="mb-3">
+                                    <label for="custom-discrete-data" class="form-label">Enter Values and Probabilities (x₁:p₁, x₂:p₂, ...):</label>
+                                    <input type="text" class="form-control" id="custom-discrete-data" placeholder="1:0.2, 2:0.5, 3:0.3" value="1:0.2, 2:0.5, 3:0.3">
+                                    <div class="form-text">
+                                        Enter each value followed by its probability, separated by commas.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="custom-continuous" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="custom-continuous-function" class="form-label">PDF Function f(x):</label>
+                                    <select class="form-select" id="custom-continuous-function">
+                                        <option value="linear">Linear: ax + b</option>
+                                        <option value="quadratic">Quadratic: ax² + bx + c</option>
+                                        <option value="exponential">Exponential: ae^(bx)</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="custom-linear-params">
+                                    <div class="mb-3">
+                                        <label for="custom-linear-a" class="form-label">Coefficient a:</label>
+                                        <input type="number" class="form-control" id="custom-linear-a" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-linear-b" class="form-label">Coefficient b:</label>
+                                        <input type="number" class="form-control" id="custom-linear-b" step="0.1" value="0">
+                                    </div>
+                                </div>
+                                
+                                <div id="custom-quadratic-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="custom-quadratic-a" class="form-label">Coefficient a:</label>
+                                        <input type="number" class="form-control" id="custom-quadratic-a" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-quadratic-b" class="form-label">Coefficient b:</label>
+                                        <input type="number" class="form-control" id="custom-quadratic-b" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-quadratic-c" class="form-label">Coefficient c:</label>
+                                        <input type="number" class="form-control" id="custom-quadratic-c" step="0.1" value="0">
+                                    </div>
+                                </div>
+                                
+                                <div id="custom-exponential-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="custom-exponential-a" class="form-label">Coefficient a:</label>
+                                        <input type="number" class="form-control" id="custom-exponential-a" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-exponential-b" class="form-label">Coefficient b:</label>
+                                        <input type="number" class="form-control" id="custom-exponential-b" step="0.1" value="1">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="custom-continuous-range" class="form-label">Integration Range [a,b]:</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="custom-continuous-a" step="0.1" value="0" placeholder="a">
+                                        <span class="input-group-text">to</span>
+                                        <input type="number" class="form-control" id="custom-continuous-b" step="0.1" value="1" placeholder="b">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" id="calculate-btn" class="btn btn-calculate">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                            <button type="button" id="reset-btn" class="btn btn-reset">
+                                <i class="fas fa-undo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div class="results-container" id="results" style="display: none;">
+                        <h3>Result</h3>
+                        <div class="result-value" id="result-value">3.5</div>
+                        <div class="result-explanation" id="result-explanation">
+                            E[X] = 3.5
+                        </div>
+                        
+                        <!-- Step-by-Step Solution -->
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" type="button" id="show-steps-btn">
+                                <i class="fas fa-list-ol me-2"></i>Show Steps
+                            </button>
+                        </div>
+                        
+                        <div class="solution-steps mt-3" id="solution-steps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="steps-content">
+                                <!-- Steps will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-container mb-4">
+                        <h3>Distribution Visualization</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="distribution-params" id="chart-params">
+                                <!-- Parameters will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Info Card -->
+                    <div class="theory-block" id="distribution-info">
+                        <h3 id="distribution-title">Bernoulli Distribution Expected Value</h3>
+                        <div id="distribution-description">
+                            <p>The expected value (mean) of a Bernoulli random variable X with parameter p is E[X] = p.</p>
+                        </div>
+                        <div class="formula-display" id="distribution-formula">
+                            \[ E[X] = p \]
+                        </div>
+                        <div id="distribution-properties">
+                            <h4>Properties:</h4>
+                            <ul>
+                                <li>The expected value represents the long-run average of the random variable</li>
+                                <li>For a Bernoulli distribution, E[X] = p, where p is the probability of success</li>
+                                <li>The expected value is also the "center of mass" of the probability distribution</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theory Section -->
+    <section class="theory-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Understanding Expected Value</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h3>Definition & Properties</h3>
+                        <p>The <strong>Expected Value</strong> (or mean) of a random variable X, denoted by E[X], is a measure of the central tendency of the distribution. It represents the long-run average value of the random variable over many independent repetitions of an experiment.</p>
+                        
+                        <div class="formula-display mt-4">
+                            <h4>Discrete Random Variables:</h4>
+                            \[ E[X] = \sum_{i} x_i \cdot P(X = x_i) \]
+                            <p class="formula-caption">where x<sub>i</sub> are the possible values of X and P(X = x<sub>i</sub>) is the probability of each value.</p>
+                        </div>
+                        
+                        <div class="formula-display mt-4">
+                            <h4>Continuous Random Variables:</h4>
+                            \[ E[X] = \int_{-\infty}^{\infty} x \cdot f(x) \, dx \]
+                            <p class="formula-caption">where f(x) is the probability density function (PDF) of X.</p>
+                        </div>
+                        
+                        <h4 class="mt-4">Key Properties:</h4>
+                        <ul>
+                            <li><strong>Linearity:</strong> E[aX + b] = a·E[X] + b, for constants a and b</li>
+                            <li><strong>Additivity:</strong> E[X + Y] = E[X] + E[Y] for any random variables X and Y</li>
+                            <li><strong>Multiplicativity for independent variables:</strong> If X and Y are independent, then E[XY] = E[X]·E[Y]</li>
+                            <li><strong>Law of the Unconscious Statistician:</strong> E[g(X)] = ∫ g(x)·f(x) dx for any function g</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="theory-block">
+                        <h3>Interpreting Expected Value</h3>
+                        
+                        <p>The expected value has several important interpretations:</p>
+                        
+                        <h4 class="mt-4">Long-Run Average:</h4>
+                        <p>The expected value represents the arithmetic average of a large number of independent repetitions of the same random experiment. This interpretation is supported by the Law of Large Numbers, which states that the sample mean approaches the expected value as the sample size increases.</p>
+                        
+                        <h4 class="mt-4">Center of Mass:</h4>
+                        <p>Physically, the expected value can be thought of as the center of mass (or balancing point) of the probability distribution. If we place weights proportional to the probabilities at each possible value of the random variable along a number line, the expected value is where the line would balance.</p>
+                        
+                        <h4 class="mt-4">Fair Price:</h4>
+                        <p>In gambling and decision theory, the expected value represents the "fair price" of a game or decision. If you pay exactly the expected value to play a game, then in the long run, you'll break even (neither win nor lose money on average).</p>
+                        
+                        <div class="example-block mt-4">
+                            <h4>Example: Expected Value in Practice</h4>
+                            <p>Consider a simple game where you roll a fair six-sided die and receive a payoff in dollars equal to the number shown.</p>
+                            <p>The expected value is:</p>
+                            <div class="formula-display">
+                                \[ E[X] = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot \frac{1}{6} + 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5 \]
+                            </div>
+                            <p>This means that if you play this game many times, your average payoff per game will approach $3.50. Therefore, any price below $3.50 to play this game would be favorable to you in the long run.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Expected Values for Common Distributions -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="theory-block">
+                        <h3 class="text-center mb-4">Expected Values for Common Distributions</h3>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered distribution-table">
+                                <thead>
+                                    <tr>
+                                        <th>Distribution</th>
+                                        <th>Parameters</th>
+                                        <th>Expected Value</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bernoulli</td>
+                                        <td>p = probability of success</td>
+                                        <td>\(E[X] = p\)</td>
+                                        <td>Represents the probability of success</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Binomial</td>
+                                        <td>n = number of trials<br>p = probability of success</td>
+                                        <td>\(E[X] = np\)</td>
+                                        <td>Represents the average number of successes in n trials</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Geometric</td>
+                                        <td>p = probability of success</td>
+                                        <td>\(E[X] = \frac{1}{p}\)</td>
+                                        <td>Average number of trials needed for first success</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Poisson</td>
+                                        <td>λ = rate parameter</td>
+                                        <td>\(E[X] = \lambda\)</td>
+                                        <td>Average number of events in the given interval</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Uniform</td>
+                                        <td>a = lower bound<br>b = upper bound</td>
+                                        <td>\(E[X] = \frac{a+b}{2}\)</td>
+                                        <td>Midpoint of the interval [a,b]</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal</td>
+                                        <td>μ = mean<br>σ = standard deviation</td>
+                                        <td>\(E[X] = \mu\)</td>
+                                        <td>Equal to the mean parameter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exponential</td>
+                                        <td>λ = rate parameter</td>
+                                        <td>\(E[X] = \frac{1}{\lambda}\)</td>
+                                        <td>Average wait time between events</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="applications-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Applications of Expected Value</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3>Finance & Investment</h3>
+                        <p>Expected value is fundamental in portfolio theory and investment decisions. It helps investors calculate the expected return on investments and analyze risk-reward tradeoffs. Insurance companies use expected value to determine premiums based on the probability and magnitude of potential claims.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-chess"></i>
+                        </div>
+                        <h3>Game Theory & Decision Making</h3>
+                        <p>In game theory and decision analysis, expected value helps determine optimal strategies by weighing potential outcomes by their probabilities. Expected utility theory extends this concept by incorporating risk preferences, allowing for more sophisticated decision-making models under uncertainty.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Engineering & Quality Control</h3>
+                        <p>Engineers use expected value to analyze system reliability and performance. In quality control, it helps calculate the expected number of defects or failures, guiding process improvements. Six Sigma methodologies rely heavily on expected value calculations to reduce variability and improve quality.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3>Medical Decision Making</h3>
+                        <p>In medical research and healthcare, expected value helps evaluate treatments by calculating quality-adjusted life years (QALYs) or disability-adjusted life years (DALYs). It's also used in cost-effectiveness analysis to determine the optimal allocation of limited healthcare resources across different interventions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Test Your Knowledge</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="quiz-card">
+                        <h4>Quick Quiz: Expected Value</h4>
+                        
+                        <div class="quiz-question">
+                            <p>1. If X is a random variable with P(X = 1) = 0.3, P(X = 2) = 0.5, and P(X = 3) = 0.2, what is E[X]?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 1.9
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 2.0
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 1.5
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 2.5
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-1"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>2. For a continuous random variable with PDF f(x) = 2x for 0 ≤ x ≤ 1, what is the expected value?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 1/2
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 2/3
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 1/3
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 1
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-2"></div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="check-answers-btn">
+                                <i class="fas fa-check-circle me-2"></i>Check Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../../pages/about.html">About</a></li>
+                        <li><a href="../../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/chart-config.js"></script>
+    
+    <!-- Expected Value Calculator JS - Use your distribution_calculator.js here -->
+    <script src="../../js/calculators/Random Variables/expected-value.js"></script>
+</body>
+</html>

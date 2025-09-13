@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Variables Overview | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item active" href="overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Random Variables</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Understanding discrete and continuous random variables and their probability distributions.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="main-content py-5">
+        <div class="container">
+            <!-- Introduction -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Introduction to Random Variables</h2>
+                        <p>
+                            In probability theory, a <strong>random variable</strong> is a variable whose possible values are 
+                            numerical outcomes of a random phenomenon. Unlike a regular variable in algebra that takes on a 
+                            specific value, a random variable can take on different values with certain probabilities.
+                        </p>
+                        <p>
+                            Random variables are mathematical functions that map outcomes from a sample space to numerical values. 
+                            They provide a way to quantify and analyze random events.
+                        </p>
+                        
+                        <div class="example-block">
+                            <h4>Example</h4>
+                            <p>
+                                Consider tossing a fair coin twice. Let X be the random variable representing the number of heads obtained.
+                                Then X can take values 0, 1, or 2, with probabilities P(X = 0) = 1/4, P(X = 1) = 1/2, and P(X = 2) = 1/4.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Discrete vs Continuous -->
+            <div class="row g-4 mb-5">
+                <!-- Discrete Random Variables -->
+                <div class="col-lg-6">
+                    <div class="theory-block h-100" data-aos="fade-up" data-aos-delay="100">
+                        <h2 class="mb-4">Discrete Random Variables</h2>
+                        <div class="custom-alert info mb-4">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                A <strong>discrete random variable</strong> is a random variable that can take on only a countable number of 
+                                distinct values, such as integers or a finite set of values.
+                            </div>
+                        </div>
+                        
+                        <h3 class="mb-3">Key Characteristics</h3>
+                        <ul class="mb-4">
+                            <li>Can take on distinct, separate values</li>
+                            <li>The set of possible values can be listed (finite or countably infinite)</li>
+                            <li>Described by a <strong>Probability Mass Function (PMF)</strong></li>
+                            <li>PMF gives the probability of each possible value</li>
+                        </ul>
+                        
+                        <h3 class="mb-3">Common Examples</h3>
+                        <ul class="mb-4">
+                            <li>Number of heads in a sequence of coin flips</li>
+                            <li>Number of defective items in a batch</li>
+                            <li>Count of customers arriving at a store</li>
+                            <li>The sum of dice rolls</li>
+                        </ul>
+                        
+                        <div class="chart-container mb-4">
+                            <h3 class="mb-3">Visualization of a Discrete Random Variable</h3>
+                            <canvas id="discreteChart" width="400" height="250"></canvas>
+                            <p class="text-center mt-2 text-secondary">Probability Mass Function (PMF) for the number of heads in 3 coin tosses</p>
+                        </div>
+                        
+                        <h3 class="mb-3">Common Discrete Distributions</h3>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-coins"></i>
+                                    </div>
+                                    <h4>Bernoulli</h4>
+                                    <p>Models a single trial with two outcomes (success/failure)</p>
+                                    <a href="../discrete-distributions/bernoulli.html" class="btn btn-primary btn-sm">Learn More</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-dice"></i>
+                                    </div>
+                                    <h4>Binomial</h4>
+                                    <p>Number of successes in a fixed number of independent trials</p>
+                                    <a href="../discrete-distributions/binomial.html" class="btn btn-primary btn-sm">Learn More</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-stopwatch"></i>
+                                    </div>
+                                    <h4>Poisson</h4>
+                                    <p>Count of events occurring in a fixed interval</p>
+                                    <a href="../discrete-distributions/poisson.html" class="btn btn-primary btn-sm">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Continuous Random Variables -->
+                <div class="col-lg-6">
+                    <div class="theory-block h-100" data-aos="fade-up" data-aos-delay="200">
+                        <h2 class="mb-4">Continuous Random Variables</h2>
+                        <div class="custom-alert info mb-4">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                A <strong>continuous random variable</strong> is a random variable that can take on any value 
+                                within a continuous range or interval.
+                            </div>
+                        </div>
+                        
+                        <h3 class="mb-3">Key Characteristics</h3>
+                        <ul class="mb-4">
+                            <li>Can take on any value within an interval</li>
+                            <li>The set of possible values is uncountable (infinite)</li>
+                            <li>Described by a <strong>Probability Density Function (PDF)</strong></li>
+                            <li>The probability of any exact value is zero</li>
+                            <li>Probabilities are calculated over intervals</li>
+                        </ul>
+                        
+                        <h3 class="mb-3">Common Examples</h3>
+                        <ul class="mb-4">
+                            <li>Height or weight of a randomly selected person</li>
+                            <li>Time until a component fails</li>
+                            <li>Temperature at a specific location</li>
+                            <li>Distance traveled by a particle</li>
+                        </ul>
+                        
+                        <div class="chart-container mb-4">
+                            <h3 class="mb-3">Visualization of a Continuous Random Variable</h3>
+                            <canvas id="continuousChart" width="400" height="250"></canvas>
+                            <p class="text-center mt-2 text-secondary">Probability Density Function (PDF) for a normal distribution</p>
+                        </div>
+                        
+                        <h3 class="mb-3">Common Continuous Distributions</h3>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-chart-bell-curve"></i>
+                                    </div>
+                                    <h4>Normal</h4>
+                                    <p>Bell-shaped distribution central to statistics</p>
+                                    <a href="../continuous-distributions/normal.html" class="btn btn-primary btn-sm">Learn More</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-equals"></i>
+                                    </div>
+                                    <h4>Uniform</h4>
+                                    <p>Equal probability over an interval</p>
+                                    <a href="../continuous-distributions/uniform.html" class="btn btn-primary btn-sm">Learn More</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                    </div>
+                                    <h4>Exponential</h4>
+                                    <p>Models time between events</p>
+                                    <a href="../continuous-distributions/exponential.html" class="btn btn-primary btn-sm">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comparison Table -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">Discrete vs Continuous: Key Differences</h2>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Discrete Random Variables</th>
+                                        <th>Continuous Random Variables</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Possible Values</td>
+                                        <td>Countable, distinct values</td>
+                                        <td>Uncountable, any value in an interval</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Probability Description</td>
+                                        <td>Probability Mass Function (PMF)</td>
+                                        <td>Probability Density Function (PDF)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Probability at a Point</td>
+                                        <td>Can be positive (P(X = x) ≥ 0)</td>
+                                        <td>Always zero (P(X = x) = 0)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumulative Probability</td>
+                                        <td>Sum of individual probabilities</td>
+                                        <td>Integral of the density function</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CDF</td>
+                                        <td>Step function</td>
+                                        <td>Smooth function</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expected Value Calculation</td>
+                                        <td>$E[X] = \sum_x x \cdot P(X = x)$</td>
+                                        <td>$E[X] = \int_{-\infty}^{\infty} x \cdot f(x) \, dx$</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Demo -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="calculator-form" data-aos="fade-up">
+                        <h2 class="mb-4">Interactive Exploration</h2>
+                        <p>
+                            Select a type of random variable to visualize its properties:
+                        </p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="variableType" class="form-label">Variable Type:</label>
+                                    <select id="variableType" class="form-select">
+                                        <option value="discrete">Discrete</option>
+                                        <option value="continuous">Continuous</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4" id="discreteControls">
+                                <div class="form-group">
+                                    <label for="discreteDistribution" class="form-label">Distribution:</label>
+                                    <select id="discreteDistribution" class="form-select">
+                                        <option value="binomial">Binomial</option>
+                                        <option value="poisson">Poisson</option>
+                                        <option value="geometric">Geometric</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4" id="continuousControls" style="display: none;">
+                                <div class="form-group">
+                                    <label for="continuousDistribution" class="form-label">Distribution:</label>
+                                    <select id="continuousDistribution" class="form-select">
+                                        <option value="normal">Normal</option>
+                                        <option value="uniform">Uniform</option>
+                                        <option value="exponential">Exponential</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-end h-100">
+                                    <button id="generateBtn" class="btn btn-primary w-100">Generate</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container mt-4">
+                            <canvas id="interactiveChart" width="600" height="350"></canvas>
+                        </div>
+                        
+                        <div class="mt-4 explanation-block" id="distributionExplanation">
+                            <p class="text-secondary">Select a distribution type and click "Generate" to visualize it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Next Steps -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="theory-block" data-aos="fade-up">
+                        <h2 class="mb-4">What's Next?</h2>
+                        <p>
+                            Now that you understand the difference between discrete and continuous random variables, 
+                            you can explore their properties in more detail:
+                        </p>
+                        
+                        <div class="row g-4 mt-3">
+                            <div class="col-md-6 col-lg-3">
+                                <a href="pmf-pdf.html" class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <h4>PMF & PDF</h4>
+                                    <p>Learn how to describe the probability distribution of random variables</p>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <a href="cdf.html" class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h4>CDF</h4>
+                                    <p>Understand how to calculate probabilities for intervals</p>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <a href="expected-value.html" class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <h4>Expected Value</h4>
+                                    <p>Calculate the long-run average value of a random variable</p>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <a href="variance.html" class="calculator-card text-center h-100">
+                                    <div class="card-icon">
+                                        <i class="fas fa-arrows-alt-h"></i>
+                                    </div>
+                                    <h4>Variance</h4>
+                                    <p>Measure the spread or dispersion of a random variable</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Probability Calculator</h5>
+                    <p>A comprehensive calculator for probability theory concepts, from basic probability to advanced distributions.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/janiyax35" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5>Basics</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../basic-probability/sample-space.html">Sample Space</a></li>
+                        <li><a href="../basic-probability/conditional.html">Conditional Probability</a></li>
+                        <li><a href="../basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                        <li><a href="../basic-probability/independence.html">Independence</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5>Random Variables</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="overview.html">Overview</a></li>
+                        <li><a href="pmf-pdf.html">PMF/PDF</a></li>
+                        <li><a href="cdf.html">CDF</a></li>
+                        <li><a href="expected-value.html">Expected Value</a></li>
+                        <li><a href="variance.html">Variance</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5>Distributions</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../discrete-distributions/binomial.html">Binomial</a></li>
+                        <li><a href="../discrete-distributions/poisson.html">Poisson</a></li>
+                        <li><a href="../continuous-distributions/normal.html">Normal</a></li>
+                        <li><a href="../continuous-distributions/exponential.html">Exponential</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <h5>More</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="mb-0">&copy; 2024 Probability Calculator. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Created by <a href="https://github.com/janiyax35" target="_blank">Janith Deshan</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/calculators/discrete.js"></script>
+    <script src="../../js/calculators/continuous.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Initialize Charts when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the discrete chart
+            const discreteCtx = document.getElementById('discreteChart').getContext('2d');
+            const discreteChart = new Chart(discreteCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['0 Heads', '1 Head', '2 Heads', '3 Heads'],
+                    datasets: [{
+                        label: 'Probability',
+                        data: [0.125, 0.375, 0.375, 0.125],
+                        backgroundColor: 'rgba(138, 180, 248, 0.7)',
+                        borderColor: 'rgba(138, 180, 248, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Initialize the continuous chart
+            const continuousCtx = document.getElementById('continuousChart').getContext('2d');
+            const continuousChart = new Chart(continuousCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 100}, (_, i) => -3 + i * 0.06),
+                    datasets: [{
+                        label: 'Density',
+                        data: Array.from({length: 100}, (_, i) => {
+                            const x = -3 + i * 0.06;
+                            return Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI);
+                        }),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Set up interactive controls
+            const variableType = document.getElementById('variableType');
+            const discreteControls = document.getElementById('discreteControls');
+            const continuousControls = document.getElementById('continuousControls');
+            const generateBtn = document.getElementById('generateBtn');
+            
+            variableType.addEventListener('change', function() {
+                if (this.value === 'discrete') {
+                    discreteControls.style.display = 'block';
+                    continuousControls.style.display = 'none';
+                } else {
+                    discreteControls.style.display = 'none';
+                    continuousControls.style.display = 'block';
+                }
+            });
+            
+            // Interactive chart generation
+            let interactiveChart = null;
+            
+            generateBtn.addEventListener('click', function() {
+                const varType = variableType.value;
+                
+                if (varType === 'discrete') {
+                    const distribution = document.getElementById('discreteDistribution').value;
+                    generateDiscreteDistribution(distribution);
+                } else {
+                    const distribution = document.getElementById('continuousDistribution').value;
+                    generateContinuousDistribution(distribution);
+                }
+            });
+            
+            function generateDiscreteDistribution(distribution) {
+                const canvas = document.getElementById('interactiveChart');
+                const explanationEl = document.getElementById('distributionExplanation');
+                let data, options, explanation;
+                
+                switch(distribution) {
+                    case 'binomial':
+                        const n = 10, p = 0.3;
+                        const labels = Array.from({length: n+1}, (_, i) => i);
+                        const values = labels.map(k => {
+                            // Binomial PMF calculation
+                            function binom(n, k) {
+                                let coeff = 1;
+                                for (let i = 1; i <= k; i++) {
+                                    coeff *= (n - (k - i)) / i;
+                                }
+                                return coeff;
+                            }
+                            return binom(n, k) * Math.pow(p, k) * Math.pow(1-p, n-k);
+                        });
+                        
+                        data = {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Binomial Distribution',
+                                data: values,
+                                backgroundColor: 'rgba(138, 180, 248, 0.7)',
+                                borderColor: 'rgba(138, 180, 248, 1)',
+                                borderWidth: 1
+                            }]
+                        };
+                        
+                        explanation = `The binomial distribution models the number of successes in a fixed number of independent trials, each with the same probability of success. This example shows Binomial(n=10, p=0.3).`;
+                        break;
+                        
+                    case 'poisson':
+                        const lambda = 3;
+                        const poissonLabels = Array.from({length: 12}, (_, i) => i);
+                        
+                        // Simple factorial function
+                        function factorial(n) {
+                            if (n <= 1) return 1;
+                            return n * factorial(n-1);
+                        }
+                        
+                        const poissonValues = poissonLabels.map(k => {
+                            return Math.exp(-lambda) * Math.pow(lambda, k) / factorial(k);
+                        });
+                        
+                        data = {
+                            labels: poissonLabels,
+                            datasets: [{
+                                label: 'Poisson Distribution',
+                                data: poissonValues,
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            }]
+                        };
+                        
+                        explanation = `The Poisson distribution models the number of events occurring within a fixed interval, where events occur independently at a constant average rate. This example shows Poisson(λ=3).`;
+                        break;
+                        
+                    case 'geometric':
+                        const prob = 0.3;
+                        const geoLabels = Array.from({length: 12}, (_, i) => i+1);
+                        const geoValues = geoLabels.map(k => prob * Math.pow(1-prob, k-1));
+                        
+                        data = {
+                            labels: geoLabels,
+                            datasets: [{
+                                label: 'Geometric Distribution',
+                                data: geoValues,
+                                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        };
+                        
+                        explanation = `The geometric distribution models the number of trials needed to achieve the first success in a sequence of independent trials, each with the same probability of success. This example shows Geometric(p=0.3).`;
+                        break;
+                }
+                
+                options = {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        }
+                    }
+                };
+                
+                // Destroy previous chart if exists
+                if (interactiveChart) {
+                    interactiveChart.destroy();
+                }
+                
+                // Create new chart
+                interactiveChart = new Chart(canvas, {
+                    type: 'bar',
+                    data: data,
+                    options: options
+                });
+                
+                explanationEl.innerHTML = `<p class="text-secondary">${explanation}</p>`;
+            }
+            
+            function generateContinuousDistribution(distribution) {
+                const canvas = document.getElementById('interactiveChart');
+                const explanationEl = document.getElementById('distributionExplanation');
+                let explanation;
+                
+                // Generate x values
+                let xValues, yValues;
+                
+                switch(distribution) {
+                    case 'normal':
+                        const mean = 0, stdDev = 1;
+                        xValues = Array.from({length: 100}, (_, i) => -4 + i * 0.08);
+                        yValues = xValues.map(x => 
+                            Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2)) / 
+                            (stdDev * Math.sqrt(2 * Math.PI))
+                        );
+                        
+                        explanation = `The normal distribution is a continuous probability distribution that is symmetric about its mean. This example shows the standard normal distribution Normal(μ=0, σ=1).`;
+                        break;
+                        
+                    case 'uniform':
+                        const a = 0, b = 1;
+                        xValues = Array.from({length: 100}, (_, i) => -0.5 + i * 0.02);
+                        yValues = xValues.map(x => (x >= a && x <= b) ? 1 / (b - a) : 0);
+                        
+                        explanation = `The uniform distribution is a continuous probability distribution where all values in an interval [a, b] are equally likely. This example shows Uniform(0, 1).`;
+                        break;
+                        
+                    case 'exponential':
+                        const rate = 1;
+                        xValues = Array.from({length: 100}, (_, i) => i * 0.06);
+                        yValues = xValues.map(x => x >= 0 ? rate * Math.exp(-rate * x) : 0);
+                        
+                        explanation = `The exponential distribution models the time between events in a Poisson process. This example shows Exponential(λ=1).`;
+                        break;
+                }
+                
+                const data = {
+                    labels: xValues,
+                    datasets: [{
+                        label: distribution.charAt(0).toUpperCase() + distribution.slice(1) + ' Distribution',
+                        data: yValues,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: true
+                    }]
+                };
+                
+                const options = {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        }
+                    }
+                };
+                
+                // Destroy previous chart if exists
+                if (interactiveChart) {
+                    interactiveChart.destroy();
+                }
+                
+                // Create new chart
+                interactiveChart = new Chart(canvas, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                });
+                
+                explanationEl.innerHTML = `<p class="text-secondary">${explanation}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

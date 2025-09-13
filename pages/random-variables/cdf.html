@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumulative Distribution Function | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item active" href="cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Cumulative Distribution Function (CDF)</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Calculate and visualize the cumulative distribution function for discrete and continuous random variables</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Calculator Form -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="calculator-form" id="cdf-calculator">
+                        <h2 class="mb-4">CDF Calculator</h2>
+                        
+                        <!-- Distribution Type Selection -->
+                        <div class="mb-4">
+                            <label for="distribution-type" class="form-label">Select Distribution Type:</label>
+                            <select class="form-select" id="distribution-type">
+                                <option value="discrete">Discrete Distribution</option>
+                                <option value="continuous">Continuous Distribution</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Discrete Distributions -->
+                        <div id="discrete-distributions">
+                            <div class="mb-4">
+                                <label for="discrete-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="discrete-distribution">
+                                    <option value="bernoulli">Bernoulli Distribution</option>
+                                    <option value="binomial">Binomial Distribution</option>
+                                    <option value="geometric">Geometric Distribution</option>
+                                    <option value="poisson">Poisson Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated) -->
+                            <div id="discrete-params">
+                                <!-- Bernoulli Parameters -->
+                                <div id="bernoulli-params">
+                                    <div class="mb-3">
+                                        <label for="bernoulli-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="bernoulli-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="bernoulli-k" class="form-label">Calculate P(X ≤ k):</label>
+                                        <select class="form-select" id="bernoulli-k">
+                                            <option value="0">0</option>
+                                            <option value="1" selected>1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Binomial Parameters (initially hidden) -->
+                                <div id="binomial-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="binomial-n" class="form-label">Number of Trials (n):</label>
+                                        <input type="number" class="form-control" id="binomial-n" min="1" step="1" value="10">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="binomial-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="binomial-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="binomial-k" class="form-label">Calculate P(X ≤ k):</label>
+                                        <input type="number" class="form-control" id="binomial-k" min="0" step="1" value="5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Geometric Parameters (initially hidden) -->
+                                <div id="geometric-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="geometric-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="geometric-p" min="0" max="1" step="0.01" value="0.3">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="geometric-k" class="form-label">Calculate P(X ≤ k):</label>
+                                        <input type="number" class="form-control" id="geometric-k" min="1" step="1" value="3">
+                                    </div>
+                                </div>
+                                
+                                <!-- Poisson Parameters (initially hidden) -->
+                                <div id="poisson-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="poisson-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="poisson-lambda" min="0" step="0.1" value="2">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="poisson-k" class="form-label">Calculate P(X ≤ k):</label>
+                                        <input type="number" class="form-control" id="poisson-k" min="0" step="1" value="3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Continuous Distributions (initially hidden) -->
+                        <div id="continuous-distributions" style="display: none;">
+                            <div class="mb-4">
+                                <label for="continuous-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="continuous-distribution">
+                                    <option value="uniform">Uniform Distribution</option>
+                                    <option value="normal">Normal Distribution</option>
+                                    <option value="exponential">Exponential Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated) -->
+                            <div id="continuous-params">
+                                <!-- Uniform Parameters -->
+                                <div id="uniform-params">
+                                    <div class="mb-3">
+                                        <label for="uniform-a" class="form-label">Lower Bound (a):</label>
+                                        <input type="number" class="form-control" id="uniform-a" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uniform-b" class="form-label">Upper Bound (b):</label>
+                                        <input type="number" class="form-control" id="uniform-b" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uniform-x" class="form-label">Calculate P(X ≤ x):</label>
+                                        <input type="number" class="form-control" id="uniform-x" step="0.01" value="0.5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Normal Parameters (initially hidden) -->
+                                <div id="normal-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="normal-mean" class="form-label">Mean (μ):</label>
+                                        <input type="number" class="form-control" id="normal-mean" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="normal-sd" class="form-label">Standard Deviation (σ):</label>
+                                        <input type="number" class="form-control" id="normal-sd" min="0.01" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="normal-x" class="form-label">Calculate P(X ≤ x):</label>
+                                        <input type="number" class="form-control" id="normal-x" step="0.01" value="0">
+                                    </div>
+                                </div>
+                                
+                                <!-- Exponential Parameters (initially hidden) -->
+                                <div id="exponential-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="exponential-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="exponential-lambda" min="0.01" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exponential-x" class="form-label">Calculate P(X ≤ x):</label>
+                                        <input type="number" class="form-control" id="exponential-x" min="0" step="0.01" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" id="calculate-btn" class="btn btn-calculate">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                            <button type="button" id="reset-btn" class="btn btn-reset">
+                                <i class="fas fa-undo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div class="results-container" id="results" style="display: none;">
+                        <h3>Result</h3>
+                        <div class="result-value" id="result-value">0.75</div>
+                        <div class="result-explanation" id="result-explanation">
+                            P(X ≤ 1) = 0.75
+                        </div>
+                        
+                        <!-- Step-by-Step Solution -->
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" type="button" id="show-steps-btn">
+                                <i class="fas fa-list-ol me-2"></i>Show Steps
+                            </button>
+                        </div>
+                        
+                        <div class="solution-steps mt-3" id="solution-steps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="steps-content">
+                                <!-- Steps will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-container mb-4">
+                        <h3>CDF Visualization</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="distribution-params" id="chart-params">
+                                <!-- Parameters will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Info Card -->
+                    <div class="theory-block" id="distribution-info">
+                        <h3 id="distribution-title">Bernoulli Distribution CDF</h3>
+                        <div id="distribution-description">
+                            <p>The CDF of a Bernoulli random variable gives the probability that the random variable X is less than or equal to a specific value x.</p>
+                        </div>
+                        <div class="formula-display" id="distribution-formula">
+                            \[ F(x) = \begin{cases}
+            0, & \text{if } x < 0 \\
+            1-p, & \text{if } 0 \leq x < 1 \\
+            1, & \text{if } x \geq 1
+            \end{cases} \]
+                        </div>
+                        <div id="distribution-properties">
+                            <h4>Properties:</h4>
+                            <ul>
+                                <li>CDF is a step function for discrete distributions</li>
+                                <li>CDF is non-decreasing: \(F(x_1) \leq F(x_2)\) when \(x_1 \leq x_2\)</li>
+                                <li>Limits: \(\lim_{x \to -\infty} F(x) = 0\) and \(\lim_{x \to \infty} F(x) = 1\)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theory Section -->
+    <section class="theory-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Understanding the Cumulative Distribution Function</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h3>Definition & Properties</h3>
+                        <p>The <strong>Cumulative Distribution Function (CDF)</strong> of a random variable X, denoted by F(x), gives the probability that X takes a value less than or equal to x.</p>
+                        
+                        <div class="formula-display">
+                            \[ F_X(x) = P(X \leq x) \]
+                        </div>
+                        
+                        <h4 class="mt-4">Key Properties of CDF:</h4>
+                        <ul>
+                            <li>Monotonically increasing: \(F_X(x_1) \leq F_X(x_2)\) whenever \(x_1 \leq x_2\)</li>
+                            <li>Right-continuous: \(\lim_{x \to a^+} F_X(x) = F_X(a)\)</li>
+                            <li>Range is [0, 1]: \(0 \leq F_X(x) \leq 1\) for all x</li>
+                            <li>Limiting behavior: \(\lim_{x \to -\infty} F_X(x) = 0\) and \(\lim_{x \to \infty} F_X(x) = 1\)</li>
+                        </ul>
+                        
+                        <div class="example-block mt-4">
+                            <h4>Calculating Interval Probabilities</h4>
+                            <p>For any interval [a, b], the probability that X falls in this interval can be calculated using the CDF:</p>
+                            <div class="formula-display">
+                                \[ P(a \leq X \leq b) = F_X(b) - F_X(a) \]
+                            </div>
+                            <p>For continuous distributions, \(P(a \leq X \leq b) = P(a < X \leq b) = P(a \leq X < b) = P(a < X < b)\)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="theory-block">
+                        <h3>Discrete vs. Continuous CDFs</h3>
+                        
+                        <h4 class="mt-4">Discrete Random Variables:</h4>
+                        <p>For a discrete random variable X with PMF p(x), the CDF is:</p>
+                        <div class="formula-display">
+                            \[ F_X(x) = \sum_{t \leq x} p(t) \]
+                        </div>
+                        <p>The CDF is a step function that jumps at each value in the support of X.</p>
+                        
+                        <h4 class="mt-4">Continuous Random Variables:</h4>
+                        <p>For a continuous random variable X with PDF f(x), the CDF is:</p>
+                        <div class="formula-display">
+                            \[ F_X(x) = \int_{-\infty}^{x} f(t) \, dt \]
+                        </div>
+                        <p>The CDF is a continuous function, and its derivative (when it exists) is the PDF:</p>
+                        <div class="formula-display">
+                            \[ f(x) = \frac{d}{dx} F_X(x) \]
+                        </div>
+                        
+                        <div class="example-block mt-4">
+                            <h4>Example: Exponential Distribution</h4>
+                            <p>For an exponential distribution with parameter λ, the CDF is:</p>
+                            <div class="formula-display">
+                                \[ F_X(x) = \begin{cases} 
+                                1 - e^{-\lambda x}, & \text{if } x \geq 0 \\
+                                0, & \text{if } x < 0 
+                                \end{cases} \]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Relationship between PMF/PDF and CDF -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="theory-block">
+                        <h3 class="text-center mb-4">Relationship Between PMF/PDF and CDF</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>From PMF to CDF (Discrete)</h4>
+                                <p>For a discrete random variable, the CDF is the sum of the PMF values up to the given point:</p>
+                                <div class="formula-display">
+                                    \[ F_X(x) = \sum_{t \leq x} P(X = t) \]
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4>From PDF to CDF (Continuous)</h4>
+                                <p>For a continuous random variable, the CDF is the integral of the PDF up to the given point:</p>
+                                <div class="formula-display">
+                                    \[ F_X(x) = \int_{-\infty}^{x} f_X(t) \, dt \]
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h4>From CDF to PMF (Discrete)</h4>
+                                <p>For a discrete random variable, the PMF can be obtained from the CDF by looking at the jumps:</p>
+                                <div class="formula-display">
+                                    \[ P(X = x) = F_X(x) - \lim_{t \to x^-} F_X(t) \]
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4>From CDF to PDF (Continuous)</h4>
+                                <p>For a continuous random variable, the PDF is the derivative of the CDF:</p>
+                                <div class="formula-display">
+                                    \[ f_X(x) = \frac{d}{dx} F_X(x) \]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="applications-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Applications of CDF</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Quantiles & Percentiles</h3>
+                        <p>CDFs are used to determine quantiles (e.g., median, quartiles) by finding the value x such that F(x) equals the desired probability. This is crucial in statistics for summarizing data distributions.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <h3>Random Number Generation</h3>
+                        <p>The inverse transform sampling method uses the inverse of the CDF to generate random numbers from any probability distribution, making it fundamental for simulations and Monte Carlo methods.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Risk Assessment</h3>
+                        <p>CDFs help quantify the probability of rare events and assess risk in finance, insurance, and engineering. Value-at-Risk (VaR) in finance is a specific quantile of a loss distribution's CDF.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3>Statistical Tests</h3>
+                        <p>Many statistical tests like the Kolmogorov-Smirnov test compare empirical CDFs to theoretical ones to determine if a sample comes from a specific distribution, essential for validating statistical models.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Test Your Knowledge</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="quiz-card">
+                        <h4>Quick Quiz: Cumulative Distribution Function</h4>
+                        
+                        <div class="quiz-question">
+                            <p>1. Which of the following statements about a CDF is FALSE?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> The CDF is always non-decreasing
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> The CDF approaches 1 as x approaches infinity
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> The CDF can take negative values for some distributions
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> The CDF approaches 0 as x approaches negative infinity
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-1"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>2. If F(x) is the CDF of a continuous random variable, what is P(a < X ≤ b)?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> F(a) - F(b)
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> F(b) - F(a)
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 1 - F(a) - F(b)
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> F(a) + F(b)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-2"></div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="check-answers-btn">
+                                <i class="fas fa-check-circle me-2"></i>Check Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../../pages/about.html">About</a></li>
+                        <li><a href="../../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/chart-config.js"></script>
+    
+    <!-- CDF Calculator JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Distribution type change handler
+            const distributionTypeSelect = document.getElementById('distribution-type');
+            distributionTypeSelect.addEventListener('change', function() {
+                if (this.value === 'discrete') {
+                    document.getElementById('discrete-distributions').style.display = 'block';
+                    document.getElementById('continuous-distributions').style.display = 'none';
+                    updateDiscreteParams();
+                } else {
+                    document.getElementById('discrete-distributions').style.display = 'none';
+                    document.getElementById('continuous-distributions').style.display = 'block';
+                    updateContinuousParams();
+                }
+                
+                // Reset the form and clear results
+                resetCalculator();
+            });
+            
+            // Discrete distribution change handler
+            const discreteDistSelect = document.getElementById('discrete-distribution');
+            discreteDistSelect.addEventListener('change', function() {
+                updateDiscreteParams();
+                resetCalculator();
+            });
+            
+            // Continuous distribution change handler
+            const continuousDistSelect = document.getElementById('continuous-distribution');
+            continuousDistSelect.addEventListener('change', function() {
+                updateContinuousParams();
+                resetCalculator();
+            });
+            
+            // Calculate button handler
+            document.getElementById('calculate-btn').addEventListener('click', function() {
+                calculateCDF();
+            });
+            
+            // Reset button handler
+            document.getElementById('reset-btn').addEventListener('click', function() {
+                resetCalculator();
+            });
+            
+            // Show/hide steps handler
+            document.getElementById('show-steps-btn').addEventListener('click', function() {
+                const stepsElement = document.getElementById('solution-steps');
+                if (stepsElement.style.display === 'none') {
+                    stepsElement.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-list-ol me-2"></i>Hide Steps';
+                } else {
+                    stepsElement.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+                }
+            });
+            
+            // Quiz handlers
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Deselect all options in the same question
+                    const questionDiv = this.closest('.quiz-question');
+                    questionDiv.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                });
+            });
+            
+            document.getElementById('check-answers-btn').addEventListener('click', function() {
+                checkQuizAnswers();
+            });
+            
+            // Initialize with default values
+            updateDiscreteParams();
+            initializeChart();
+        });
+        
+        function updateDiscreteParams() {
+            const selected = document.getElementById('discrete-distribution').value;
+            
+            // Hide all parameter divs
+            document.querySelectorAll('#discrete-params > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // Show the selected distribution's parameters
+            document.getElementById(`${selected}-params`).style.display = 'block';
+            
+            // Update distribution info
+            updateDistributionInfo(selected);
+        }
+        
+        function updateContinuousParams() {
+            const selected = document.getElementById('continuous-distribution').value;
+            
+            // Hide all parameter divs
+            document.querySelectorAll('#continuous-params > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // Show the selected distribution's parameters
+            document.getElementById(`${selected}-params`).style.display = 'block';
+            
+            // Update distribution info
+            updateDistributionInfo(selected);
+        }
+        
+        function updateDistributionInfo(distribution) {
+            const titles = {
+                'bernoulli': 'Bernoulli Distribution CDF',
+                'binomial': 'Binomial Distribution CDF',
+                'geometric': 'Geometric Distribution CDF',
+                'poisson': 'Poisson Distribution CDF',
+                'uniform': 'Uniform Distribution CDF',
+                'normal': 'Normal Distribution CDF',
+                'exponential': 'Exponential Distribution CDF'
+            };
+            
+            const descriptions = {
+                'bernoulli': 'The CDF of a Bernoulli random variable gives the probability that the random variable X is less than or equal to a specific value x.',
+                'binomial': 'The CDF of a binomial distribution gives the probability of obtaining at most k successes in n independent trials, each with probability of success p.',
+                'geometric': 'The CDF of a geometric distribution gives the probability that the first success will occur within the first k trials.',
+                'poisson': 'The CDF of a Poisson distribution gives the probability of observing at most k events in a fixed interval, when the events occur at a constant rate λ.',
+                'uniform': 'The CDF of a uniform distribution gives the probability that a random variable X takes a value less than or equal to x in the interval [a, b].',
+                'normal': 'The CDF of a normal distribution (also known as the Gaussian distribution) gives the probability that a random variable X takes a value less than or equal to x.',
+                'exponential': 'The CDF of an exponential distribution gives the probability that the waiting time until an event occurs is less than or equal to x.'
+            };
+            
+            const formulas = {
+                'bernoulli': '\\[ F(x) = \\begin{cases} 0, & \\text{if } x < 0 \\\\ 1-p, & \\text{if } 0 \\leq x < 1 \\\\ 1, & \\text{if } x \\geq 1 \\end{cases} \\]',
+                'binomial': '\\[ F(k) = P(X \\leq k) = \\sum_{i=0}^{\\lfloor k \\rfloor} \\binom{n}{i} p^i (1-p)^{n-i} \\]',
+                'geometric': '\\[ F(k) = P(X \\leq k) = 1 - (1-p)^{\\lfloor k \\rfloor} \\text{ for } k \\geq 1 \\]',
+                'poisson': '\\[ F(k) = P(X \\leq k) = e^{-\\lambda} \\sum_{i=0}^{\\lfloor k \\rfloor} \\frac{\\lambda^i}{i!} \\]',
+                'uniform': '\\[ F(x) = \\begin{cases} 0, & \\text{if } x < a \\\\ \\frac{x-a}{b-a}, & \\text{if } a \\leq x < b \\\\ 1, & \\text{if } x \\geq b \\end{cases} \\]',
+                'normal': '\\[ F(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} \\int_{-\\infty}^{x} e^{-\\frac{1}{2}\\left(\\frac{t-\\mu}{\\sigma}\\right)^2} dt = \\Phi\\left(\\frac{x-\\mu}{\\sigma}\\right) \\]',
+                'exponential': '\\[ F(x) = \\begin{cases} 1 - e^{-\\lambda x}, & \\text{if } x \\geq 0 \\\\ 0, & \\text{if } x < 0 \\end{cases} \\]'
+            };
+            
+            const properties = {
+                'bernoulli': '<h4>Properties:</h4><ul><li>CDF is a step function</li><li>Jumps at x = 0 by (1-p) and at x = 1 by p</li><li>F(0) = 1-p and F(1) = 1</li></ul>',
+                'binomial': '<h4>Properties:</h4><ul><li>CDF is a step function</li><li>F(k) increases as k increases</li><li>For large n, can be approximated by normal CDF</li></ul>',
+                'geometric': '<h4>Properties:</h4><ul><li>CDF is a step function</li><li>F(k) = 1-(1-p)^k for k ≥ 1</li><li>Memoryless property: P(X > m+n | X > m) = P(X > n)</li></ul>',
+                'poisson': '<h4>Properties:</h4><ul><li>CDF is a step function</li><li>For large λ, can be approximated by normal CDF</li><li>Mean and variance are both equal to λ</li></ul>',
+                'uniform': '<h4>Properties:</h4><ul><li>CDF is a straight line from (a,0) to (b,1)</li><li>F(x) = (x-a)/(b-a) for a ≤ x ≤ b</li><li>Slope of CDF is 1/(b-a)</li></ul>',
+                'normal': '<h4>Properties:</h4><ul><li>CDF is an S-shaped curve</li><li>F(μ) = 0.5 (CDF at the mean is 0.5)</li><li>Symmetric about x = μ: F(μ+x) = 1-F(μ-x)</li></ul>',
+                'exponential': '<h4>Properties:</h4><ul><li>CDF is F(x) = 1-e^(-λx) for x ≥ 0</li><li>Memoryless property: P(X > m+n | X > m) = P(X > n)</li><li>Mean is 1/λ</li></ul>'
+            };
+            
+            document.getElementById('distribution-title').textContent = titles[distribution];
+            document.getElementById('distribution-description').innerHTML = `<p>${descriptions[distribution]}</p>`;
+            document.getElementById('distribution-formula').innerHTML = formulas[distribution];
+            document.getElementById('distribution-properties').innerHTML = properties[distribution];
+            
+            // Render formulas with MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+        
+        function calculateCDF() {
+            const distType = document.getElementById('distribution-type').value;
+            let result;
+            
+            if (distType === 'discrete') {
+                const dist = document.getElementById('discrete-distribution').value;
+                switch (dist) {
+                    case 'bernoulli':
+                        result = calculateBernoulliCDF();
+                        break;
+                    case 'binomial':
+                        result = calculateBinomialCDF();
+                        break;
+                    case 'geometric':
+                        result = calculateGeometricCDF();
+                        break;
+                    case 'poisson':
+                        result = calculatePoissonCDF();
+                        break;
+                }
+            } else {
+                const dist = document.getElementById('continuous-distribution').value;
+                switch (dist) {
+                    case 'uniform':
+                        result = calculateUniformCDF();
+                        break;
+                    case 'normal':
+                        result = calculateNormalCDF();
+                        break;
+                    case 'exponential':
+                        result = calculateExponentialCDF();
+                        break;
+                }
+            }
+            
+            // Display results
+            document.getElementById('result-value').textContent = result.value.toFixed(6);
+            document.getElementById('result-explanation').textContent = result.explanation;
+            
+            // Set step-by-step solution
+            document.getElementById('steps-content').innerHTML = result.steps;
+            
+            // Render math in steps
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+            
+            // Show results container
+            document.getElementById('results').style.display = 'block';
+            
+            // Update chart
+            updateChart(result);
+        }
+        
+        function calculateBernoulliCDF() {
+            const p = parseFloat(document.getElementById('bernoulli-p').value);
+            const k = parseInt(document.getElementById('bernoulli-k').value);
+            
+            let cdf;
+            if (k < 0) {
+                cdf = 0;
+            } else if (k < 1) {
+                cdf = 1 - p;
+            } else {
+                cdf = 1;
+            }
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${k}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the Bernoulli distribution:
+                        <ul>
+                            <li>Success probability: p = ${p}</li>
+                            <li>Calculate P(X ≤ ${k})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the Bernoulli CDF formula:
+                        <div class="step-formula">
+                            \\[F(x) = \\begin{cases} 
+                            0, & \\text{if } x < 0 \\\\
+                            1-p, & \\text{if } 0 \\leq x < 1 \\\\
+                            1, & \\text{if } x \\geq 1
+                            \\end{cases}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Determine which case applies for x = ${k}:
+                        ${k < 0 ? 
+                            `<p>Since ${k} < 0, F(${k}) = 0</p>` : 
+                            k < 1 ? 
+                                `<p>Since 0 ≤ ${k} < 1, F(${k}) = 1-p = 1-${p} = ${(1-p).toFixed(6)}</p>` : 
+                                `<p>Since ${k} ≥ 1, F(${k}) = 1</p>`
+                        }
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Therefore, P(X ≤ ${k}) = ${cdf.toFixed(6)}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'bernoulli',
+                    p: p,
+                    k: k
+                }
+            };
+        }
+        
+        function calculateBinomialCDF() {
+            const n = parseInt(document.getElementById('binomial-n').value);
+            const p = parseFloat(document.getElementById('binomial-p').value);
+            const k = parseInt(document.getElementById('binomial-k').value);
+            
+            // Calculate CDF by summing PMF values from 0 to k
+            let cdf = 0;
+            const pmfValues = [];
+            
+            for (let i = 0; i <= Math.min(k, n); i++) {
+                const coef = binomialCoefficient(n, i);
+                const pmf = coef * Math.pow(p, i) * Math.pow(1 - p, n - i);
+                pmfValues.push({i: i, pmf: pmf});
+                cdf += pmf;
+            }
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${k}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            let pmfSteps = '';
+            for (let i = 0; i < pmfValues.length; i++) {
+                const val = pmfValues[i];
+                pmfSteps += `<li>P(X = ${val.i}) = \\(\\binom{${n}}{${val.i}} ${p}^{${val.i}} (1-${p})^{${n}-${val.i}} = ${val.pmf.toFixed(6)}\\)</li>`;
+            }
+            
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameters of the binomial distribution:
+                        <ul>
+                            <li>Number of trials: n = ${n}</li>
+                            <li>Success probability: p = ${p}</li>
+                            <li>Calculate P(X ≤ ${k})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        For a binomial distribution, the CDF is calculated by summing the PMF values:
+                        <div class="step-formula">
+                            \\[F(k) = P(X \\leq k) = \\sum_{i=0}^{\\lfloor k \\rfloor} \\binom{n}{i} p^i (1-p)^{n-i}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Calculate the PMF for each value from 0 to ${Math.min(k, n)}:
+                        <ul>
+                            ${pmfSteps}
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Sum all the PMF values to get the CDF:
+                        <div class="step-formula">
+                            \\[P(X \\leq ${k}) = ${pmfValues.map(v => v.pmf.toFixed(6)).join(' + ')} = ${cdf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'binomial',
+                    n: n,
+                    p: p,
+                    k: k
+                }
+            };
+        }
+        
+        function calculateGeometricCDF() {
+            const p = parseFloat(document.getElementById('geometric-p').value);
+            const k = parseInt(document.getElementById('geometric-k').value);
+            
+            // Calculate CDF: P(X ≤ k) = 1 - (1-p)^k for k ≥ 1
+            let cdf = 0;
+            if (k >= 1) {
+                cdf = 1 - Math.pow(1 - p, k);
+            }
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${k}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the geometric distribution:
+                        <ul>
+                            <li>Success probability: p = ${p}</li>
+                            <li>Calculate P(X ≤ ${k})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the geometric CDF formula:
+                        <div class="step-formula">
+                            \\[F(k) = P(X \\leq k) = \\begin{cases}
+                            0, & \\text{if } k < 1 \\\\
+                            1 - (1-p)^k, & \\text{if } k \\geq 1
+                            \\end{cases}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        ${k < 1 ? 
+                            `Since ${k} < 1, F(${k}) = 0` : 
+                            `Since ${k} ≥ 1, calculate F(${k}) = 1 - (1-${p})^${k}`
+                        }
+                        ${k >= 1 ? 
+                            `<div class="step-formula">\\[F(${k}) = 1 - (1-${p})^${k} = 1 - ${Math.pow(1-p, k).toFixed(6)} = ${cdf.toFixed(6)}\\]</div>` : 
+                            ''
+                        }
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Therefore, P(X ≤ ${k}) = ${cdf.toFixed(6)}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'geometric',
+                    p: p,
+                    k: k
+                }
+            };
+        }
+        
+        function calculatePoissonCDF() {
+            const lambda = parseFloat(document.getElementById('poisson-lambda').value);
+            const k = parseInt(document.getElementById('poisson-k').value);
+            
+            // Calculate CDF by summing PMF values from 0 to k
+            let cdf = 0;
+            const pmfValues = [];
+            
+            for (let i = 0; i <= k; i++) {
+                const pmf = (Math.pow(lambda, i) * Math.exp(-lambda)) / factorial(i);
+                pmfValues.push({i: i, pmf: pmf});
+                cdf += pmf;
+            }
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${k}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            let pmfSteps = '';
+            for (let i = 0; i < pmfValues.length; i++) {
+                const val = pmfValues[i];
+                pmfSteps += `<li>P(X = ${val.i}) = \\(\\frac{${lambda}^{${val.i}} e^{-${lambda}}}{${val.i}!} = ${val.pmf.toFixed(6)}\\)</li>`;
+            }
+            
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the Poisson distribution:
+                        <ul>
+                            <li>Rate parameter: λ = ${lambda}</li>
+                            <li>Calculate P(X ≤ ${k})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        For a Poisson distribution, the CDF is calculated by summing the PMF values:
+                        <div class="step-formula">
+                            \\[F(k) = P(X \\leq k) = \\sum_{i=0}^{\\lfloor k \\rfloor} \\frac{\\lambda^i e^{-\\lambda}}{i!}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Calculate the PMF for each value from 0 to ${k}:
+                        <ul>
+                            ${pmfSteps}
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Sum all the PMF values to get the CDF:
+                        <div class="step-formula">
+                            \\[P(X \\leq ${k}) = ${pmfValues.map(v => v.pmf.toFixed(6)).join(' + ')} = ${cdf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'poisson',
+                    lambda: lambda,
+                    k: k
+                }
+            };
+        }
+        
+        function calculateUniformCDF() {
+            const a = parseFloat(document.getElementById('uniform-a').value);
+            const b = parseFloat(document.getElementById('uniform-b').value);
+            const x = parseFloat(document.getElementById('uniform-x').value);
+            
+            // Calculate CDF: F(x) = 0 if x < a, (x-a)/(b-a) if a ≤ x ≤ b, 1 if x > b
+            let cdf;
+            if (x < a) {
+                cdf = 0;
+            } else if (x > b) {
+                cdf = 1;
+            } else {
+                cdf = (x - a) / (b - a);
+            }
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${x}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameters of the uniform distribution:
+                        <ul>
+                            <li>Lower bound: a = ${a}</li>
+                            <li>Upper bound: b = ${b}</li>
+                            <li>Calculate P(X ≤ ${x})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the uniform CDF formula:
+                        <div class="step-formula">
+                            \\[F(x) = \\begin{cases} 
+                            0, & \\text{if } x < a \\\\
+                            \\frac{x-a}{b-a}, & \\text{if } a \\leq x \\leq b \\\\
+                            1, & \\text{if } x > b
+                            \\end{cases}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Determine which case applies for x = ${x}:
+                        ${x < a ? 
+                            `<p>Since ${x} < ${a}, F(${x}) = 0</p>` : 
+                            x > b ? 
+                                `<p>Since ${x} > ${b}, F(${x}) = 1</p>` : 
+                                `<p>Since ${a} ≤ ${x} ≤ ${b}, calculate F(${x}) = \\(\\frac{${x}-${a}}{${b}-${a}} = \\frac{${(x-a).toFixed(4)}}{${(b-a).toFixed(4)}} = ${cdf.toFixed(6)}\\)</p>`
+                        }
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Therefore, P(X ≤ ${x}) = ${cdf.toFixed(6)}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'uniform',
+                    a: a,
+                    b: b,
+                    x: x
+                }
+            };
+        }
+        
+        function calculateNormalCDF() {
+            const mean = parseFloat(document.getElementById('normal-mean').value);
+            const sd = parseFloat(document.getElementById('normal-sd').value);
+            const x = parseFloat(document.getElementById('normal-x').value);
+            
+            // Calculate CDF using standard normal approximation
+            const z = (x - mean) / sd;
+            const cdf = standardNormalCDF(z);
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${x}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameters of the normal distribution:
+                        <ul>
+                            <li>Mean: μ = ${mean}</li>
+                            <li>Standard deviation: σ = ${sd}</li>
+                            <li>Calculate P(X ≤ ${x})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        For a normal distribution, we need to standardize the value by converting to a z-score:
+                        <div class="step-formula">
+                            \\[z = \\frac{x - \\mu}{\\sigma} = \\frac{${x} - ${mean}}{${sd}} = ${z.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Use the standard normal CDF (Φ) to find P(X ≤ ${x}):
+                        <div class="step-formula">
+                            \\[P(X \\leq ${x}) = P\\left(Z \\leq ${z.toFixed(6)}\\right) = \\Phi(${z.toFixed(6)}) = ${cdf.toFixed(6)}\\]
+                        </div>
+                        <p>The standard normal CDF value is calculated using a numerical approximation algorithm.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Therefore, P(X ≤ ${x}) = ${cdf.toFixed(6)}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'normal',
+                    mean: mean,
+                    sd: sd,
+                    x: x
+                }
+            };
+        }
+        
+        function calculateExponentialCDF() {
+            const lambda = parseFloat(document.getElementById('exponential-lambda').value);
+            const x = parseFloat(document.getElementById('exponential-x').value);
+            
+            // Calculate CDF: F(x) = 1 - e^(-lambda * x) for x >= 0, 0 otherwise
+            let cdf = 0;
+            if (x >= 0) {
+                cdf = 1 - Math.exp(-lambda * x);
+            }
+            
+            // Generate explanation
+            const explanation = `P(X ≤ ${x}) = ${cdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the exponential distribution:
+                        <ul>
+                            <li>Rate parameter: λ = ${lambda}</li>
+                            <li>Calculate P(X ≤ ${x})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the exponential CDF formula:
+                        <div class="step-formula">
+                            \\[F(x) = \\begin{cases} 
+                            1 - e^{-\\lambda x}, & \\text{if } x \\geq 0 \\\\
+                            0, & \\text{if } x < 0
+                            \\end{cases}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        ${x < 0 ? 
+                            `<p>Since ${x} < 0, F(${x}) = 0</p>` : 
+                            `<p>Since ${x} ≥ 0, calculate F(${x}) = 1 - e^{-${lambda} \\cdot ${x}}</p>
+                            <div class="step-formula">\\[F(${x}) = 1 - e^{-${lambda} \\cdot ${x}} = 1 - e^{-${(lambda * x).toFixed(6)}} = 1 - ${Math.exp(-lambda * x).toFixed(6)} = ${cdf.toFixed(6)}\\]</div>`
+                        }
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Therefore, P(X ≤ ${x}) = ${cdf.toFixed(6)}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: cdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'exponential',
+                    lambda: lambda,
+                    x: x
+                }
+            };
+        }
+        
+        // Chart initialization and update functions
+        let distributionChart;
+        
+        function initializeChart() {
+            const ctx = document.getElementById('distribution-chart').getContext('2d');
+            
+            distributionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [0, 1],
+                    datasets: [{
+                        label: 'Cumulative Distribution Function',
+                        data: [0, 1],
+                        backgroundColor: 'rgba(138, 180, 248, 0.2)',
+                        borderColor: 'rgba(138, 180, 248, 1)',
+                        borderWidth: 2,
+                        stepped: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Value',
+                                color: '#FFFFFF'
+                            },
+                            grid: {
+                                color: '#333333'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 1.05,
+                            title: {
+                                display: true,
+                                text: 'Probability',
+                                color: '#FFFFFF'
+                            },
+                            grid: {
+                                color: '#333333'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1E1E1E',
+                            titleColor: '#FFFFFF',
+                            bodyColor: '#B3B3B3',
+                            borderColor: '#333333',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
+            
+            // Display initial parameters
+            updateChartParams({
+                distribution: 'bernoulli',
+                p: 0.5,
+                k: 1
+            });
+        }
+        
+        function updateChart(result) {
+            const params = result.params;
+            const distribution = params.distribution;
+            
+            // Update chart based on distribution type
+            if (distribution === 'bernoulli') {
+                updateBernoulliChart(params);
+            } else if (distribution === 'binomial') {
+                updateBinomialChart(params);
+            } else if (distribution === 'geometric') {
+                updateGeometricChart(params);
+            } else if (distribution === 'poisson') {
+                updatePoissonChart(params);
+            } else if (distribution === 'uniform') {
+                updateUniformChart(params);
+            } else if (distribution === 'normal') {
+                updateNormalChart(params);
+            } else if (distribution === 'exponential') {
+                updateExponentialChart(params);
+            }
+            
+            // Update chart parameters display
+            updateChartParams(params);
+        }
+        
+        function updateBernoulliChart(params) {
+            const p = params.p;
+            const k = params.k;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Update data for CDF
+            distributionChart.data.labels = [-0.5, 0, 0, 1, 1, 1.5];
+            distributionChart.data.datasets[0].label = 'Bernoulli CDF';
+            distributionChart.data.datasets[0].data = [0, 0, 1-p, 1-p, 1, 1];
+            distributionChart.data.datasets[0].stepped = true;
+            
+            // Add point markers
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${k})`,
+                    data: Array(distributionChart.data.labels.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Set the x point value
+            const pointData = Array(distributionChart.data.labels.length).fill(null);
+            if (k < 0) {
+                pointData[0] = 0;
+            } else if (k < 1) {
+                pointData[2] = 1-p;
+            } else {
+                pointData[4] = 1;
+            }
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (k)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateBinomialChart(params) {
+            const n = params.n;
+            const p = params.p;
+            const k = params.k;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Generate all possible k values from 0 to n
+            const kValues = Array.from({length: n + 2}, (_, i) => i - 0.5);
+            
+            // Calculate CDF for each k value
+            const cdfValues = [];
+            let cumulativePmf = 0;
+            
+            // Start with 0 for values less than 0
+            cdfValues.push(0);
+            
+            for (let i = 0; i <= n; i++) {
+                const coef = binomialCoefficient(n, i);
+                const pmf = coef * Math.pow(p, i) * Math.pow(1 - p, n - i);
+                cumulativePmf += pmf;
+                
+                // Add point before (step function)
+                cdfValues.push(cumulativePmf);
+                
+                // Repeat value for the step
+                if (i < n) {
+                    cdfValues.push(cumulativePmf);
+                }
+            }
+            
+            // Update data
+            distributionChart.data.labels = kValues;
+            distributionChart.data.datasets[0].label = 'Binomial CDF';
+            distributionChart.data.datasets[0].data = cdfValues;
+            distributionChart.data.datasets[0].stepped = true;
+            
+            // Add point markers
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${k})`,
+                    data: Array(distributionChart.data.labels.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest index to k
+            const closest = kValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - k) < Math.abs(kValues[prev] - k)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(distributionChart.data.labels.length).fill(null);
+            pointData[closest] = cdfValues[closest];
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Number of Successes (k)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateGeometricChart(params) {
+            const p = params.p;
+            const k = params.k;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Generate k values up to max(k+10, 20)
+            const maxK = Math.max(k + 10, 20);
+            const kValues = [];
+            const cdfValues = [];
+            
+            // Add point at 0 (CDF is 0 for x < 1)
+            kValues.push(0);
+            cdfValues.push(0);
+            
+            // Calculate CDF for each integer k value and create step function
+            for (let i = 1; i <= maxK; i++) {
+                const cdf = 1 - Math.pow(1 - p, i);
+                
+                // Add point before (step function)
+                kValues.push(i - 0.001);
+                cdfValues.push(i === 1 ? 0 : cdfValues[cdfValues.length - 1]);
+                
+                // Add point at i
+                kValues.push(i);
+                cdfValues.push(cdf);
+            }
+            
+            // Update data
+            distributionChart.data.labels = kValues;
+            distributionChart.data.datasets[0].label = 'Geometric CDF';
+            distributionChart.data.datasets[0].data = cdfValues;
+            distributionChart.data.datasets[0].stepped = true;
+            
+            // Add point markers
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${k})`,
+                    data: Array(distributionChart.data.labels.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest index to k
+            const closest = kValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - k) < Math.abs(kValues[prev] - k)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(distributionChart.data.labels.length).fill(null);
+            pointData[closest] = cdfValues[closest];
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Number of Trials (k)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updatePoissonChart(params) {
+            const lambda = params.lambda;
+            const k = params.k;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Generate k values up to max(k+10, 3*lambda)
+            const maxK = Math.max(k + 10, Math.ceil(3 * lambda));
+            const kValues = [];
+            const cdfValues = [];
+            
+            // Add point at -0.5 (CDF is 0 for x < 0)
+            kValues.push(-0.5);
+            cdfValues.push(0);
+            
+            let cumulativePmf = 0;
+            
+            // Calculate CDF for each integer k value and create step function
+            for (let i = 0; i <= maxK; i++) {
+                const pmf = (Math.pow(lambda, i) * Math.exp(-lambda)) / factorial(i);
+                cumulativePmf += pmf;
+                
+                // Add point before (step function)
+                kValues.push(i - 0.001);
+                cdfValues.push(i === 0 ? 0 : cdfValues[cdfValues.length - 2]);
+                
+                // Add point at i
+                kValues.push(i);
+                cdfValues.push(cumulativePmf);
+            }
+            
+            // Update data
+            distributionChart.data.labels = kValues;
+            distributionChart.data.datasets[0].label = 'Poisson CDF';
+            distributionChart.data.datasets[0].data = cdfValues;
+            distributionChart.data.datasets[0].stepped = true;
+            
+            // Add point markers
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${k})`,
+                    data: Array(distributionChart.data.labels.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest index to k
+            const closest = kValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - k) < Math.abs(kValues[prev] - k)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(distributionChart.data.labels.length).fill(null);
+            pointData[closest] = cdfValues[closest];
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (k)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateUniformChart(params) {
+            const a = params.a;
+            const b = params.b;
+            const x = params.x;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Generate x values for plotting with padding
+            const padding = (b - a) * 0.2;
+            const min = a - padding;
+            const max = b + padding;
+            
+            // Create points for the piecewise linear function
+            const xValues = [min, a, b, max];
+            const cdfValues = [0, 0, 1, 1];
+            
+            // Update data
+            distributionChart.data.labels = xValues;
+            distributionChart.data.datasets[0].label = 'Uniform CDF';
+            distributionChart.data.datasets[0].data = cdfValues;
+            distributionChart.data.datasets[0].stepped = false;
+            
+            // Add point for the specified x value
+            let cdf;
+            if (x < a) {
+                cdf = 0;
+            } else if (x > b) {
+                cdf = 1;
+            } else {
+                cdf = (x - a) / (b - a);
+            }
+            
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${x})`,
+                    data: [null, null, null, null],
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Update the point dataset
+            distributionChart.data.datasets[1].data = [null, null, null, null];
+            
+            // Add the specific point for x
+            if (x >= min && x <= max) {
+                // Insert x into the sorted array and update datasets
+                let insertIndex = 0;
+                while (insertIndex < xValues.length && x > xValues[insertIndex]) {
+                    insertIndex++;
+                }
+                
+                const newXValues = [...xValues];
+                newXValues.splice(insertIndex, 0, x);
+                
+                const newCdfValues = [...cdfValues];
+                newCdfValues.splice(insertIndex, 0, cdf);
+                
+                const pointData = Array(newXValues.length).fill(null);
+                pointData[insertIndex] = cdf;
+                
+                distributionChart.data.labels = newXValues;
+                distributionChart.data.datasets[0].data = newCdfValues;
+                distributionChart.data.datasets[1].data = pointData;
+            }
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (x)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ x)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateNormalChart(params) {
+            const mean = params.mean;
+            const sd = params.sd;
+            const x = params.x;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Generate x values for plotting
+            const xValues = [];
+            const cdfValues = [];
+            
+            // Use 100 points for a smooth curve, centered at mean, spanning +/- 4 standard deviations
+            const min = mean - 4 * sd;
+            const max = mean + 4 * sd;
+            const step = (max - min) / 100;
+            
+            for (let i = 0; i <= 100; i++) {
+                const xVal = min + i * step;
+                const z = (xVal - mean) / sd;
+                const cdf = standardNormalCDF(z);
+                
+                xValues.push(xVal);
+                cdfValues.push(cdf);
+            }
+            
+            // Update data
+            distributionChart.data.labels = xValues;
+            distributionChart.data.datasets[0].label = 'Normal CDF';
+            distributionChart.data.datasets[0].data = cdfValues;
+            distributionChart.data.datasets[0].stepped = false;
+            
+            // Add point for the specified x value
+            const z = (x - mean) / sd;
+            const cdf = standardNormalCDF(z);
+            
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${x})`,
+                    data: Array(xValues.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest x value index
+            const closest = xValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - x) < Math.abs(xValues[prev] - x)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(xValues.length).fill(null);
+            pointData[closest] = cdfValues[closest];
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (x)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ x)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateExponentialChart(params) {
+            const lambda = params.lambda;
+            const x = params.x;
+            
+            // Set chart type to line for CDF
+            distributionChart.config.type = 'line';
+            
+            // Generate x values for plotting
+            const xValues = [];
+            const cdfValues = [];
+            
+            // Use 100 points from -1 to 5/lambda (covering most of the distribution)
+            const min = -1;
+            const max = 5 / lambda;
+            const step = (max - min) / 100;
+            
+            for (let i = 0; i <= 100; i++) {
+                const xVal = min + i * step;
+                let cdf = 0;
+                if (xVal >= 0) {
+                    cdf = 1 - Math.exp(-lambda * xVal);
+                }
+                
+                xValues.push(xVal);
+                cdfValues.push(cdf);
+            }
+            
+            // Update data
+            distributionChart.data.labels = xValues;
+            distributionChart.data.datasets[0].label = 'Exponential CDF';
+            distributionChart.data.datasets[0].data = cdfValues;
+            distributionChart.data.datasets[0].stepped = false;
+            
+            // Add point for the specified x value
+            let cdf = 0;
+            if (x >= 0) {
+                cdf = 1 - Math.exp(-lambda * x);
+            }
+            
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `F(${x})`,
+                    data: Array(xValues.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest x value index
+            const closest = xValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - x) < Math.abs(xValues[prev] - x)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(xValues.length).fill(null);
+            pointData[closest] = cdfValues[closest];
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (x)';
+            distributionChart.options.scales.y.title.text = 'P(X ≤ x)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateChartParams(params) {
+            const chartParams = document.getElementById('chart-params');
+            let paramsHTML = '';
+            
+            switch (params.distribution) {
+                case 'bernoulli':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">p:</span>
+                            <span class="param-value">${params.p}</span>
+                        </div>
+                    `;
+                    break;
+                case 'binomial':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">n:</span>
+                            <span class="param-value">${params.n}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-name">p:</span>
+                            <span class="param-value">${params.p}</span>
+                        </div>
+                    `;
+                    break;
+                case 'geometric':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">p:</span>
+                            <span class="param-value">${params.p}</span>
+                        </div>
+                    `;
+                    break;
+                case 'poisson':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">λ:</span>
+                            <span class="param-value">${params.lambda}</span>
+                        </div>
+                    `;
+                    break;
+                case 'uniform':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">a:</span>
+                            <span class="param-value">${params.a}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-name">b:</span>
+                            <span class="param-value">${params.b}</span>
+                        </div>
+                    `;
+                    break;
+                case 'normal':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">μ:</span>
+                            <span class="param-value">${params.mean}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-name">σ:</span>
+                            <span class="param-value">${params.sd}</span>
+                        </div>
+                    `;
+                    break;
+                case 'exponential':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">λ:</span>
+                            <span class="param-value">${params.lambda}</span>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            chartParams.innerHTML = paramsHTML;
+        }
+        
+        function resetCalculator() {
+            // Hide results
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('solution-steps').style.display = 'none';
+            document.getElementById('show-steps-btn').innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+            
+            // Reset chart to default state based on current distribution
+            const distType = document.getElementById('distribution-type').value;
+            
+            if (distType === 'discrete') {
+                const dist = document.getElementById('discrete-distribution').value;
+                switch (dist) {
+                    case 'bernoulli':
+                        updateBernoulliChart({ p: 0.5, k: 1 });
+                        break;
+                    case 'binomial':
+                        updateBinomialChart({ n: 10, p: 0.5, k: 5 });
+                        break;
+                    case 'geometric':
+                        updateGeometricChart({ p: 0.3, k: 3 });
+                        break;
+                    case 'poisson':
+                        updatePoissonChart({ lambda: 2, k: 3 });
+                        break;
+                }
+            } else {
+                const dist = document.getElementById('continuous-distribution').value;
+                switch (dist) {
+                    case 'uniform':
+                        updateUniformChart({ a: 0, b: 1, x: 0.5 });
+                        break;
+                    case 'normal':
+                        updateNormalChart({ mean: 0, sd: 1, x: 0 });
+                        break;
+                    case 'exponential':
+                        updateExponentialChart({ lambda: 1, x: 1 });
+                        break;
+                }
+            }
+        }
+        
+        function checkQuizAnswers() {
+            // Get selected answers
+            const question1 = document.querySelector('.quiz-question:nth-child(1) .quiz-option.selected');
+            const question2 = document.querySelector('.quiz-question:nth-child(3) .quiz-option.selected');
+            
+            // Check if any question is unanswered
+            if (!question1 || !question2) {
+                alert('Please answer all questions before checking.');
+                return;
+            }
+            
+            // Check question 1
+            const answer1 = question1.getAttribute('data-value');
+            const feedback1 = document.getElementById('feedback-1');
+            
+            if (answer1 === 'c') {
+                question1.classList.add('correct');
+                feedback1.textContent = 'Correct! A CDF cannot take negative values; it is always between 0 and 1.';
+                feedback1.classList.add('correct');
+            } else {
+                question1.classList.add('incorrect');
+                feedback1.textContent = 'Incorrect. The CDF is always non-negative. The false statement is that the CDF can take negative values.';
+                feedback1.classList.add('incorrect');
+            }
+            
+            // Check question 2
+            const answer2 = question2.getAttribute('data-value');
+            const feedback2 = document.getElementById('feedback-2');
+            
+            if (answer2 === 'b') {
+                question2.classList.add('correct');
+                feedback2.textContent = 'Correct! The probability P(a < X ≤ b) is calculated as F(b) - F(a).';
+                feedback2.classList.add('correct');
+            } else {
+                question2.classList.add('incorrect');
+                feedback2.textContent = 'Incorrect. The probability P(a < X ≤ b) is calculated as F(b) - F(a).';
+                feedback2.classList.add('incorrect');
+            }
+            
+            // Disable button after checking
+            document.getElementById('check-answers-btn').disabled = true;
+        }
+        
+        // Utility functions
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+        
+        function binomialCoefficient(n, k) {
+            // More efficient calculation for large numbers
+            if (k < 0 || k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            
+            // Use symmetry to minimize calculations
+            k = Math.min(k, n - k);
+            
+            let result = 1;
+            for (let i = 1; i <= k; i++) {
+                result *= (n - (k - i));
+                result /= i;
+            }
+            
+            return Math.round(result);
+        }
+        
+        // Standard normal CDF approximation (Abramowitz and Stegun method)
+        function standardNormalCDF(z) {
+            // Handle special cases
+            if (z === 0) return 0.5;
+            
+            // Use symmetry for negative values
+            const isNegative = z < 0;
+            if (isNegative) z = -z;
+            
+            // Constants for approximation
+            const a1 = 0.254829592;
+            const a2 = -0.284496736;
+            const a3 = 1.421413741;
+            const a4 = -1.453152027;
+            const a5 = 1.061405429;
+            const p = 0.3275911;
+            
+            // Approximation formula
+            const t = 1.0 / (1.0 + p * z);
+            const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-z * z / 2);
+            
+            // Return result, accounting for symmetry
+            return isNegative ? 1 - y : y;
+        }
+    </script>
+</body>
+</html>

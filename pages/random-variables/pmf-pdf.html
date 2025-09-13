@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMF & PDF | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="overview.html">Overview</a></li>
+                            <li><a class="dropdown-item active" href="pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Probability Mass Function & Probability Density Function</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Calculate and visualize PMF for discrete random variables and PDF for continuous random variables</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Calculator Form -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="calculator-form" id="pmf-pdf-calculator">
+                        <h2 class="mb-4">PMF/PDF Calculator</h2>
+                        
+                        <!-- Distribution Type Selection -->
+                        <div class="mb-4">
+                            <label for="distribution-type" class="form-label">Select Distribution Type:</label>
+                            <select class="form-select" id="distribution-type">
+                                <option value="discrete">Discrete (PMF)</option>
+                                <option value="continuous">Continuous (PDF)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Discrete Distributions (PMF) -->
+                        <div id="discrete-distributions">
+                            <div class="mb-4">
+                                <label for="discrete-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="discrete-distribution">
+                                    <option value="bernoulli">Bernoulli Distribution</option>
+                                    <option value="binomial">Binomial Distribution</option>
+                                    <option value="geometric">Geometric Distribution</option>
+                                    <option value="poisson">Poisson Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated based on selection) -->
+                            <div id="discrete-params">
+                                <!-- Bernoulli Parameters -->
+                                <div id="bernoulli-params">
+                                    <div class="mb-3">
+                                        <label for="bernoulli-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="bernoulli-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="bernoulli-k" class="form-label">Value (k):</label>
+                                        <select class="form-select" id="bernoulli-k">
+                                            <option value="0">0 (Failure)</option>
+                                            <option value="1">1 (Success)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Binomial Parameters (initially hidden) -->
+                                <div id="binomial-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="binomial-n" class="form-label">Number of Trials (n):</label>
+                                        <input type="number" class="form-control" id="binomial-n" min="1" step="1" value="10">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="binomial-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="binomial-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="binomial-k" class="form-label">Number of Successes (k):</label>
+                                        <input type="number" class="form-control" id="binomial-k" min="0" step="1" value="5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Geometric Parameters (initially hidden) -->
+                                <div id="geometric-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="geometric-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="geometric-p" min="0" max="1" step="0.01" value="0.3">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="geometric-k" class="form-label">Number of Trials (k):</label>
+                                        <input type="number" class="form-control" id="geometric-k" min="1" step="1" value="3">
+                                    </div>
+                                </div>
+                                
+                                <!-- Poisson Parameters (initially hidden) -->
+                                <div id="poisson-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="poisson-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="poisson-lambda" min="0" step="0.1" value="2">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="poisson-k" class="form-label">Value (k):</label>
+                                        <input type="number" class="form-control" id="poisson-k" min="0" step="1" value="3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Continuous Distributions (PDF) (initially hidden) -->
+                        <div id="continuous-distributions" style="display: none;">
+                            <div class="mb-4">
+                                <label for="continuous-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="continuous-distribution">
+                                    <option value="uniform">Uniform Distribution</option>
+                                    <option value="normal">Normal Distribution</option>
+                                    <option value="exponential">Exponential Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated based on selection) -->
+                            <div id="continuous-params">
+                                <!-- Uniform Parameters -->
+                                <div id="uniform-params">
+                                    <div class="mb-3">
+                                        <label for="uniform-a" class="form-label">Lower Bound (a):</label>
+                                        <input type="number" class="form-control" id="uniform-a" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uniform-b" class="form-label">Upper Bound (b):</label>
+                                        <input type="number" class="form-control" id="uniform-b" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uniform-x" class="form-label">Value (x):</label>
+                                        <input type="number" class="form-control" id="uniform-x" step="0.01" value="0.5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Normal Parameters (initially hidden) -->
+                                <div id="normal-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="normal-mean" class="form-label">Mean (μ):</label>
+                                        <input type="number" class="form-control" id="normal-mean" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="normal-sd" class="form-label">Standard Deviation (σ):</label>
+                                        <input type="number" class="form-control" id="normal-sd" min="0.01" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="normal-x" class="form-label">Value (x):</label>
+                                        <input type="number" class="form-control" id="normal-x" step="0.01" value="0">
+                                    </div>
+                                </div>
+                                
+                                <!-- Exponential Parameters (initially hidden) -->
+                                <div id="exponential-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="exponential-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="exponential-lambda" min="0.01" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exponential-x" class="form-label">Value (x):</label>
+                                        <input type="number" class="form-control" id="exponential-x" min="0" step="0.01" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" id="calculate-btn" class="btn btn-calculate">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                            <button type="button" id="reset-btn" class="btn btn-reset">
+                                <i class="fas fa-undo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div class="results-container" id="results" style="display: none;">
+                        <h3>Result</h3>
+                        <div class="result-value" id="result-value">0.25</div>
+                        <div class="result-explanation" id="result-explanation">
+                            P(X = 1) = 0.25
+                        </div>
+                        
+                        <!-- Step-by-Step Solution -->
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" type="button" id="show-steps-btn">
+                                <i class="fas fa-list-ol me-2"></i>Show Steps
+                            </button>
+                        </div>
+                        
+                        <div class="solution-steps mt-3" id="solution-steps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="steps-content">
+                                <!-- Steps will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-container mb-4">
+                        <h3>Distribution Visualization</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="distribution-params" id="chart-params">
+                                <!-- Parameters will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Info Card -->
+                    <div class="theory-block" id="distribution-info">
+                        <h3 id="distribution-title">Bernoulli Distribution</h3>
+                        <div id="distribution-description">
+                            <p>The Bernoulli distribution is a discrete probability distribution of a random variable which takes the value 1 with probability p and the value 0 with probability q = 1 - p.</p>
+                        </div>
+                        <div class="formula-display" id="distribution-formula">
+                            \[ P(X = k) = p^k (1-p)^{1-k}, \quad k \in \{0, 1\} \]
+                        </div>
+                        <div id="distribution-properties">
+                            <h4>Properties:</h4>
+                            <ul>
+                                <li>Support: \(k \in \{0, 1\}\)</li>
+                                <li>Mean: \(E[X] = p\)</li>
+                                <li>Variance: \(Var[X] = p(1-p)\)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theory Section -->
+    <section class="theory-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Understanding PMF and PDF</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h3>Probability Mass Function (PMF)</h3>
+                        <p>The <strong>Probability Mass Function (PMF)</strong> gives the probability that a discrete random variable X is exactly equal to some value x.</p>
+                        
+                        <div class="formula-display">
+                            \[ P(X = x) = P_X(x) \]
+                        </div>
+                        
+                        <h4 class="mt-4">Properties of PMF:</h4>
+                        <ul>
+                            <li>Non-negative: \(P_X(x) \geq 0\) for all \(x\)</li>
+                            <li>Sum to 1: \(\sum_{x \in \text{Range}(X)} P_X(x) = 1\)</li>
+                            <li>PMF is defined only for discrete random variables</li>
+                        </ul>
+                        
+                        <div class="example-block mt-4">
+                            <h4>Example: Bernoulli PMF</h4>
+                            <p>For a fair coin toss where X = 1 represents "heads" and X = 0 represents "tails":</p>
+                            <div class="formula-display">
+                                \[ P(X = 1) = p = 0.5 \]
+                                \[ P(X = 0) = 1-p = 0.5 \]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="theory-block">
+                        <h3>Probability Density Function (PDF)</h3>
+                        <p>The <strong>Probability Density Function (PDF)</strong> describes the relative likelihood that a continuous random variable X takes on a given value x.</p>
+                        
+                        <div class="formula-display">
+                            \[ f_X(x) \]
+                        </div>
+                        
+                        <p>Unlike the PMF, the PDF does not directly give probabilities. Instead, the probability that X takes a value in an interval [a, b] is given by:</p>
+                        
+                        <div class="formula-display">
+                            \[ P(a \leq X \leq b) = \int_a^b f_X(x) \, dx \]
+                        </div>
+                        
+                        <h4 class="mt-4">Properties of PDF:</h4>
+                        <ul>
+                            <li>Non-negative: \(f_X(x) \geq 0\) for all \(x\)</li>
+                            <li>Integrates to 1: \(\int_{-\infty}^{\infty} f_X(x) \, dx = 1\)</li>
+                            <li>PDF is defined only for continuous random variables</li>
+                        </ul>
+                        
+                        <div class="example-block mt-4">
+                            <h4>Example: Uniform PDF</h4>
+                            <p>For a random variable X that is uniformly distributed between a and b:</p>
+                            <div class="formula-display">
+                                \[ f_X(x) = 
+                                \begin{cases} 
+                                \frac{1}{b-a}, & \text{if } a \leq x \leq b \\
+                                0, & \text{otherwise} 
+                                \end{cases} \]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Differences -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="theory-block">
+                        <h3 class="text-center mb-4">Key Differences: PMF vs. PDF</h3>
+                        
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Property</th>
+                                        <th>Probability Mass Function (PMF)</th>
+                                        <th>Probability Density Function (PDF)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Type of Random Variable</td>
+                                        <td>Discrete</td>
+                                        <td>Continuous</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Values</td>
+                                        <td>Direct probabilities</td>
+                                        <td>Density values (not probabilities)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Calculation of P(X = x)</td>
+                                        <td>P(X = x) = PMF(x)</td>
+                                        <td>P(X = x) = 0 (for any single point)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Range Probabilities</td>
+                                        <td>P(a ≤ X ≤ b) = ∑<sub>x∈[a,b]</sub> PMF(x)</td>
+                                        <td>P(a ≤ X ≤ b) = ∫<sub>a</sub><sup>b</sup> PDF(x) dx</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sum/Integral</td>
+                                        <td>∑<sub>all x</sub> PMF(x) = 1</td>
+                                        <td>∫<sub>-∞</sub><sup>∞</sup> PDF(x) dx = 1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="applications-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Applications of PMF and PDF</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3>Finance & Risk Analysis</h3>
+                        <p>PMFs and PDFs are used to model financial returns, assess investment risks, and price options. The normal distribution's PDF is often used to model stock price changes.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <h3>Medical Research</h3>
+                        <p>PMFs like the binomial distribution model success/failure in clinical trials, while PDFs like the normal distribution describe the distribution of physical measurements in a population.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Telecommunications</h3>
+                        <p>The Poisson PMF models call arrivals at a call center, while exponential PDFs model the time between consecutive calls or data packet arrivals in networks.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Engineering & Reliability</h3>
+                        <p>PDFs like the exponential or Weibull distribution model component lifetimes, while PMFs help analyze discrete failure counts in complex systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Test Your Knowledge</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="quiz-card">
+                        <h4>Quick Quiz: PMF & PDF</h4>
+                        
+                        <div class="quiz-question">
+                            <p>1. Which of the following statements is true about the probability mass function (PMF)?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> It is used for continuous random variables
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> It can have values greater than 1
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> It gives the probability that a discrete random variable equals a specific value
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> The sum of all PMF values can be any number
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-1"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>2. For a continuous random variable X, what is P(X = a) where a is any specific value?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> Equal to the PDF at point a
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> Always 0
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> Equal to the CDF at point a
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> Depends on the specific distribution
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-2"></div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="check-answers-btn">
+                                <i class="fas fa-check-circle me-2"></i>Check Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../../pages/about.html">About</a></li>
+                        <li><a href="../../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/chart-config.js"></script>
+    
+    <!-- PMF/PDF Calculator JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Distribution type change handler
+            const distributionTypeSelect = document.getElementById('distribution-type');
+            distributionTypeSelect.addEventListener('change', function() {
+                if (this.value === 'discrete') {
+                    document.getElementById('discrete-distributions').style.display = 'block';
+                    document.getElementById('continuous-distributions').style.display = 'none';
+                    updateDiscreteParams();
+                } else {
+                    document.getElementById('discrete-distributions').style.display = 'none';
+                    document.getElementById('continuous-distributions').style.display = 'block';
+                    updateContinuousParams();
+                }
+                
+                // Reset the form and clear results
+                resetCalculator();
+            });
+            
+            // Discrete distribution change handler
+            const discreteDistSelect = document.getElementById('discrete-distribution');
+            discreteDistSelect.addEventListener('change', function() {
+                updateDiscreteParams();
+                resetCalculator();
+            });
+            
+            // Continuous distribution change handler
+            const continuousDistSelect = document.getElementById('continuous-distribution');
+            continuousDistSelect.addEventListener('change', function() {
+                updateContinuousParams();
+                resetCalculator();
+            });
+            
+            // Calculate button handler
+            document.getElementById('calculate-btn').addEventListener('click', function() {
+                calculateProbability();
+            });
+            
+            // Reset button handler
+            document.getElementById('reset-btn').addEventListener('click', function() {
+                resetCalculator();
+            });
+            
+            // Show/hide steps handler
+            document.getElementById('show-steps-btn').addEventListener('click', function() {
+                const stepsElement = document.getElementById('solution-steps');
+                if (stepsElement.style.display === 'none') {
+                    stepsElement.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-list-ol me-2"></i>Hide Steps';
+                } else {
+                    stepsElement.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+                }
+            });
+            
+            // Quiz handlers
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Deselect all options in the same question
+                    const questionDiv = this.closest('.quiz-question');
+                    questionDiv.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                });
+            });
+            
+            document.getElementById('check-answers-btn').addEventListener('click', function() {
+                checkQuizAnswers();
+            });
+            
+            // Initialize with default values
+            updateDiscreteParams();
+            initializeChart();
+        });
+        
+        function updateDiscreteParams() {
+            const selected = document.getElementById('discrete-distribution').value;
+            
+            // Hide all parameter divs
+            document.querySelectorAll('#discrete-params > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // Show the selected distribution's parameters
+            document.getElementById(`${selected}-params`).style.display = 'block';
+            
+            // Update distribution info
+            updateDistributionInfo(selected);
+        }
+        
+        function updateContinuousParams() {
+            const selected = document.getElementById('continuous-distribution').value;
+            
+            // Hide all parameter divs
+            document.querySelectorAll('#continuous-params > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // Show the selected distribution's parameters
+            document.getElementById(`${selected}-params`).style.display = 'block';
+            
+            // Update distribution info
+            updateDistributionInfo(selected);
+        }
+        
+        function updateDistributionInfo(distribution) {
+            const titles = {
+                'bernoulli': 'Bernoulli Distribution',
+                'binomial': 'Binomial Distribution',
+                'geometric': 'Geometric Distribution',
+                'poisson': 'Poisson Distribution',
+                'uniform': 'Uniform Distribution',
+                'normal': 'Normal Distribution',
+                'exponential': 'Exponential Distribution'
+            };
+            
+            const descriptions = {
+                'bernoulli': 'The Bernoulli distribution is a discrete probability distribution of a random variable which takes the value 1 with probability p and the value 0 with probability q = 1 - p.',
+                'binomial': 'The binomial distribution models the number of successes in n independent trials, each with the same probability p of success.',
+                'geometric': 'The geometric distribution models the number of trials needed to get the first success in a sequence of independent trials, each with the same probability p of success.',
+                'poisson': 'The Poisson distribution models the number of events occurring in a fixed interval of time or space with a known average rate and independently of the time since the last event.',
+                'uniform': 'The uniform distribution is a continuous probability distribution where all outcomes in a finite interval are equally likely.',
+                'normal': 'The normal distribution is a continuous probability distribution that is symmetric about the mean, showing that data near the mean are more frequent in occurrence than data far from the mean.',
+                'exponential': 'The exponential distribution models the time between events in a Poisson point process, i.e., a process in which events occur continuously and independently at a constant average rate.'
+            };
+            
+            const formulas = {
+                'bernoulli': '\\[ P(X = k) = p^k (1-p)^{1-k}, \\quad k \\in \\{0, 1\\} \\]',
+                'binomial': '\\[ P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}, \\quad k \\in \\{0, 1, 2, \\ldots, n\\} \\]',
+                'geometric': '\\[ P(X = k) = (1-p)^{k-1} p, \\quad k \\in \\{1, 2, 3, \\ldots\\} \\]',
+                'poisson': '\\[ P(X = k) = \\frac{\\lambda^k e^{-\\lambda}}{k!}, \\quad k \\in \\{0, 1, 2, \\ldots\\} \\]',
+                'uniform': '\\[ f(x) = \\begin{cases} \\frac{1}{b-a}, & \\text{for } a \\leq x \\leq b \\\\ 0, & \\text{otherwise} \\end{cases} \\]',
+                'normal': '\\[ f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2} \\]',
+                'exponential': '\\[ f(x) = \\begin{cases} \\lambda e^{-\\lambda x}, & \\text{for } x \\geq 0 \\\\ 0, & \\text{for } x < 0 \\end{cases} \\]'
+            };
+            
+            const properties = {
+                'bernoulli': '<h4>Properties:</h4><ul><li>Support: \\(k \\in \\{0, 1\\}\\)</li><li>Mean: \\(E[X] = p\\)</li><li>Variance: \\(Var[X] = p(1-p)\\)</li></ul>',
+                'binomial': '<h4>Properties:</h4><ul><li>Support: \\(k \\in \\{0, 1, 2, \\ldots, n\\}\\)</li><li>Mean: \\(E[X] = np\\)</li><li>Variance: \\(Var[X] = np(1-p)\\)</li></ul>',
+                'geometric': '<h4>Properties:</h4><ul><li>Support: \\(k \\in \\{1, 2, 3, \\ldots\\}\\)</li><li>Mean: \\(E[X] = \\frac{1}{p}\\)</li><li>Variance: \\(Var[X] = \\frac{1-p}{p^2}\\)</li></ul>',
+                'poisson': '<h4>Properties:</h4><ul><li>Support: \\(k \\in \\{0, 1, 2, \\ldots\\}\\)</li><li>Mean: \\(E[X] = \\lambda\\)</li><li>Variance: \\(Var[X] = \\lambda\\)</li></ul>',
+                'uniform': '<h4>Properties:</h4><ul><li>Support: \\(x \\in [a, b]\\)</li><li>Mean: \\(E[X] = \\frac{a+b}{2}\\)</li><li>Variance: \\(Var[X] = \\frac{(b-a)^2}{12}\\)</li></ul>',
+                'normal': '<h4>Properties:</h4><ul><li>Support: \\(x \\in (-\\infty, \\infty)\\)</li><li>Mean: \\(E[X] = \\mu\\)</li><li>Variance: \\(Var[X] = \\sigma^2\\)</li></ul>',
+                'exponential': '<h4>Properties:</h4><ul><li>Support: \\(x \\in [0, \\infty)\\)</li><li>Mean: \\(E[X] = \\frac{1}{\\lambda}\\)</li><li>Variance: \\(Var[X] = \\frac{1}{\\lambda^2}\\)</li></ul>'
+            };
+            
+            document.getElementById('distribution-title').textContent = titles[distribution];
+            document.getElementById('distribution-description').innerHTML = `<p>${descriptions[distribution]}</p>`;
+            document.getElementById('distribution-formula').innerHTML = formulas[distribution];
+            document.getElementById('distribution-properties').innerHTML = properties[distribution];
+            
+            // Render formulas with MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+        
+        function calculateProbability() {
+            const distType = document.getElementById('distribution-type').value;
+            let result, explanation, steps;
+            
+            if (distType === 'discrete') {
+                const dist = document.getElementById('discrete-distribution').value;
+                switch (dist) {
+                    case 'bernoulli':
+                        result = calculateBernoulli();
+                        break;
+                    case 'binomial':
+                        result = calculateBinomial();
+                        break;
+                    case 'geometric':
+                        result = calculateGeometric();
+                        break;
+                    case 'poisson':
+                        result = calculatePoisson();
+                        break;
+                }
+            } else {
+                const dist = document.getElementById('continuous-distribution').value;
+                switch (dist) {
+                    case 'uniform':
+                        result = calculateUniform();
+                        break;
+                    case 'normal':
+                        result = calculateNormal();
+                        break;
+                    case 'exponential':
+                        result = calculateExponential();
+                        break;
+                }
+            }
+            
+            // Display results
+            document.getElementById('result-value').textContent = result.value.toFixed(6);
+            document.getElementById('result-explanation').textContent = result.explanation;
+            
+            // Set step-by-step solution
+            document.getElementById('steps-content').innerHTML = result.steps;
+            
+            // Render math in steps
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+            
+            // Show results container
+            document.getElementById('results').style.display = 'block';
+            
+            // Update chart
+            updateChart(result);
+        }
+        
+        function calculateBernoulli() {
+            const p = parseFloat(document.getElementById('bernoulli-p').value);
+            const k = parseInt(document.getElementById('bernoulli-k').value);
+            
+            // Calculate PMF: P(X = k) = p^k * (1-p)^(1-k)
+            const pmf = (k === 1) ? p : 1 - p;
+            
+            // Generate explanation
+            const explanation = `P(X = ${k}) = ${pmf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the Bernoulli distribution:
+                        <ul>
+                            <li>Success probability: p = ${p}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the Bernoulli PMF formula:
+                        <div class="step-formula">
+                            \\[P(X = k) = p^k \\cdot (1-p)^{1-k}, \\quad k \\in \\{0, 1\\}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Substitute the values:
+                        <div class="step-formula">
+                            \\[P(X = ${k}) = ${p}^{${k}} \\cdot (1-${p})^{1-${k}} = ${pmf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pmf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'bernoulli',
+                    p: p,
+                    k: k
+                }
+            };
+        }
+        
+        function calculateBinomial() {
+            const n = parseInt(document.getElementById('binomial-n').value);
+            const p = parseFloat(document.getElementById('binomial-p').value);
+            const k = parseInt(document.getElementById('binomial-k').value);
+            
+            // Calculate binomial coefficient
+            const coef = binomialCoefficient(n, k);
+            
+            // Calculate PMF: P(X = k) = (n choose k) * p^k * (1-p)^(n-k)
+            const pmf = coef * Math.pow(p, k) * Math.pow(1 - p, n - k);
+            
+            // Generate explanation
+            const explanation = `P(X = ${k}) = ${pmf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameters of the binomial distribution:
+                        <ul>
+                            <li>Number of trials: n = ${n}</li>
+                            <li>Success probability: p = ${p}</li>
+                            <li>Number of successes: k = ${k}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Calculate the binomial coefficient:
+                        <div class="step-formula">
+                            \\[\\binom{n}{k} = \\frac{n!}{k!(n-k)!} = \\frac{${n}!}{${k}!(${n}-${k})!} = ${coef}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Apply the binomial PMF formula:
+                        <div class="step-formula">
+                            \\[P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Substitute the values:
+                        <div class="step-formula">
+                            \\[P(X = ${k}) = ${coef} \\cdot ${p}^{${k}} \\cdot (1-${p})^{${n}-${k}} = ${coef} \\cdot ${Math.pow(p, k).toFixed(6)} \\cdot ${Math.pow(1-p, n-k).toFixed(6)} = ${pmf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pmf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'binomial',
+                    n: n,
+                    p: p,
+                    k: k
+                }
+            };
+        }
+        
+        function calculateGeometric() {
+            const p = parseFloat(document.getElementById('geometric-p').value);
+            const k = parseInt(document.getElementById('geometric-k').value);
+            
+            // Calculate PMF: P(X = k) = (1-p)^(k-1) * p
+            const pmf = Math.pow(1 - p, k - 1) * p;
+            
+            // Generate explanation
+            const explanation = `P(X = ${k}) = ${pmf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the geometric distribution:
+                        <ul>
+                            <li>Success probability: p = ${p}</li>
+                            <li>Number of trials: k = ${k}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the geometric PMF formula:
+                        <div class="step-formula">
+                            \\[P(X = k) = (1-p)^{k-1} \\cdot p\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Substitute the values:
+                        <div class="step-formula">
+                            \\[P(X = ${k}) = (1-${p})^{${k}-1} \\cdot ${p} = ${Math.pow(1-p, k-1).toFixed(6)} \\cdot ${p} = ${pmf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pmf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'geometric',
+                    p: p,
+                    k: k
+                }
+            };
+        }
+        
+        function calculatePoisson() {
+            const lambda = parseFloat(document.getElementById('poisson-lambda').value);
+            const k = parseInt(document.getElementById('poisson-k').value);
+            
+            // Calculate PMF: P(X = k) = (lambda^k * e^(-lambda)) / k!
+            const pmf = (Math.pow(lambda, k) * Math.exp(-lambda)) / factorial(k);
+            
+            // Generate explanation
+            const explanation = `P(X = ${k}) = ${pmf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the Poisson distribution:
+                        <ul>
+                            <li>Rate parameter: λ = ${lambda}</li>
+                            <li>Value: k = ${k}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the Poisson PMF formula:
+                        <div class="step-formula">
+                            \\[P(X = k) = \\frac{\\lambda^k e^{-\\lambda}}{k!}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Calculate the factorial of k:
+                        <div class="step-formula">
+                            \\[${k}! = ${factorial(k)}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Substitute the values:
+                        <div class="step-formula">
+                            \\[P(X = ${k}) = \\frac{${lambda}^{${k}} \\cdot e^{-${lambda}}}{${k}!} = \\frac{${Math.pow(lambda, k).toFixed(6)} \\cdot ${Math.exp(-lambda).toFixed(6)}}{${factorial(k)}} = ${pmf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pmf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'poisson',
+                    lambda: lambda,
+                    k: k
+                }
+            };
+        }
+        
+        function calculateUniform() {
+            const a = parseFloat(document.getElementById('uniform-a').value);
+            const b = parseFloat(document.getElementById('uniform-b').value);
+            const x = parseFloat(document.getElementById('uniform-x').value);
+            
+            // Calculate PDF: f(x) = 1/(b-a) for a <= x <= b, 0 otherwise
+            let pdf = 0;
+            if (x >= a && x <= b) {
+                pdf = 1 / (b - a);
+            }
+            
+            // Generate explanation
+            const explanation = `f(${x}) = ${pdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameters of the uniform distribution:
+                        <ul>
+                            <li>Lower bound: a = ${a}</li>
+                            <li>Upper bound: b = ${b}</li>
+                            <li>Value: x = ${x}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the uniform PDF formula:
+                        <div class="step-formula">
+                            \\[f(x) = \\begin{cases} 
+                            \\frac{1}{b-a}, & \\text{if } a \\leq x \\leq b \\\\
+                            0, & \\text{otherwise} 
+                            \\end{cases}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Check if ${x} is within the interval [${a}, ${b}]:
+                        ${x >= a && x <= b ? `${a} ≤ ${x} ≤ ${b}, so x is within the interval.` : `${x} is not within the interval [${a}, ${b}], so the PDF is 0.`}
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        ${x >= a && x <= b ? 
+                            `Calculate the PDF value:<div class="step-formula">\\[f(${x}) = \\frac{1}{${b}-${a}} = \\frac{1}{${b-a}} = ${pdf.toFixed(6)}\\]</div>` : 
+                            `Since x is outside the interval, f(${x}) = 0`}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'uniform',
+                    a: a,
+                    b: b,
+                    x: x
+                }
+            };
+        }
+        
+        function calculateNormal() {
+            const mean = parseFloat(document.getElementById('normal-mean').value);
+            const sd = parseFloat(document.getElementById('normal-sd').value);
+            const x = parseFloat(document.getElementById('normal-x').value);
+            
+            // Calculate PDF: f(x) = (1/(sd*sqrt(2π))) * e^(-((x-mean)^2)/(2*sd^2))
+            const z = (x - mean) / sd;
+            const pdf = (1 / (sd * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * z * z);
+            
+            // Generate explanation
+            const explanation = `f(${x}) = ${pdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameters of the normal distribution:
+                        <ul>
+                            <li>Mean: μ = ${mean}</li>
+                            <li>Standard deviation: σ = ${sd}</li>
+                            <li>Value: x = ${x}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the normal PDF formula:
+                        <div class="step-formula">
+                            \\[f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Calculate the standard score (z-score):
+                        <div class="step-formula">
+                            \\[z = \\frac{x - \\mu}{\\sigma} = \\frac{${x} - ${mean}}{${sd}} = ${z.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        Substitute into the PDF formula:
+                        <div class="step-formula">
+                            \\[f(${x}) = \\frac{1}{${sd}\\sqrt{2\\pi}} e^{-\\frac{1}{2}(${z.toFixed(6)})^2} = \\frac{1}{${sd} \\cdot ${Math.sqrt(2 * Math.PI).toFixed(6)}} \\cdot e^{-${(0.5 * z * z).toFixed(6)}} = ${pdf.toFixed(6)}\\]
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'normal',
+                    mean: mean,
+                    sd: sd,
+                    x: x
+                }
+            };
+        }
+        
+        function calculateExponential() {
+            const lambda = parseFloat(document.getElementById('exponential-lambda').value);
+            const x = parseFloat(document.getElementById('exponential-x').value);
+            
+            // Calculate PDF: f(x) = lambda * e^(-lambda * x) for x >= 0, 0 otherwise
+            let pdf = 0;
+            if (x >= 0) {
+                pdf = lambda * Math.exp(-lambda * x);
+            }
+            
+            // Generate explanation
+            const explanation = `f(${x}) = ${pdf.toFixed(6)}`;
+            
+            // Generate steps
+            const steps = `
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        Identify the parameter of the exponential distribution:
+                        <ul>
+                            <li>Rate parameter: λ = ${lambda}</li>
+                            <li>Value: x = ${x}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        Apply the exponential PDF formula:
+                        <div class="step-formula">
+                            \\[f(x) = \\begin{cases} 
+                            \\lambda e^{-\\lambda x}, & \\text{if } x \\geq 0 \\\\
+                            0, & \\text{if } x < 0 
+                            \\end{cases}\\]
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        Check if ${x} is non-negative:
+                        ${x >= 0 ? `${x} ≥ 0, so we can apply the formula.` : `${x} < 0, so the PDF is 0.`}
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        ${x >= 0 ? 
+                            `Calculate the PDF value:<div class="step-formula">\\[f(${x}) = ${lambda} \\cdot e^{-${lambda} \\cdot ${x}} = ${lambda} \\cdot e^{-${(lambda * x).toFixed(6)}} = ${lambda} \\cdot ${Math.exp(-lambda * x).toFixed(6)} = ${pdf.toFixed(6)}\\]</div>` : 
+                            `Since x is negative, f(${x}) = 0`}
+                    </div>
+                </div>
+            `;
+            
+            return {
+                value: pdf,
+                explanation: explanation,
+                steps: steps,
+                params: {
+                    distribution: 'exponential',
+                    lambda: lambda,
+                    x: x
+                }
+            };
+        }
+        
+        // Chart initialization and update functions
+        let distributionChart;
+        
+        function initializeChart() {
+            const ctx = document.getElementById('distribution-chart').getContext('2d');
+            
+            distributionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [0, 1],
+                    datasets: [{
+                        label: 'Probability Mass Function',
+                        data: [0.5, 0.5],
+                        backgroundColor: 'rgba(138, 180, 248, 0.6)',
+                        borderColor: 'rgba(138, 180, 248, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Value',
+                                color: '#FFFFFF'
+                            },
+                            grid: {
+                                color: '#333333'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Probability',
+                                color: '#FFFFFF'
+                            },
+                            grid: {
+                                color: '#333333'
+                            },
+                            ticks: {
+                                color: '#B3B3B3'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1E1E1E',
+                            titleColor: '#FFFFFF',
+                            bodyColor: '#B3B3B3',
+                            borderColor: '#333333',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
+            
+            // Display initial parameters
+            updateChartParams({
+                distribution: 'bernoulli',
+                p: 0.5,
+                k: 1
+            });
+        }
+        
+        function updateChart(result) {
+            const params = result.params;
+            const distribution = params.distribution;
+            
+            // Update chart based on distribution type
+            if (distribution === 'bernoulli') {
+                updateBernoulliChart(params);
+            } else if (distribution === 'binomial') {
+                updateBinomialChart(params);
+            } else if (distribution === 'geometric') {
+                updateGeometricChart(params);
+            } else if (distribution === 'poisson') {
+                updatePoissonChart(params);
+            } else if (distribution === 'uniform') {
+                updateUniformChart(params);
+            } else if (distribution === 'normal') {
+                updateNormalChart(params);
+            } else if (distribution === 'exponential') {
+                updateExponentialChart(params);
+            }
+            
+            // Update chart parameters display
+            updateChartParams(params);
+        }
+        
+        function updateBernoulliChart(params) {
+            const p = params.p;
+            const k = params.k;
+            
+            // Set chart type to bar for discrete distribution
+            distributionChart.config.type = 'bar';
+            
+            // Update data
+            distributionChart.data.labels = [0, 1];
+            distributionChart.data.datasets[0].label = 'Bernoulli PMF';
+            distributionChart.data.datasets[0].data = [1 - p, p];
+            
+            // Highlight the selected k value
+            distributionChart.data.datasets[0].backgroundColor = [0, 1].map(val => 
+                val === k ? 'rgba(3, 218, 198, 0.6)' : 'rgba(138, 180, 248, 0.6)'
+            );
+            distributionChart.data.datasets[0].borderColor = [0, 1].map(val => 
+                val === k ? 'rgba(3, 218, 198, 1)' : 'rgba(138, 180, 248, 1)'
+            );
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (k)';
+            distributionChart.options.scales.y.title.text = 'P(X = k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateBinomialChart(params) {
+            const n = params.n;
+            const p = params.p;
+            const k = params.k;
+            
+            // Set chart type to bar for discrete distribution
+            distributionChart.config.type = 'bar';
+            
+            // Generate all possible k values from 0 to n
+            const kValues = Array.from({length: n + 1}, (_, i) => i);
+            
+            // Calculate PMF for each k value
+            const pmfValues = kValues.map(val => {
+                const coef = binomialCoefficient(n, val);
+                return coef * Math.pow(p, val) * Math.pow(1 - p, n - val);
+            });
+            
+            // Update data
+            distributionChart.data.labels = kValues;
+            distributionChart.data.datasets[0].label = 'Binomial PMF';
+            distributionChart.data.datasets[0].data = pmfValues;
+            
+            // Highlight the selected k value
+            distributionChart.data.datasets[0].backgroundColor = kValues.map(val => 
+                val === k ? 'rgba(3, 218, 198, 0.6)' : 'rgba(138, 180, 248, 0.6)'
+            );
+            distributionChart.data.datasets[0].borderColor = kValues.map(val => 
+                val === k ? 'rgba(3, 218, 198, 1)' : 'rgba(138, 180, 248, 1)'
+            );
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Number of Successes (k)';
+            distributionChart.options.scales.y.title.text = 'P(X = k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateGeometricChart(params) {
+            const p = params.p;
+            const k = params.k;
+            
+            // Set chart type to bar for discrete distribution
+            distributionChart.config.type = 'bar';
+            
+            // Generate k values from 1 to max(k+10, 20)
+            const maxK = Math.max(k + 10, 20);
+            const kValues = Array.from({length: maxK}, (_, i) => i + 1);
+            
+            // Calculate PMF for each k value
+            const pmfValues = kValues.map(val => Math.pow(1 - p, val - 1) * p);
+            
+            // Update data
+            distributionChart.data.labels = kValues;
+            distributionChart.data.datasets[0].label = 'Geometric PMF';
+            distributionChart.data.datasets[0].data = pmfValues;
+            
+            // Highlight the selected k value
+            distributionChart.data.datasets[0].backgroundColor = kValues.map(val => 
+                val === k ? 'rgba(3, 218, 198, 0.6)' : 'rgba(138, 180, 248, 0.6)'
+            );
+            distributionChart.data.datasets[0].borderColor = kValues.map(val => 
+                val === k ? 'rgba(3, 218, 198, 1)' : 'rgba(138, 180, 248, 1)'
+            );
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Number of Trials (k)';
+            distributionChart.options.scales.y.title.text = 'P(X = k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updatePoissonChart(params) {
+            const lambda = params.lambda;
+            const k = params.k;
+            
+            // Set chart type to bar for discrete distribution
+            distributionChart.config.type = 'bar';
+            
+            // Generate k values from 0 to max(k+10, 3*lambda)
+            const maxK = Math.max(k + 10, Math.ceil(3 * lambda));
+            const kValues = Array.from({length: maxK + 1}, (_, i) => i);
+            
+            // Calculate PMF for each k value
+            const pmfValues = kValues.map(val => {
+                return (Math.pow(lambda, val) * Math.exp(-lambda)) / factorial(val);
+            });
+            
+            // Update data
+            distributionChart.data.labels = kValues;
+            distributionChart.data.datasets[0].label = 'Poisson PMF';
+            distributionChart.data.datasets[0].data = pmfValues;
+            
+            // Highlight the selected k value
+            distributionChart.data.datasets[0].backgroundColor = kValues.map(val => 
+                val === k ? 'rgba(3, 218, 198, 0.6)' : 'rgba(138, 180, 248, 0.6)'
+            );
+            distributionChart.data.datasets[0].borderColor = kValues.map(val => 
+                val === k ? 'rgba(3, 218, 198, 1)' : 'rgba(138, 180, 248, 1)'
+            );
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (k)';
+            distributionChart.options.scales.y.title.text = 'P(X = k)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateUniformChart(params) {
+            const a = params.a;
+            const b = params.b;
+            const x = params.x;
+            
+            // Set chart type to line for continuous distribution
+            distributionChart.config.type = 'line';
+            
+            // Generate x values for plotting
+            const xValues = [];
+            const pdfValues = [];
+            
+            // Add points slightly outside the bounds for better visualization
+            const padding = (b - a) * 0.1;
+            const min = a - padding;
+            const max = b + padding;
+            
+            // Add points to create step function
+            xValues.push(min);
+            pdfValues.push(0);
+            
+            xValues.push(a);
+            pdfValues.push(0);
+            
+            xValues.push(a);
+            pdfValues.push(1 / (b - a));
+            
+            xValues.push(b);
+            pdfValues.push(1 / (b - a));
+            
+            xValues.push(b);
+            pdfValues.push(0);
+            
+            xValues.push(max);
+            pdfValues.push(0);
+            
+            // Update data
+            distributionChart.data.labels = xValues;
+            distributionChart.data.datasets[0].label = 'Uniform PDF';
+            distributionChart.data.datasets[0].data = pdfValues;
+            distributionChart.data.datasets[0].backgroundColor = 'rgba(138, 180, 248, 0.2)';
+            distributionChart.data.datasets[0].borderColor = 'rgba(138, 180, 248, 1)';
+            distributionChart.data.datasets[0].pointRadius = 0;
+            distributionChart.data.datasets[0].tension = 0;
+            distributionChart.data.datasets[0].stepped = true;
+            
+            // Add point for the specified x value
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `f(${x})`,
+                    data: Array(xValues.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Set the x point value
+            const pointData = Array(xValues.length).fill(null);
+            if (x >= a && x <= b) {
+                pointData[2] = 1 / (b - a);
+            } else {
+                pointData[0] = 0;
+            }
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (x)';
+            distributionChart.options.scales.y.title.text = 'f(x)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateNormalChart(params) {
+            const mean = params.mean;
+            const sd = params.sd;
+            const x = params.x;
+            
+            // Set chart type to line for continuous distribution
+            distributionChart.config.type = 'line';
+            
+            // Generate x values for plotting
+            const xValues = [];
+            const pdfValues = [];
+            
+            // Use 100 points for a smooth curve, centered at mean, spanning +/- 4 standard deviations
+            const min = mean - 4 * sd;
+            const max = mean + 4 * sd;
+            const step = (max - min) / 100;
+            
+            for (let i = 0; i <= 100; i++) {
+                const xVal = min + i * step;
+                xValues.push(xVal);
+                
+                const z = (xVal - mean) / sd;
+                const pdf = (1 / (sd * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * z * z);
+                pdfValues.push(pdf);
+            }
+            
+            // Update data
+            distributionChart.data.labels = xValues;
+            distributionChart.data.datasets[0].label = 'Normal PDF';
+            distributionChart.data.datasets[0].data = pdfValues;
+            distributionChart.data.datasets[0].backgroundColor = 'rgba(138, 180, 248, 0.2)';
+            distributionChart.data.datasets[0].borderColor = 'rgba(138, 180, 248, 1)';
+            distributionChart.data.datasets[0].pointRadius = 0;
+            distributionChart.data.datasets[0].tension = 0.4;
+            distributionChart.data.datasets[0].stepped = false;
+            
+            // Add point for the specified x value
+            const z = (x - mean) / sd;
+            const pdf = (1 / (sd * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * z * z);
+            
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `f(${x})`,
+                    data: Array(xValues.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest x value index
+            const closest = xValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - x) < Math.abs(xValues[prev] - x)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(xValues.length).fill(null);
+            pointData[closest] = pdfValues[closest];
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (x)';
+            distributionChart.options.scales.y.title.text = 'f(x)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateExponentialChart(params) {
+            const lambda = params.lambda;
+            const x = params.x;
+            
+            // Set chart type to line for continuous distribution
+            distributionChart.config.type = 'line';
+            
+            // Generate x values for plotting
+            const xValues = [];
+            const pdfValues = [];
+            
+            // Use 100 points from 0 to 5/lambda (covering most of the distribution)
+            const max = 5 / lambda;
+            const step = max / 100;
+            
+            for (let i = 0; i <= 100; i++) {
+                const xVal = i * step;
+                xValues.push(xVal);
+                
+                const pdf = lambda * Math.exp(-lambda * xVal);
+                pdfValues.push(pdf);
+            }
+            
+            // Update data
+            distributionChart.data.labels = xValues;
+            distributionChart.data.datasets[0].label = 'Exponential PDF';
+            distributionChart.data.datasets[0].data = pdfValues;
+            distributionChart.data.datasets[0].backgroundColor = 'rgba(138, 180, 248, 0.2)';
+            distributionChart.data.datasets[0].borderColor = 'rgba(138, 180, 248, 1)';
+            distributionChart.data.datasets[0].pointRadius = 0;
+            distributionChart.data.datasets[0].tension = 0.4;
+            distributionChart.data.datasets[0].stepped = false;
+            
+            // Add point for the specified x value
+            if (distributionChart.data.datasets.length === 1) {
+                distributionChart.data.datasets.push({
+                    label: `f(${x})`,
+                    data: Array(xValues.length).fill(null),
+                    backgroundColor: 'rgba(3, 218, 198, 1)',
+                    borderColor: 'rgba(3, 218, 198, 1)',
+                    borderWidth: 1,
+                    pointRadius: 5,
+                    pointStyle: 'circle'
+                });
+            }
+            
+            // Find closest x value index
+            const closest = xValues.reduce((prev, curr, idx) => {
+                return (Math.abs(curr - x) < Math.abs(xValues[prev] - x)) ? idx : prev;
+            }, 0);
+            
+            // Set the x point value
+            const pointData = Array(xValues.length).fill(null);
+            if (x >= 0) {
+                pointData[closest] = pdfValues[closest];
+            }
+            distributionChart.data.datasets[1].data = pointData;
+            
+            // Update scales
+            distributionChart.options.scales.x.title.text = 'Value (x)';
+            distributionChart.options.scales.y.title.text = 'f(x)';
+            
+            // Update chart
+            distributionChart.update();
+        }
+        
+        function updateChartParams(params) {
+            const chartParams = document.getElementById('chart-params');
+            let paramsHTML = '';
+            
+            switch (params.distribution) {
+                case 'bernoulli':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">p:</span>
+                            <span class="param-value">${params.p}</span>
+                        </div>
+                    `;
+                    break;
+                case 'binomial':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">n:</span>
+                            <span class="param-value">${params.n}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-name">p:</span>
+                            <span class="param-value">${params.p}</span>
+                        </div>
+                    `;
+                    break;
+                case 'geometric':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">p:</span>
+                            <span class="param-value">${params.p}</span>
+                        </div>
+                    `;
+                    break;
+                case 'poisson':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">λ:</span>
+                            <span class="param-value">${params.lambda}</span>
+                        </div>
+                    `;
+                    break;
+                case 'uniform':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">a:</span>
+                            <span class="param-value">${params.a}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-name">b:</span>
+                            <span class="param-value">${params.b}</span>
+                        </div>
+                    `;
+                    break;
+                case 'normal':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">μ:</span>
+                            <span class="param-value">${params.mean}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-name">σ:</span>
+                            <span class="param-value">${params.sd}</span>
+                        </div>
+                    `;
+                    break;
+                case 'exponential':
+                    paramsHTML = `
+                        <div class="param-item">
+                            <span class="param-name">λ:</span>
+                            <span class="param-value">${params.lambda}</span>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            chartParams.innerHTML = paramsHTML;
+        }
+        
+        function resetCalculator() {
+            // Hide results
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('solution-steps').style.display = 'none';
+            document.getElementById('show-steps-btn').innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+            
+            // Reset chart to default state based on current distribution
+            const distType = document.getElementById('distribution-type').value;
+            
+            if (distType === 'discrete') {
+                const dist = document.getElementById('discrete-distribution').value;
+                switch (dist) {
+                    case 'bernoulli':
+                        updateBernoulliChart({ p: 0.5, k: 1 });
+                        break;
+                    case 'binomial':
+                        updateBinomialChart({ n: 10, p: 0.5, k: 5 });
+                        break;
+                    case 'geometric':
+                        updateGeometricChart({ p: 0.3, k: 3 });
+                        break;
+                    case 'poisson':
+                        updatePoissonChart({ lambda: 2, k: 3 });
+                        break;
+                }
+            } else {
+                const dist = document.getElementById('continuous-distribution').value;
+                switch (dist) {
+                    case 'uniform':
+                        updateUniformChart({ a: 0, b: 1, x: 0.5 });
+                        break;
+                    case 'normal':
+                        updateNormalChart({ mean: 0, sd: 1, x: 0 });
+                        break;
+                    case 'exponential':
+                        updateExponentialChart({ lambda: 1, x: 1 });
+                        break;
+                }
+            }
+        }
+        
+        function checkQuizAnswers() {
+            // Get selected answers
+            const question1 = document.querySelector('.quiz-question:nth-child(1) .quiz-option.selected');
+            const question2 = document.querySelector('.quiz-question:nth-child(3) .quiz-option.selected');
+            
+            // Check if any question is unanswered
+            if (!question1 || !question2) {
+                alert('Please answer all questions before checking.');
+                return;
+            }
+            
+            // Check question 1
+            const answer1 = question1.getAttribute('data-value');
+            const feedback1 = document.getElementById('feedback-1');
+            
+            if (answer1 === 'c') {
+                question1.classList.add('correct');
+                feedback1.textContent = 'Correct! The PMF gives the probability that a discrete random variable equals a specific value.';
+                feedback1.classList.add('correct');
+            } else {
+                question1.classList.add('incorrect');
+                feedback1.textContent = 'Incorrect. The PMF gives the probability that a discrete random variable equals a specific value.';
+                feedback1.classList.add('incorrect');
+            }
+            
+            // Check question 2
+            const answer2 = question2.getAttribute('data-value');
+            const feedback2 = document.getElementById('feedback-2');
+            
+            if (answer2 === 'b') {
+                question2.classList.add('correct');
+                feedback2.textContent = 'Correct! For a continuous random variable, the probability of any single point is 0.';
+                feedback2.classList.add('correct');
+            } else {
+                question2.classList.add('incorrect');
+                feedback2.textContent = 'Incorrect. For a continuous random variable, the probability of any single point is 0.';
+                feedback2.classList.add('incorrect');
+            }
+            
+            // Disable button after checking
+            document.getElementById('check-answers-btn').disabled = true;
+        }
+        
+        // Utility functions
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+        
+        function binomialCoefficient(n, k) {
+            // More efficient calculation for large numbers
+            if (k < 0 || k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            
+            // Use symmetry to minimize calculations
+            k = Math.min(k, n - k);
+            
+            let result = 1;
+            for (let i = 1; i <= k; i++) {
+                result *= (n - (k - i));
+                result /= i;
+            }
+            
+            return Math.round(result);
+        }
+    </script>
+</body>
+</html>
