@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variance | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item active" href="variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="../../pages/discrete-distributions/poisson.html">Poisson</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Variance</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Calculate and visualize the variance and standard deviation for discrete and continuous random variables</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Calculator Form -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="calculator-form" id="variance-calculator">
+                        <h2 class="mb-4">Variance Calculator</h2>
+                        
+                        <!-- Distribution Type Selection -->
+                        <div class="mb-4">
+                            <label for="distribution-type" class="form-label">Select Distribution Type:</label>
+                            <select class="form-select" id="distribution-type">
+                                <option value="discrete">Discrete Distribution</option>
+                                <option value="continuous">Continuous Distribution</option>
+                                <option value="custom">Custom Probability Distribution</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Discrete Distributions -->
+                        <div id="discrete-distributions">
+                            <div class="mb-4">
+                                <label for="discrete-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="discrete-distribution">
+                                    <option value="bernoulli">Bernoulli Distribution</option>
+                                    <option value="binomial">Binomial Distribution</option>
+                                    <option value="geometric">Geometric Distribution</option>
+                                    <option value="poisson">Poisson Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated) -->
+                            <div id="discrete-params">
+                                <!-- Bernoulli Parameters -->
+                                <div id="bernoulli-params">
+                                    <div class="mb-3">
+                                        <label for="bernoulli-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="bernoulli-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Binomial Parameters (initially hidden) -->
+                                <div id="binomial-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="binomial-n" class="form-label">Number of Trials (n):</label>
+                                        <input type="number" class="form-control" id="binomial-n" min="1" step="1" value="10">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="binomial-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="binomial-p" min="0" max="1" step="0.01" value="0.5">
+                                    </div>
+                                </div>
+                                
+                                <!-- Geometric Parameters (initially hidden) -->
+                                <div id="geometric-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="geometric-p" class="form-label">Success Probability (p):</label>
+                                        <input type="number" class="form-control" id="geometric-p" min="0.01" max="1" step="0.01" value="0.3">
+                                    </div>
+                                </div>
+                                
+                                <!-- Poisson Parameters (initially hidden) -->
+                                <div id="poisson-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="poisson-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="poisson-lambda" min="0.1" step="0.1" value="2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Continuous Distributions (initially hidden) -->
+                        <div id="continuous-distributions" style="display: none;">
+                            <div class="mb-4">
+                                <label for="continuous-distribution" class="form-label">Select Distribution:</label>
+                                <select class="form-select" id="continuous-distribution">
+                                    <option value="uniform">Uniform Distribution</option>
+                                    <option value="normal">Normal Distribution</option>
+                                    <option value="exponential">Exponential Distribution</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Distribution Parameters (will be dynamically updated) -->
+                            <div id="continuous-params">
+                                <!-- Uniform Parameters -->
+                                <div id="uniform-params">
+                                    <div class="mb-3">
+                                        <label for="uniform-a" class="form-label">Lower Bound (a):</label>
+                                        <input type="number" class="form-control" id="uniform-a" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uniform-b" class="form-label">Upper Bound (b):</label>
+                                        <input type="number" class="form-control" id="uniform-b" step="0.1" value="1">
+                                    </div>
+                                </div>
+                                
+                                <!-- Normal Parameters (initially hidden) -->
+                                <div id="normal-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="normal-mean" class="form-label">Mean (μ):</label>
+                                        <input type="number" class="form-control" id="normal-mean" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="normal-sd" class="form-label">Standard Deviation (σ):</label>
+                                        <input type="number" class="form-control" id="normal-sd" min="0.01" step="0.1" value="1">
+                                    </div>
+                                </div>
+                                
+                                <!-- Exponential Parameters (initially hidden) -->
+                                <div id="exponential-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="exponential-lambda" class="form-label">Rate Parameter (λ):</label>
+                                        <input type="number" class="form-control" id="exponential-lambda" min="0.01" step="0.1" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Distribution (initially hidden) -->
+                        <div id="custom-distribution" style="display: none;">
+                            <div class="mb-3">
+                                <label for="custom-type" class="form-label">Type of Custom Distribution:</label>
+                                <select class="form-select" id="custom-type">
+                                    <option value="discrete">Discrete</option>
+                                    <option value="continuous">Continuous</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-discrete">
+                                <div class="mb-3">
+                                    <label for="custom-discrete-data" class="form-label">Enter Values and Probabilities (x₁:p₁, x₂:p₂, ...):</label>
+                                    <input type="text" class="form-control" id="custom-discrete-data" placeholder="1:0.2, 2:0.5, 3:0.3" value="1:0.2, 2:0.5, 3:0.3">
+                                    <div class="form-text">
+                                        Enter each value followed by its probability, separated by commas.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="custom-continuous" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="custom-continuous-function" class="form-label">PDF Function f(x):</label>
+                                    <select class="form-select" id="custom-continuous-function">
+                                        <option value="linear">Linear: ax + b</option>
+                                        <option value="quadratic">Quadratic: ax² + bx + c</option>
+                                        <option value="exponential">Exponential: ae^(bx)</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="custom-linear-params">
+                                    <div class="mb-3">
+                                        <label for="custom-linear-a" class="form-label">Coefficient a:</label>
+                                        <input type="number" class="form-control" id="custom-linear-a" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-linear-b" class="form-label">Coefficient b:</label>
+                                        <input type="number" class="form-control" id="custom-linear-b" step="0.1" value="0">
+                                    </div>
+                                </div>
+                                
+                                <div id="custom-quadratic-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="custom-quadratic-a" class="form-label">Coefficient a:</label>
+                                        <input type="number" class="form-control" id="custom-quadratic-a" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-quadratic-b" class="form-label">Coefficient b:</label>
+                                        <input type="number" class="form-control" id="custom-quadratic-b" step="0.1" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-quadratic-c" class="form-label">Coefficient c:</label>
+                                        <input type="number" class="form-control" id="custom-quadratic-c" step="0.1" value="0">
+                                    </div>
+                                </div>
+                                
+                                <div id="custom-exponential-params" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="custom-exponential-a" class="form-label">Coefficient a:</label>
+                                        <input type="number" class="form-control" id="custom-exponential-a" step="0.1" value="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-exponential-b" class="form-label">Coefficient b:</label>
+                                        <input type="number" class="form-control" id="custom-exponential-b" step="0.1" value="1">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="custom-continuous-range" class="form-label">Integration Range [a,b]:</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="custom-continuous-a" step="0.1" value="0" placeholder="a">
+                                        <span class="input-group-text">to</span>
+                                        <input type="number" class="form-control" id="custom-continuous-b" step="0.1" value="1" placeholder="b">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" id="calculate-btn" class="btn btn-calculate">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                            <button type="button" id="reset-btn" class="btn btn-reset">
+                                <i class="fas fa-undo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div class="results-container" id="results" style="display: none;">
+                        <h3>Result</h3>
+                        <div class="result-value" id="result-value">0.25</div>
+                        <div class="result-explanation" id="result-explanation">
+                            Var(X) = 0.25, σ = 0.5
+                        </div>
+                        
+                        <!-- Step-by-Step Solution -->
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" type="button" id="show-steps-btn">
+                                <i class="fas fa-list-ol me-2"></i>Show Steps
+                            </button>
+                        </div>
+                        
+                        <div class="solution-steps mt-3" id="solution-steps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="steps-content">
+                                <!-- Steps will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-container mb-4">
+                        <h3>Distribution Visualization</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="distribution-params" id="chart-params">
+                                <!-- Parameters will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Info Card -->
+                    <div class="theory-block" id="distribution-info">
+                        <h3 id="distribution-title">Bernoulli Distribution Variance</h3>
+                        <div id="distribution-description">
+                            <p>The variance of a Bernoulli random variable X with parameter p is Var(X) = p(1-p).</p>
+                        </div>
+                        <div class="formula-display" id="distribution-formula">
+                            \[ Var(X) = p(1-p) \]
+                        </div>
+                        <div id="distribution-properties">
+                            <h4>Properties:</h4>
+                            <ul>
+                                <li>The variance measures the spread of the random variable around its mean</li>
+                                <li>For a Bernoulli distribution, Var(X) = p(1-p), which is maximized at p = 0.5</li>
+                                <li>The standard deviation σ = √(p(1-p)) is in the same units as the random variable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theory Section -->
+    <section class="theory-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Understanding Variance</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h3>Definition & Properties</h3>
+                        <p>The <strong>Variance</strong> of a random variable X, denoted by Var(X) or σ², is a measure of the dispersion or spread of the probability distribution. It quantifies how far the values of the random variable typically deviate from the mean.</p>
+                        
+                        <div class="formula-display mt-4">
+                            <h4>General Formula:</h4>
+                            \[ Var(X) = E[(X - \mu)^2] \]
+                            <p class="formula-caption">where μ = E[X] is the mean (expected value) of X.</p>
+                        </div>
+                        
+                        <div class="formula-display mt-4">
+                            <h4>Discrete Random Variables:</h4>
+                            \[ Var(X) = \sum_{i} (x_i - \mu)^2 \cdot P(X = x_i) \]
+                            <p class="formula-caption">where x<sub>i</sub> are the possible values of X and P(X = x<sub>i</sub>) is the probability of each value.</p>
+                        </div>
+                        
+                        <div class="formula-display mt-4">
+                            <h4>Continuous Random Variables:</h4>
+                            \[ Var(X) = \int_{-\infty}^{\infty} (x - \mu)^2 \cdot f(x) \, dx \]
+                            <p class="formula-caption">where f(x) is the probability density function (PDF) of X.</p>
+                        </div>
+                        
+                        <div class="formula-display mt-4">
+                            <h4>Computational Formula:</h4>
+                            \[ Var(X) = E[X^2] - (E[X])^2 \]
+                            <p class="formula-caption">This alternative formula is often easier to compute.</p>
+                        </div>
+                        
+                        <h4 class="mt-4">Key Properties:</h4>
+                        <ul>
+                            <li><strong>Non-negativity:</strong> Var(X) ≥ 0 for any random variable X</li>
+                            <li><strong>Variance of a constant:</strong> Var(c) = 0, for any constant c</li>
+                            <li><strong>Effect of scaling:</strong> Var(aX) = a²·Var(X), for any constant a</li>
+                            <li><strong>Effect of shifting:</strong> Var(X + b) = Var(X), for any constant b</li>
+                            <li><strong>Variance of sum:</strong> Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X,Y), where Cov(X,Y) is the covariance</li>
+                            <li><strong>For independent variables:</strong> Var(X + Y) = Var(X) + Var(Y)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="theory-block">
+                        <h3>Standard Deviation & Interpretation</h3>
+                        
+                        <p>The <strong>Standard Deviation</strong> (σ) is the square root of the variance:</p>
+                        <div class="formula-display">
+                            \[ \sigma = \sqrt{Var(X)} \]
+                        </div>
+                        
+                        <p class="mt-3">The standard deviation has several important interpretations:</p>
+                        
+                        <h4 class="mt-4">Measure of Dispersion:</h4>
+                        <p>The standard deviation measures the typical or average deviation of values from the mean. Unlike variance, it's expressed in the same units as the random variable, making it more directly interpretable.</p>
+                        
+                        <h4 class="mt-4">Probability Rules for Normal Distributions:</h4>
+                        <p>For normally distributed variables, the standard deviation determines the probability of observations falling within specific ranges:</p>
+                        <ul>
+                            <li>Approximately 68% of values lie within 1 standard deviation of the mean (μ ± σ)</li>
+                            <li>Approximately 95% lie within 2 standard deviations (μ ± 2σ)</li>
+                            <li>Approximately 99.7% lie within 3 standard deviations (μ ± 3σ)</li>
+                        </ul>
+                        <p>This is known as the "empirical rule" or "68-95-99.7 rule."</p>
+                        
+                        <h4 class="mt-4">Coefficient of Variation:</h4>
+                        <p>The coefficient of variation (CV) is the ratio of the standard deviation to the mean:</p>
+                        <div class="formula-display">
+                            \[ CV = \frac{\sigma}{\mu} \]
+                        </div>
+                        <p>It provides a dimensionless measure of relative variability, allowing for comparison of dispersion across different distributions with different units or scales.</p>
+                        
+                        <div class="example-block mt-4">
+                            <h4>Example: Variance in Practice</h4>
+                            <p>Consider a discrete random variable X with the following probability distribution:</p>
+                            <p>P(X = 1) = 0.2, P(X = 2) = 0.5, P(X = 3) = 0.3</p>
+                            <p>The mean is:</p>
+                            <div class="formula-display">
+                                \[ E[X] = 1 \cdot 0.2 + 2 \cdot 0.5 + 3 \cdot 0.3 = 2.1 \]
+                            </div>
+                            <p>The variance is:</p>
+                            <div class="formula-display">
+                                \[ Var(X) = (1 - 2.1)^2 \cdot 0.2 + (2 - 2.1)^2 \cdot 0.5 + (3 - 2.1)^2 \cdot 0.3 = 0.49 \]
+                            </div>
+                            <p>And the standard deviation is:</p>
+                            <div class="formula-display">
+                                \[ \sigma = \sqrt{0.49} = 0.7 \]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Variances for Common Distributions -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="theory-block">
+                        <h3 class="text-center mb-4">Variances for Common Distributions</h3>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered distribution-table">
+                                <thead>
+                                    <tr>
+                                        <th>Distribution</th>
+                                        <th>Parameters</th>
+                                        <th>Variance</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bernoulli</td>
+                                        <td>p = probability of success</td>
+                                        <td>\(Var(X) = p(1-p)\)</td>
+                                        <td>Maximized at p = 0.5, where Var(X) = 0.25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Binomial</td>
+                                        <td>n = number of trials<br>p = probability of success</td>
+                                        <td>\(Var(X) = np(1-p)\)</td>
+                                        <td>Sum of n independent Bernoulli variances</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Geometric</td>
+                                        <td>p = probability of success</td>
+                                        <td>\(Var(X) = \frac{1-p}{p^2}\)</td>
+                                        <td>Increases rapidly as p approaches 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Poisson</td>
+                                        <td>λ = rate parameter</td>
+                                        <td>\(Var(X) = \lambda\)</td>
+                                        <td>Equal to the mean, a unique property</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Uniform</td>
+                                        <td>a = lower bound<br>b = upper bound</td>
+                                        <td>\(Var(X) = \frac{(b-a)^2}{12}\)</td>
+                                        <td>Depends only on the range width</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal</td>
+                                        <td>μ = mean<br>σ = standard deviation</td>
+                                        <td>\(Var(X) = \sigma^2\)</td>
+                                        <td>Variance is a parameter of the distribution</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exponential</td>
+                                        <td>λ = rate parameter</td>
+                                        <td>\(Var(X) = \frac{1}{\lambda^2}\)</td>
+                                        <td>Standard deviation equals the mean</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="applications-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Applications of Variance</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Finance & Risk Management</h3>
+                        <p>Variance is fundamental in portfolio theory as a measure of investment risk. The variance of returns quantifies investment volatility, helping investors balance risk and return. Modern Portfolio Theory uses variance to optimize asset allocation, while Value at Risk (VaR) calculations rely on variance to estimate potential losses.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3>Science & Research</h3>
+                        <p>In experimental sciences, variance measures the reliability and consistency of observations. Low variance suggests high precision in measurements. In statistical hypothesis testing, variance is used to assess whether differences between groups are statistically significant or merely due to random variation in the data.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Quality Control & Manufacturing</h3>
+                        <p>Variance is central to Six Sigma and other quality improvement methodologies. Process capability indices like Cp and Cpk compare the variance of a process to specification limits. Statistical Process Control uses variance to set control limits for detecting when a process is operating outside normal parameters.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Machine Learning & AI</h3>
+                        <p>In machine learning, variance has dual meanings: as a statistical measure and as a learning theory concept. High-variance models (like deep neural networks) can overfit training data, while variance is used in feature selection to identify informative variables. Principal Component Analysis uses variance to identify the most important dimensions in high-dimensional data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Test Your Knowledge</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="quiz-card">
+                        <h4>Quick Quiz: Variance</h4>
+                        
+                        <div class="quiz-question">
+                            <p>1. What is the variance of a Bernoulli random variable with p = 0.5?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 0.5
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 0.75
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 0.25
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 1.0
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-1"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>2. The variance of a binomial distribution with n = 10 and p = 0.3 is:</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 2.1
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 3.0
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 1.45
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 3.3
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-2"></div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="check-answers-btn">
+                                <i class="fas fa-check-circle me-2"></i>Check Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../../pages/about.html">About</a></li>
+                        <li><a href="../../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/chart-config.js"></script>
+    
+    <!-- Variance Calculator JS -->
+    <script src="../../js/calculators/Random Variables/variance_calculator.js"></script>
+</body>
+</html>

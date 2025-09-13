@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negative Binomial Distribution | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="../../pages/random-variables/overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item" href="poisson.html">Poisson</a></li>
+                            <li><a class="dropdown-item active" href="negative-binomial.html">Negative Binomial</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Negative Binomial Distribution</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Calculate probabilities related to the number of trials needed to achieve a specified number of successes</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Calculator Form -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="calculator-form" id="negative-binomial-calculator">
+                        <h2 class="mb-4">Negative Binomial Distribution Calculator</h2>
+                        
+                        <!-- Parameters -->
+                        <div class="mb-4">
+                            <h4>Distribution Parameters</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="r" class="form-label">Number of Successes (r):</label>
+                                    <input type="number" class="form-control" id="r" min="1" step="1" value="3">
+                                    <div class="form-text">Required number of successes (positive integer)</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="p" class="form-label">Success Probability (p):</label>
+                                    <input type="number" class="form-control" id="p" min="0.01" max="1" step="0.01" value="0.4">
+                                    <div class="form-text">Probability of success on a single trial (0 < p ≤ 1)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Type -->
+                        <div class="mb-4">
+                            <h4>Calculation Type</h4>
+                            <select class="form-select" id="calculation-type">
+                                <option value="pmf">Probability Mass Function (PMF): P(X = k)</option>
+                                <option value="cdf">Cumulative Distribution Function (CDF): P(X ≤ k)</option>
+                                <option value="interval">Interval Probability: P(a ≤ X ≤ b)</option>
+                                <option value="mean">Expected Value (Mean): E[X]</option>
+                                <option value="variance">Variance: Var(X)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Dynamic Input Fields -->
+                        <div id="pmf-inputs" class="mb-4">
+                            <label for="k-value" class="form-label">Number of Trials (k):</label>
+                            <input type="number" class="form-control" id="k-value" min="3" step="1" value="7">
+                            <div class="form-text">Calculate P(X = k), the probability of needing exactly k trials to get r successes</div>
+                        </div>
+                        
+                        <div id="cdf-inputs" class="mb-4" style="display: none;">
+                            <label for="k-value-cdf" class="form-label">Number of Trials (k):</label>
+                            <input type="number" class="form-control" id="k-value-cdf" min="3" step="1" value="7">
+                            <div class="form-text">Calculate P(X ≤ k), the probability of needing at most k trials to get r successes</div>
+                        </div>
+                        
+                        <div id="interval-inputs" class="mb-4" style="display: none;">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="a-value" class="form-label">Lower Bound (a):</label>
+                                    <input type="number" class="form-control" id="a-value" min="3" step="1" value="5">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="b-value" class="form-label">Upper Bound (b):</label>
+                                    <input type="number" class="form-control" id="b-value" min="3" step="1" value="9">
+                                </div>
+                            </div>
+                            <div class="form-text">Calculate P(a ≤ X ≤ b), the probability of needing between a and b trials (inclusive) to get r successes</div>
+                        </div>
+                        
+                        <!-- Display Options -->
+                        <div class="mb-4">
+                            <h4>Display Options</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="decimal-places" class="form-label">Decimal Places:</label>
+                                    <input type="number" class="form-control" id="decimal-places" min="1" max="10" step="1" value="4">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" id="calculate-btn" class="btn btn-calculate">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                            <button type="button" id="reset-btn" class="btn btn-reset">
+                                <i class="fas fa-undo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div class="results-container mt-4" id="results" style="display: none;">
+                        <h3>Result</h3>
+                        <div class="result-value" id="result-value">0.1536</div>
+                        <div class="result-explanation" id="result-explanation">
+                            The probability of needing exactly 7 trials to get 3 successes with p = 0.4 is 0.1536 (15.36%).
+                        </div>
+                        
+                        <!-- Result Formula -->
+                        <div class="formula-display mt-3" id="result-formula">
+                            \[ P(X = 7) = \binom{7-1}{3-1} 0.4^3 (1-0.4)^{7-3} = \binom{6}{2} 0.4^3 0.6^4 = 15 \cdot 0.064 \cdot 0.1296 = 0.1536 \]
+                        </div>
+                        
+                        <!-- Distribution Properties -->
+                        <div class="mt-4">
+                            <h4>Distribution Properties</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Expected Value (Mean)</div>
+                                        <div class="property-value" id="mean-value">7.5</div>
+                                        <div class="property-formula">E[X] = r/p = 3/0.4 = 7.5</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Variance</div>
+                                        <div class="property-value" id="variance-value">11.25</div>
+                                        <div class="property-formula">Var(X) = r(1-p)/p² = 3×0.6/0.4² = 11.25</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Standard Deviation</div>
+                                        <div class="property-value" id="std-dev-value">3.3541</div>
+                                        <div class="property-formula">σ = √Var(X) = √11.25 = 3.3541</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Skewness</div>
+                                        <div class="property-value" id="skewness-value">0.9798</div>
+                                        <div class="property-formula">(2-p)/√(r(1-p)) = 0.9798</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step-by-Step Solution -->
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" type="button" id="show-steps-btn">
+                                <i class="fas fa-list-ol me-2"></i>Show Steps
+                            </button>
+                        </div>
+                        
+                        <div class="solution-steps mt-3" id="solution-steps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="steps-content">
+                                <!-- Steps will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-container mb-4">
+                        <h3>Negative Binomial Distribution Visualization</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="distribution-params" id="chart-params">
+                                <span>r = 3, p = 0.4</span>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-light" id="toggle-chart-type">
+                                    <i class="fas fa-chart-bar me-1"></i>PMF/CDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Probability Table -->
+                    <div class="probability-table-container mb-4">
+                        <h3>Probability Table</h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-dark" id="probability-table">
+                                <thead>
+                                    <tr>
+                                        <th>k</th>
+                                        <th>P(X = k)</th>
+                                        <th>P(X ≤ k)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Info Card -->
+                    <div class="theory-block" id="distribution-info">
+                        <h3>Negative Binomial Distribution Overview</h3>
+                        <p>The <strong>negative binomial distribution</strong> models the number of trials needed to achieve a specified number of successes in a sequence of independent Bernoulli trials, each with the same probability of success.</p>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Probability Mass Function (PMF)</h4>
+                            \[ P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r} \]
+                            <p class="formula-caption">where r is the number of successes, p is the probability of success on each trial, and k is the number of trials (k ≥ r).</p>
+                        </div>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Cumulative Distribution Function (CDF)</h4>
+                            \[ P(X \leq k) = \sum_{i=r}^{k} \binom{i-1}{r-1} p^r (1-p)^{i-r} \]
+                        </div>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Expected Value</h4>
+                            \[ E[X] = \frac{r}{p} \]
+                        </div>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Variance</h4>
+                            \[ Var(X) = \frac{r(1-p)}{p^2} \]
+                        </div>
+                        
+                        <h4 class="mt-4">Key Properties</h4>
+                        <ul>
+                            <li>The distribution is always positively skewed (right-tailed)</li>
+                            <li>When r = 1, the negative binomial distribution reduces to the geometric distribution</li>
+                            <li>The sum of independent negative binomial random variables with the same p is also negative binomial</li>
+                            <li>As r increases, the distribution approaches normality</li>
+                            <li>Skewness = (2-p)/√(r(1-p)) and Kurtosis = 3 + 6/r + p²/(r(1-p))</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theory Section -->
+    <section class="theory-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Understanding the Negative Binomial Distribution</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h3>Definition & Characteristics</h3>
+                        <p>The negative binomial distribution models the number of trials needed to achieve a specified number of successes (r) in a sequence of independent Bernoulli trials, where each trial has the same probability of success (p).</p>
+                        
+                        <h4 class="mt-4">Requirements for a Negative Binomial Distribution</h4>
+                        <ol>
+                            <li><strong>Fixed number of successes:</strong> The experiment continues until a specified number of successes (r) is achieved.</li>
+                            <li><strong>Independence:</strong> Each trial is independent of all other trials.</li>
+                            <li><strong>Binary outcomes:</strong> Each trial has exactly two possible outcomes: "success" or "failure".</li>
+                            <li><strong>Constant probability:</strong> The probability of success p is the same for each trial.</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Mathematical Formulation</h4>
+                        <p>A random variable X follows a negative binomial distribution with parameters r and p, written as X ~ NB(r, p), if:</p>
+                        <ul>
+                            <li>X represents the number of trials needed to achieve r successes</li>
+                            <li>The probability of success in any single trial is p</li>
+                            <li>All trials are independent of each other</li>
+                            <li>The probability mass function is:
+                                \[ P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r} \]
+                                for k = r, r+1, r+2, ...
+                            </li>
+                        </ul>
+                        
+                        <h4 class="mt-4">Relationship with Geometric Distribution</h4>
+                        <p>The negative binomial distribution is a generalization of the geometric distribution:</p>
+                        <ul>
+                            <li>When r = 1, the negative binomial distribution becomes the geometric distribution</li>
+                            <li>The negative binomial can be viewed as the sum of r independent geometric random variables</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="theory-block">
+                        <h3>Properties & Applications</h3>
+                        
+                        <h4>Key Properties</h4>
+                        <div class="property-list">
+                            <div class="property">
+                                <div class="property-name">Expected Value (Mean)</div>
+                                <div class="property-formula">E[X] = r/p</div>
+                                <div class="property-explanation">The average number of trials needed to achieve r successes</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Variance</div>
+                                <div class="property-formula">Var(X) = r(1-p)/p²</div>
+                                <div class="property-explanation">Measures the spread or dispersion of the distribution</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Standard Deviation</div>
+                                <div class="property-formula">σ = √(r(1-p)/p²)</div>
+                                <div class="property-explanation">Typical deviation from the mean</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Skewness</div>
+                                <div class="property-formula">(2-p)/√(r(1-p))</div>
+                                <div class="property-explanation">Always positive, indicating right-skewed distribution</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Alternative Parameterizations</h4>
+                        <p>The negative binomial distribution can also be parameterized in terms of the number of failures before the rth success (Y = X - r), giving:</p>
+                        <div class="formula-display">
+                            \[ P(Y = y) = \binom{y+r-1}{y} p^r (1-p)^y \]
+                        </div>
+                        <p>This parameterization is sometimes preferred in certain applications.</p>
+                        
+                        <h4 class="mt-4">Normal Approximation</h4>
+                        <p>For large values of r, the negative binomial distribution can be approximated by a normal distribution with mean r/p and variance r(1-p)/p².</p>
+                        
+                        <h4 class="mt-4">Real-World Applications</h4>
+                        <ul>
+                            <li><strong>Quality Control:</strong> Number of items inspected until finding a certain number of defects</li>
+                            <li><strong>Epidemiology:</strong> Modeling disease outbreaks and transmission</li>
+                            <li><strong>Sports Analytics:</strong> Number of at-bats until a baseball player gets a certain number of hits</li>
+                            <li><strong>Marketing:</strong> Number of sales calls needed to achieve a target number of successful sales</li>
+                            <li><strong>Risk Management:</strong> Modeling claim frequencies in insurance</li>
+                            <li><strong>Reliability Theory:</strong> Number of components tested until finding a specified number of failures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Example Problems Section -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="theory-block">
+                        <h3 class="text-center mb-4">Example Problems</h3>
+                        
+                        <div class="example-card">
+                            <h4>Example 1: Sales Calls</h4>
+                            <p>A salesperson has a 30% success rate on sales calls. What is the probability that exactly 8 calls are needed to make 3 sales?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution1">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution1">
+                                    <div class="solution-content">
+                                        <p>This is a negative binomial distribution problem where:</p>
+                                        <ul>
+                                            <li>r = 3 (number of successes needed)</li>
+                                            <li>p = 0.3 (probability of success on a single call)</li>
+                                            <li>k = 8 (total number of calls)</li>
+                                        </ul>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X = 8) &= \binom{8-1}{3-1} p^3 (1-p)^{8-3} \\
+                                            &= \binom{7}{2} (0.3)^3 (0.7)^5 \\
+                                            &= 21 \times 0.027 \times 0.16807 \\
+                                            &= 21 \times 0.004538 \\
+                                            &= 0.0953
+                                            \end{align}
+                                        </div>
+                                        <p>The probability that exactly 8 calls are needed to make 3 sales is approximately 0.0953 or 9.53%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>Example 2: Testing Components</h4>
+                            <p>An engineer tests electronic components until finding 4 defective ones. Each component has a 15% chance of being defective. What is the probability that the engineer needs to test at most 30 components?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution2">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution2">
+                                    <div class="solution-content">
+                                        <p>This is a negative binomial distribution problem where:</p>
+                                        <ul>
+                                            <li>r = 4 (number of defective components needed)</li>
+                                            <li>p = 0.15 (probability of a component being defective)</li>
+                                            <li>We want P(X ≤ 30), the probability of finding 4 defective components within 30 tests</li>
+                                        </ul>
+                                        <p>Using the negative binomial CDF:</p>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X \leq 30) &= \sum_{k=4}^{30} \binom{k-1}{4-1} (0.15)^4 (0.85)^{k-4}
+                                            \end{align}
+                                        </div>
+                                        <p>This sum is complex to calculate by hand, but using computational methods:</p>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X \leq 30) &= 0.9322
+                                            \end{align}
+                                        </div>
+                                        <p>The probability that the engineer needs to test at most 30 components to find 4 defective ones is approximately 0.9322 or 93.22%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>Example 3: Expected Number of Trials</h4>
+                            <p>A basketball player has a 40% free-throw success rate. On average, how many free throws must the player attempt to make 5 successful shots?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution3">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution3">
+                                    <div class="solution-content">
+                                        <p>This is a negative binomial distribution problem where:</p>
+                                        <ul>
+                                            <li>r = 5 (number of successful free throws needed)</li>
+                                            <li>p = 0.4 (probability of making a free throw)</li>
+                                            <li>We want E[X], the expected number of attempts needed</li>
+                                        </ul>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            E[X] &= \frac{r}{p} \\
+                                            &= \frac{5}{0.4} \\
+                                            &= 12.5
+                                            \end{align}
+                                        </div>
+                                        <p>On average, the player will need to attempt 12.5 free throws to make 5 successful shots.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>Example 4: Variance Calculation</h4>
+                            <p>In a manufacturing process, each item has a 20% chance of requiring rework. What is the variance in the number of items that need to be inspected to find 10 items requiring rework?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution4">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution4">
+                                    <div class="solution-content">
+                                        <p>This is a negative binomial distribution problem where:</p>
+                                        <ul>
+                                            <li>r = 10 (number of items requiring rework)</li>
+                                            <li>p = 0.2 (probability an item requires rework)</li>
+                                            <li>We want Var(X), the variance in the number of items inspected</li>
+                                        </ul>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            Var(X) &= \frac{r(1-p)}{p^2} \\
+                                            &= \frac{10 \times (1-0.2)}{0.2^2} \\
+                                            &= \frac{10 \times 0.8}{0.04} \\
+                                            &= \frac{8}{0.04} \\
+                                            &= 200
+                                            \end{align}
+                                        </div>
+                                        <p>The variance in the number of items that need to be inspected is 200, which means the standard deviation is √200 = 14.14 items.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Test Your Knowledge</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="quiz-card">
+                        <h4>Quick Quiz: Negative Binomial Distribution</h4>
+                        
+                        <div class="quiz-question">
+                            <p>1. A customer service representative resolves customer issues with a 25% success rate on the first attempt. What is the probability that exactly 12 attempts are needed to resolve 4 customer issues?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 0.0562
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 0.0785
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 0.0827
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 0.0918
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-1"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>2. If r = 5 and p = 0.2, what is the expected number of trials needed to achieve 5 successes?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 1
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 5
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 20
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 25
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-2"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>3. Which of the following is true about the negative binomial distribution?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> It is always symmetric around the mean
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> When r = 1, it becomes the geometric distribution
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> The variance is always less than the mean
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> It only applies when p > 0.5
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-3"></div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="check-answers-btn">
+                                <i class="fas fa-check-circle me-2"></i>Check Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../../pages/about.html">About</a></li>
+                        <li><a href="../../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    
+    <!-- Negative Binomial Distribution Calculator JS -->
+    <script type="module">
+        import { calculateNegativeBinomial } from '../../js/calculators/discrete.js';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // UI Elements
+            const calculationType = document.getElementById('calculation-type');
+            const pmfInputs = document.getElementById('pmf-inputs');
+            const cdfInputs = document.getElementById('cdf-inputs');
+            const intervalInputs = document.getElementById('interval-inputs');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const showStepsBtn = document.getElementById('show-steps-btn');
+            const resultsContainer = document.getElementById('results');
+            const solutionSteps = document.getElementById('solution-steps');
+            const toggleChartTypeBtn = document.getElementById('toggle-chart-type');
+            
+            // State variables
+            let chartInstance = null;
+            let currentChartType = 'pmf'; // 'pmf' or 'cdf'
+            
+            // Initialize
+            updateInputFields();
+            createInitialChart();
+            updateMinValues();
+            
+            // Event Listeners
+            calculationType.addEventListener('change', updateInputFields);
+            document.getElementById('r').addEventListener('change', updateMinValues);
+            calculateBtn.addEventListener('click', performCalculation);
+            resetBtn.addEventListener('click', resetCalculator);
+            showStepsBtn.addEventListener('click', toggleSolutionSteps);
+            toggleChartTypeBtn.addEventListener('click', toggleChartType);
+            
+            // Handle quiz
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionDiv = this.closest('.quiz-question');
+                    questionDiv.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            document.getElementById('check-answers-btn').addEventListener('click', checkQuizAnswers);
+            
+            // Functions
+            function updateInputFields() {
+                const type = calculationType.value;
+                
+                // Hide all input sections
+                pmfInputs.style.display = 'none';
+                cdfInputs.style.display = 'none';
+                intervalInputs.style.display = 'none';
+                
+                // Show relevant input section
+                switch (type) {
+                    case 'pmf':
+                        pmfInputs.style.display = 'block';
+                        break;
+                    case 'cdf':
+                        cdfInputs.style.display = 'block';
+                        break;
+                    case 'interval':
+                        intervalInputs.style.display = 'block';
+                        break;
+                }
+            }
+            
+            function updateMinValues() {
+                const r = parseInt(document.getElementById('r').value);
+                if (isNaN(r) || r < 1) return;
+                
+                // Update min values for k inputs based on r
+                document.getElementById('k-value').min = r;
+                document.getElementById('k-value-cdf').min = r;
+                document.getElementById('a-value').min = r;
+                document.getElementById('b-value').min = r;
+                
+                // Update current values if they're below new minimum
+                if (parseInt(document.getElementById('k-value').value) < r) {
+                    document.getElementById('k-value').value = r;
+                }
+                if (parseInt(document.getElementById('k-value-cdf').value) < r) {
+                    document.getElementById('k-value-cdf').value = r;
+                }
+                if (parseInt(document.getElementById('a-value').value) < r) {
+                    document.getElementById('a-value').value = r;
+                }
+                if (parseInt(document.getElementById('b-value').value) < r) {
+                    document.getElementById('b-value').value = r;
+                }
+            }
+            
+            function createInitialChart() {
+                const r = parseInt(document.getElementById('r').value);
+                const p = parseFloat(document.getElementById('p').value);
+                
+                updateChart(r, p);
+                updateProbabilityTable(r, p);
+                updateChartParams(r, p);
+            }
+            
+            function performCalculation() {
+                // Get parameters
+                const r = parseInt(document.getElementById('r').value);
+                const p = parseFloat(document.getElementById('p').value);
+                const decimals = parseInt(document.getElementById('decimal-places').value);
+                const calculationType = document.getElementById('calculation-type').value;
+                
+                // Validate parameters
+                if (isNaN(r) || r < 1 || !Number.isInteger(r)) {
+                    alert('Number of successes (r) must be a positive integer.');
+                    return;
+                }
+                
+                if (isNaN(p) || p <= 0 || p > 1) {
+                    alert('Success probability (p) must be between 0 and 1 (exclusive of 0).');
+                    return;
+                }
+                
+                // Get specific parameters based on calculation type
+                let params = { r, p, calculationType, decimals };
+                
+                switch (calculationType) {
+                    case 'pmf':
+                        const k = parseInt(document.getElementById('k-value').value);
+                        
+                        if (isNaN(k) || k < r || !Number.isInteger(k)) {
+                            alert(`Number of trials (k) must be an integer greater than or equal to ${r}.`);
+                            return;
+                        }
+                        params.k = k;
+                        break;
+                        
+                    case 'cdf':
+                        const kCdf = parseInt(document.getElementById('k-value-cdf').value);
+                        
+                        if (isNaN(kCdf) || kCdf < r || !Number.isInteger(kCdf)) {
+                            alert(`Number of trials (k) must be an integer greater than or equal to ${r}.`);
+                            return;
+                        }
+                        params.k = kCdf;
+                        break;
+                        
+                    case 'interval':
+                        const a = parseInt(document.getElementById('a-value').value);
+                        const b = parseInt(document.getElementById('b-value').value);
+                        
+                        if (isNaN(a) || isNaN(b) || a < r || b < r || !Number.isInteger(a) || !Number.isInteger(b)) {
+                            alert(`Interval bounds must be integers greater than or equal to ${r}.`);
+                            return;
+                        }
+                        
+                        if (a > b) {
+                            alert('Lower bound (a) must be less than or equal to upper bound (b).');
+                            return;
+                        }
+                        
+                        params.a = a;
+                        params.b = b;
+                        break;
+                }
+                
+                // Calculate
+                const result = calculateNegativeBinomial(params);
+                
+                // Check for errors
+                if (result.error) {
+                    alert(result.error);
+                    return;
+                }
+                
+                // Display results
+                displayResults(result, params);
+                
+                // Update chart
+                updateChart(r, p, params);
+                updateProbabilityTable(r, p);
+                updateChartParams(r, p);
+                
+                // Show results container
+                resultsContainer.style.display = 'block';
+            }
+            
+            function displayResults(result, params) {
+                // Display result value
+                document.getElementById('result-value').textContent = result.result;
+                
+                // Display explanation
+                document.getElementById('result-explanation').textContent = result.interpretation;
+                
+                // Display formula
+                document.getElementById('result-formula').innerHTML = `\\[${result.formula}\\]`;
+                
+                // Display distribution properties
+                document.getElementById('mean-value').textContent = result.mean;
+                document.getElementById('variance-value').textContent = result.variance;
+                document.getElementById('std-dev-value').textContent = result.stdDev;
+                document.getElementById('skewness-value').textContent = result.skewness;
+                
+                // Display steps
+                document.getElementById('steps-content').innerHTML = result.steps.map(step => 
+                    `<div class="step-item">${step}</div>`
+                ).join('');
+                
+                // Update MathJax rendering
+                if (window.MathJax) {
+                    MathJax.typesetPromise();
+                }
+            }
+            
+            function updateChart(r, p, params) {
+                // Calculate maxK (show enough values to cover most of the distribution)
+                const mean = r / p;
+                const variance = r * (1 - p) / (p * p);
+                const maxK = Math.min(50, Math.ceil(mean + 4 * Math.sqrt(variance)));
+                
+                // Generate data for PMF
+                const pmfData = [];
+                const cdfData = [];
+                const labels = [];
+                
+                let cumulativeProbability = 0;
+                
+                for (let k = r; k <= maxK; k++) {
+                    const pmf = negativeBinomialPMF(r, p, k);
+                    cumulativeProbability += pmf;
+                    
+                    pmfData.push(pmf);
+                    cdfData.push(cumulativeProbability);
+                    labels.push(k.toString());
+                    
+                    // Stop when we've covered 99.9% of the distribution
+                    if (cumulativeProbability > 0.999 && k >= mean + 3 * Math.sqrt(variance)) break;
+                }
+                
+                // Highlight specific values if available in params
+                let highlightIndices = [];
+                
+                if (params) {
+                    switch (params.calculationType) {
+                        case 'pmf':
+                            highlightIndices = [params.k - r]; // Adjust for the start index at r
+                            break;
+                        case 'cdf':
+                            highlightIndices = Array.from({length: params.k - r + 1}, (_, i) => i);
+                            break;
+                        case 'interval':
+                            highlightIndices = Array.from(
+                                {length: params.b - params.a + 1}, 
+                                (_, i) => i + params.a - r
+                            );
+                            break;
+                    }
+                }
+                
+                // Create background colors array
+                const pmfBackgroundColors = pmfData.map((_, index) => {
+                    if (highlightIndices.includes(index)) {
+                        return 'rgba(255, 99, 132, 0.7)'; // Highlight specific value
+                    } else {
+                        return 'rgba(54, 162, 235, 0.7)'; // Default color
+                    }
+                });
+                
+                // Create border colors array
+                const pmfBorderColors = pmfData.map((_, index) => {
+                    if (highlightIndices.includes(index)) {
+                        return 'rgba(255, 99, 132, 1)';
+                    } else {
+                        return 'rgba(54, 162, 235, 1)';
+                    }
+                });
+                
+                // Calculate expected value for chart annotation
+                const chartMean = mean;
+                
+                // Destroy existing chart if any
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                
+                // Create chart
+                const ctx = document.getElementById('distribution-chart').getContext('2d');
+                
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: currentChartType === 'pmf' ? 'PMF: P(X = k)' : 'CDF: P(X ≤ k)',
+                            data: currentChartType === 'pmf' ? pmfData : cdfData,
+                            backgroundColor: pmfBackgroundColors,
+                            borderColor: pmfBorderColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Number of Trials (k)',
+                                    color: '#fff'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#fff'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: currentChartType === 'pmf' ? 'Probability P(X = k)' : 'Probability P(X ≤ k)',
+                                    color: '#fff'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#fff'
+                                },
+                                beginAtZero: true,
+                                max: currentChartType === 'pmf' ? Math.max(...pmfData) * 1.1 : 1.05
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#fff'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        return `k = ${tooltipItems[0].label}`;
+                                    },
+                                    label: function(context) {
+                                        if (currentChartType === 'pmf') {
+                                            return `P(X = ${context.label}) = ${context.raw.toFixed(6)}`;
+                                        } else {
+                                            return `P(X ≤ ${context.label}) = ${context.raw.toFixed(6)}`;
+                                        }
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    meanLine: {
+                                        type: 'line',
+                                        xMin: chartMean,
+                                        xMax: chartMean,
+                                        borderColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 2,
+                                        borderDash: [5, 5],
+                                        label: {
+                                            display: true,
+                                            content: `Mean = ${chartMean.toFixed(2)}`,
+                                            position: 'top',
+                                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                            color: '#fff'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function updateProbabilityTable(r, p) {
+                const tableBody = document.getElementById('probability-table').querySelector('tbody');
+                tableBody.innerHTML = '';
+                
+                // Calculate mean and variance for determining max k
+                const mean = r / p;
+                const variance = r * (1 - p) / (p * p);
+                const maxK = Math.min(25, Math.ceil(mean + 3 * Math.sqrt(variance)));
+                
+                let cumulativeProbability = 0;
+                
+                for (let k = r; k <= maxK; k++) {
+                    const pmf = negativeBinomialPMF(r, p, k);
+                    cumulativeProbability += pmf;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${k}</td>
+                        <td>${pmf.toFixed(6)}</td>
+                        <td>${cumulativeProbability.toFixed(6)}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                    
+                    // Stop when we've covered 99.9% of the distribution
+                    if (cumulativeProbability > 0.999 && k >= mean + 2 * Math.sqrt(variance)) break;
+                }
+            }
+            
+            function updateChartParams(r, p) {
+                document.getElementById('chart-params').textContent = `r = ${r}, p = ${p}`;
+            }
+            
+            function toggleChartType() {
+                currentChartType = currentChartType === 'pmf' ? 'cdf' : 'pmf';
+                
+                const r = parseInt(document.getElementById('r').value);
+                const p = parseFloat(document.getElementById('p').value);
+                
+                updateChart(r, p);
+                
+                toggleChartTypeBtn.innerHTML = currentChartType === 'pmf' ? 
+                    '<i class="fas fa-chart-line me-1"></i>PMF/CDF' : 
+                    '<i class="fas fa-chart-bar me-1"></i>CDF/PMF';
+            }
+            
+            function resetCalculator() {
+                // Reset form
+                document.getElementById('r').value = '3';
+                document.getElementById('p').value = '0.4';
+                document.getElementById('k-value').value = '7';
+                document.getElementById('k-value-cdf').value = '7';
+                document.getElementById('a-value').value = '5';
+                document.getElementById('b-value').value = '9';
+                document.getElementById('decimal-places').value = '4';
+                document.getElementById('calculation-type').value = 'pmf';
+                
+                // Update UI
+                updateInputFields();
+                updateMinValues();
+                
+                // Hide results
+                resultsContainer.style.display = 'none';
+                solutionSteps.style.display = 'none';
+                showStepsBtn.innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+                
+                // Reset chart
+                createInitialChart();
+            }
+            
+            function toggleSolutionSteps() {
+                if (solutionSteps.style.display === 'none') {
+                    solutionSteps.style.display = 'block';
+                    showStepsBtn.innerHTML = '<i class="fas fa-list-ol me-2"></i>Hide Steps';
+                } else {
+                    solutionSteps.style.display = 'none';
+                    showStepsBtn.innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+                }
+            }
+            
+            function checkQuizAnswers() {
+                // Get selected answers
+                const answer1 = document.querySelector('.quiz-question:nth-child(1) .quiz-option.selected')?.getAttribute('data-value');
+                const answer2 = document.querySelector('.quiz-question:nth-child(3) .quiz-option.selected')?.getAttribute('data-value');
+                const answer3 = document.querySelector('.quiz-question:nth-child(5) .quiz-option.selected')?.getAttribute('data-value');
+                
+                // Check answers and display feedback
+                if (answer1) {
+                    const feedback1 = document.getElementById('feedback-1');
+                    if (answer1 === 'c') {
+                        feedback1.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! P(X = 12) = C(11,3) × 0.25^4 × 0.75^8 = 165 × 0.0039 × 0.1001 = 0.0827</div>';
+                        feedback1.style.display = 'block';
+                    } else {
+                        feedback1.innerHTML = '<div class="wrong-answer"><i class="fas fa-times-circle"></i> Incorrect. Using the negative binomial PMF: P(X = 12) = C(11,3) × 0.25^4 × 0.75^8 = 165 × 0.0039 × 0.1001 = 0.0827</div>';
+                        feedback1.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('feedback-1').innerHTML = '<div class="warning-message"><i class="fas fa-exclamation-circle"></i> Please select an answer for question 1.</div>';
+                    document.getElementById('feedback-1').style.display = 'block';
+                }
+                
+                if (answer2) {
+                    const feedback2 = document.getElementById('feedback-2');
+                    if (answer2 === 'c') {
+                        feedback2.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! E[X] = r/p = 5/0.2 = 25</div>';
+                        feedback2.style.display = 'block';
+                    } else {
+                        feedback2.innerHTML = '<div class="wrong-answer"><i class="fas fa-times-circle"></i> Incorrect. For a negative binomial distribution, E[X] = r/p = 5/0.2 = 25</div>';
+                        feedback2.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('feedback-2').innerHTML = '<div class="warning-message"><i class="fas fa-exclamation-circle"></i> Please select an answer for question 2.</div>';
+                    document.getElementById('feedback-2').style.display = 'block';
+                }
+                
+                if (answer3) {
+                    const feedback3 = document.getElementById('feedback-3');
+                    if (answer3 === 'b') {
+                        feedback3.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! When r = 1, the negative binomial distribution becomes the geometric distribution.</div>';
+                        feedback3.style.display = 'block';
+                    } else {
+                        feedback3.innerHTML = '<div class="wrong-answer"><i class="fas fa-times-circle"></i> Incorrect. When r = 1, the negative binomial distribution reduces to the geometric distribution, which models the number of trials until first success.</div>';
+                        feedback3.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('feedback-3').innerHTML = '<div class="warning-message"><i class="fas fa-exclamation-circle"></i> Please select an answer for question 3.</div>';
+                    document.getElementById('feedback-3').style.display = 'block';
+                }
+            }
+            
+            // Helper function for negative binomial PMF calculation
+            function negativeBinomialPMF(r, p, k) {
+                if (k < r || !Number.isInteger(k)) return 0;
+                
+                // For numerical stability, calculate directly using logarithms
+                const logBinomCoef = logBinomialCoefficient(k - 1, r - 1);
+                const logProb = logBinomCoef + r * Math.log(p) + (k - r) * Math.log(1 - p);
+                
+                return Math.exp(logProb);
+            }
+            
+            // Helper function to calculate the log of binomial coefficient
+            function logBinomialCoefficient(n, k) {
+                if (k < 0 || k > n) return -Infinity;
+                if (k === 0 || k === n) return 0;
+                
+                // Use symmetry to minimize the number of operations
+                if (k > n - k) {
+                    k = n - k;
+                }
+                
+                let logResult = 0;
+                for (let i = 1; i <= k; i++) {
+                    logResult += Math.log(n - (k - i)) - Math.log(i);
+                }
+                
+                return logResult;
+            }
+            
+            // Initialize AOS animation library
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+            
+            // Initialize particles.js background if available
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: '#ffffff' },
+                        shape: { type: 'circle' },
+                        opacity: { value: 0.1, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.1, width: 1 },
+                        move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                    },
+                    retina_detect: true
+                });
+            }
+        });
+    </script>
+</body>
+</html>

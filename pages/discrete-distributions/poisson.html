@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poisson Distribution | Random Variables & Probability Distributions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/svgs/solid/calculator.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Montserrat and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-square-root-variable me-2"></i>
+                Probability Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="basicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Basics
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="basicDropdown">
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/sample-space.html">Sample Space</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/conditional.html">Conditional Probability</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/bayes-theorem.html">Bayes' Theorem</a></li>
+                            <li><a class="dropdown-item" href="../../pages/basic-probability/independence.html">Independence</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rvDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Random Variables
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="rvDropdown">
+                            <li><a class="dropdown-item" href="../../pages/random-variables/overview.html">Overview</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/pmf-pdf.html">PMF/PDF</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/cdf.html">CDF</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/expected-value.html">Expected Value</a></li>
+                            <li><a class="dropdown-item" href="../../pages/random-variables/variance.html">Variance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="discreteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Discrete Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="discreteDropdown">
+                            <li><a class="dropdown-item" href="bernoulli.html">Bernoulli</a></li>
+                            <li><a class="dropdown-item" href="binomial.html">Binomial</a></li>
+                            <li><a class="dropdown-item" href="geometric.html">Geometric</a></li>
+                            <li><a class="dropdown-item active" href="poisson.html">Poisson</a></li>
+                            <li><a class="dropdown-item" href="negative-binomial.html">Negative Binomial</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="continuousDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Continuous Distributions
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="continuousDropdown">
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/uniform.html">Uniform</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/normal.html">Normal</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/exponential.html">Exponential</a></li>
+                            <li><a class="dropdown-item" href="../../pages/continuous-distributions/gamma.html">Gamma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Poisson Distribution</h1>
+                    <p class="lead mb-0" data-aos="fade-up" data-aos-delay="200">Calculate probabilities for the number of events occurring in a fixed interval of time or space</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Calculator Form -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="calculator-form" id="poisson-calculator">
+                        <h2 class="mb-4">Poisson Distribution Calculator</h2>
+                        
+                        <!-- Parameters -->
+                        <div class="mb-4">
+                            <h4>Distribution Parameter</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="lambda" class="form-label">Rate Parameter (λ):</label>
+                                    <input type="number" class="form-control" id="lambda" min="0.01" step="0.1" value="3">
+                                    <div class="form-text">Average number of events in the given interval (λ > 0)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Type -->
+                        <div class="mb-4">
+                            <h4>Calculation Type</h4>
+                            <select class="form-select" id="calculation-type">
+                                <option value="pmf">Probability Mass Function (PMF): P(X = k)</option>
+                                <option value="cdf">Cumulative Distribution Function (CDF): P(X ≤ k)</option>
+                                <option value="interval">Interval Probability: P(a ≤ X ≤ b)</option>
+                                <option value="mean">Expected Value (Mean): E[X]</option>
+                                <option value="variance">Variance: Var(X)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Dynamic Input Fields -->
+                        <div id="pmf-inputs" class="mb-4">
+                            <label for="k-value" class="form-label">Number of Events (k):</label>
+                            <input type="number" class="form-control" id="k-value" min="0" step="1" value="2">
+                            <div class="form-text">Calculate P(X = k), the probability of observing exactly k events</div>
+                        </div>
+                        
+                        <div id="cdf-inputs" class="mb-4" style="display: none;">
+                            <label for="k-value-cdf" class="form-label">Number of Events (k):</label>
+                            <input type="number" class="form-control" id="k-value-cdf" min="0" step="1" value="2">
+                            <div class="form-text">Calculate P(X ≤ k), the probability of observing at most k events</div>
+                        </div>
+                        
+                        <div id="interval-inputs" class="mb-4" style="display: none;">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="a-value" class="form-label">Lower Bound (a):</label>
+                                    <input type="number" class="form-control" id="a-value" min="0" step="1" value="1">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="b-value" class="form-label">Upper Bound (b):</label>
+                                    <input type="number" class="form-control" id="b-value" min="0" step="1" value="4">
+                                </div>
+                            </div>
+                            <div class="form-text">Calculate P(a ≤ X ≤ b), the probability of observing between a and b events (inclusive)</div>
+                        </div>
+                        
+                        <!-- Display Options -->
+                        <div class="mb-4">
+                            <h4>Display Options</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="decimal-places" class="form-label">Decimal Places:</label>
+                                    <input type="number" class="form-control" id="decimal-places" min="1" max="10" step="1" value="4">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculation Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" id="calculate-btn" class="btn btn-calculate">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                            <button type="button" id="reset-btn" class="btn btn-reset">
+                                <i class="fas fa-undo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div class="results-container mt-4" id="results" style="display: none;">
+                        <h3>Result</h3>
+                        <div class="result-value" id="result-value">0.2240</div>
+                        <div class="result-explanation" id="result-explanation">
+                            The probability of observing exactly 2 events when λ = 3 is 0.2240 (22.40%).
+                        </div>
+                        
+                        <!-- Result Formula -->
+                        <div class="formula-display mt-3" id="result-formula">
+                            \[ P(X = 2) = \frac{e^{-3} \cdot 3^2}{2!} = \frac{e^{-3} \cdot 9}{2} = 0.2240 \]
+                        </div>
+                        
+                        <!-- Distribution Properties -->
+                        <div class="mt-4">
+                            <h4>Distribution Properties</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Expected Value (Mean)</div>
+                                        <div class="property-value" id="mean-value">3</div>
+                                        <div class="property-formula">E[X] = λ = 3</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Variance</div>
+                                        <div class="property-value" id="variance-value">3</div>
+                                        <div class="property-formula">Var(X) = λ = 3</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Standard Deviation</div>
+                                        <div class="property-value" id="std-dev-value">1.7321</div>
+                                        <div class="property-formula">σ = √λ = √3 = 1.7321</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="property-card">
+                                        <div class="property-name">Skewness</div>
+                                        <div class="property-value" id="skewness-value">0.5774</div>
+                                        <div class="property-formula">1/√λ = 1/√3 = 0.5774</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step-by-Step Solution -->
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" type="button" id="show-steps-btn">
+                                <i class="fas fa-list-ol me-2"></i>Show Steps
+                            </button>
+                        </div>
+                        
+                        <div class="solution-steps mt-3" id="solution-steps" style="display: none;">
+                            <h4>Step-by-Step Solution</h4>
+                            <div id="steps-content">
+                                <!-- Steps will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-container mb-4">
+                        <h3>Poisson Distribution Visualization</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="distribution-params" id="chart-params">
+                                <span>λ = 3</span>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-light" id="toggle-chart-type">
+                                    <i class="fas fa-chart-bar me-1"></i>PMF/CDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Probability Table -->
+                    <div class="probability-table-container mb-4">
+                        <h3>Probability Table</h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-dark" id="probability-table">
+                                <thead>
+                                    <tr>
+                                        <th>k</th>
+                                        <th>P(X = k)</th>
+                                        <th>P(X ≤ k)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Info Card -->
+                    <div class="theory-block" id="distribution-info">
+                        <h3>Poisson Distribution Overview</h3>
+                        <p>The <strong>Poisson distribution</strong> models the number of events occurring in a fixed interval of time or space, assuming these events happen with a known constant mean rate and independently of each other.</p>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Probability Mass Function (PMF)</h4>
+                            \[ P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!} \]
+                            <p class="formula-caption">where λ is the average number of events in the interval and k is the number of events.</p>
+                        </div>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Cumulative Distribution Function (CDF)</h4>
+                            \[ P(X \leq k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \lambda^i}{i!} = e^{-\lambda} \sum_{i=0}^{k} \frac{\lambda^i}{i!} \]
+                        </div>
+                        
+                        <div class="formula-display mt-3">
+                            <h4>Expected Value and Variance</h4>
+                            \[ E[X] = Var(X) = \lambda \]
+                        </div>
+                        
+                        <h4 class="mt-4">Key Properties</h4>
+                        <ul>
+                            <li>Mean and variance are both equal to λ</li>
+                            <li>As λ increases, the distribution becomes more symmetric and approaches a normal distribution</li>
+                            <li>The sum of independent Poisson random variables is also Poisson distributed</li>
+                            <li>The Poisson distribution can be derived as the limit of a binomial distribution as n → ∞ and p → 0 while np = λ remains constant</li>
+                            <li>Skewness = 1/√λ and Kurtosis = 3 + 1/λ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theory Section -->
+    <section class="theory-section py-5 bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Understanding the Poisson Distribution</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="theory-block">
+                        <h3>Definition & Characteristics</h3>
+                        <p>The Poisson distribution is a discrete probability distribution that expresses the probability of a given number of events occurring in a fixed interval of time or space, assuming these events occur with a known constant mean rate and independently of the time since the last event.</p>
+                        
+                        <h4 class="mt-4">Requirements for a Poisson Process</h4>
+                        <ol>
+                            <li><strong>Independent events:</strong> The occurrence of one event does not affect the probability of another event occurring.</li>
+                            <li><strong>Events occur one at a time:</strong> Two or more events cannot occur at exactly the same time.</li>
+                            <li><strong>Constant rate:</strong> The rate at which events occur is constant throughout the interval.</li>
+                            <li><strong>Rare events:</strong> The probability of an event in a very small interval is proportional to the length of the interval.</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Mathematical Formulation</h4>
+                        <p>A random variable X follows a Poisson distribution with parameter λ (lambda), written as X ~ Poisson(λ), if:</p>
+                        <ul>
+                            <li>X represents the number of events occurring in a fixed interval</li>
+                            <li>λ represents the average number of events in that interval</li>
+                            <li>Events occur independently of each other</li>
+                            <li>The probability of observing k events is given by the PMF: \( P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!} \)</li>
+                        </ul>
+                        
+                        <h4 class="mt-4">Relationship with Binomial Distribution</h4>
+                        <p>The Poisson distribution can be derived as a limiting case of the binomial distribution where:</p>
+                        <ul>
+                            <li>The number of trials n becomes very large (n → ∞)</li>
+                            <li>The probability of success p becomes very small (p → 0)</li>
+                            <li>The product np = λ remains constant</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="theory-block">
+                        <h3>Properties & Applications</h3>
+                        
+                        <h4>Key Properties</h4>
+                        <div class="property-list">
+                            <div class="property">
+                                <div class="property-name">Expected Value (Mean)</div>
+                                <div class="property-formula">E[X] = λ</div>
+                                <div class="property-explanation">The average number of events in the given interval</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Variance</div>
+                                <div class="property-formula">Var(X) = λ</div>
+                                <div class="property-explanation">The expected squared deviation from the mean, equal to λ</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Standard Deviation</div>
+                                <div class="property-formula">σ = √λ</div>
+                                <div class="property-explanation">Measure of the dispersion of the distribution</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Skewness</div>
+                                <div class="property-formula">1/√λ</div>
+                                <div class="property-explanation">Measure of the asymmetry of the distribution</div>
+                            </div>
+                            <div class="property">
+                                <div class="property-name">Mode</div>
+                                <div class="property-formula">⌊λ⌋ (when λ is not an integer)</div>
+                                <div class="property-explanation">The most likely number of events</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Additivity Property</h4>
+                        <p>If X ~ Poisson(λ₁) and Y ~ Poisson(λ₂) are independent, then X + Y ~ Poisson(λ₁ + λ₂). This property makes the Poisson distribution useful for modeling composite processes.</p>
+                        
+                        <h4 class="mt-4">Normal Approximation</h4>
+                        <p>For large values of λ (typically λ > 10), the Poisson distribution can be approximated by a normal distribution with mean λ and variance λ.</p>
+                        
+                        <h4 class="mt-4">Real-World Applications</h4>
+                        <ul>
+                            <li><strong>Call centers:</strong> Number of calls received per hour</li>
+                            <li><strong>Quality control:</strong> Number of defects in a product or manufacturing process</li>
+                            <li><strong>Biology:</strong> Number of mutations in a DNA sequence</li>
+                            <li><strong>Insurance:</strong> Number of claims in a time period</li>
+                            <li><strong>Telecommunications:</strong> Number of data packets arriving at a router</li>
+                            <li><strong>Astronomy:</strong> Number of stars in a region of space</li>
+                            <li><strong>Radioactivity:</strong> Number of radioactive particles detected in a time interval</li>
+                            <li><strong>Epidemiology:</strong> Number of disease cases in a population</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Example Problems Section -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="theory-block">
+                        <h3 class="text-center mb-4">Example Problems</h3>
+                        
+                        <div class="example-card">
+                            <h4>Example 1: Call Center</h4>
+                            <p>A call center receives an average of 12 calls per hour. What is the probability of receiving exactly 8 calls in a particular hour?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution1">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution1">
+                                    <div class="solution-content">
+                                        <p>This is a Poisson distribution problem where:</p>
+                                        <ul>
+                                            <li>λ = 12 (average number of calls per hour)</li>
+                                            <li>k = 8 (we want the probability of exactly 8 calls)</li>
+                                        </ul>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X = 8) &= \frac{e^{-\lambda} \lambda^k}{k!} \\
+                                            &= \frac{e^{-12} \cdot 12^8}{8!} \\
+                                            &= \frac{e^{-12} \cdot 429,981,696}{40,320} \\
+                                            &= e^{-12} \cdot 10,663.98 \\
+                                            &\approx 0.0752
+                                            \end{align}
+                                        </div>
+                                        <p>The probability of receiving exactly 8 calls in an hour is about 0.0752 or 7.52%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>Example 2: Manufacturing Defects</h4>
+                            <p>A manufacturing process produces circuit boards with an average of 2.5 defects per board. What is the probability that a randomly selected board has at most 1 defect?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution2">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution2">
+                                    <div class="solution-content">
+                                        <p>This is a Poisson distribution problem where:</p>
+                                        <ul>
+                                            <li>λ = 2.5 (average number of defects per board)</li>
+                                            <li>We want P(X ≤ 1), the probability of at most 1 defect</li>
+                                        </ul>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X \leq 1) &= P(X = 0) + P(X = 1) \\
+                                            &= \frac{e^{-2.5} \cdot 2.5^0}{0!} + \frac{e^{-2.5} \cdot 2.5^1}{1!} \\
+                                            &= e^{-2.5} \cdot 1 + e^{-2.5} \cdot 2.5 \\
+                                            &= e^{-2.5} \cdot (1 + 2.5) \\
+                                            &= e^{-2.5} \cdot 3.5 \\
+                                            &\approx 0.0821 \cdot 3.5 \\
+                                            &\approx 0.2873
+                                            \end{align}
+                                        </div>
+                                        <p>The probability that a randomly selected board has at most 1 defect is about 0.2873 or 28.73%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>Example 3: Radioactive Decay</h4>
+                            <p>A Geiger counter detects an average of 15 radioactive particles per minute from a sample. What is the probability of detecting between 10 and 20 particles (inclusive) in a one-minute period?</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution3">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution3">
+                                    <div class="solution-content">
+                                        <p>This is a Poisson distribution problem where:</p>
+                                        <ul>
+                                            <li>λ = 15 (average number of particles per minute)</li>
+                                            <li>We want P(10 ≤ X ≤ 20), the probability of detecting between 10 and 20 particles</li>
+                                        </ul>
+                                        <p>We can calculate this using the formula P(a ≤ X ≤ b) = P(X ≤ b) - P(X ≤ a-1):</p>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(10 \leq X \leq 20) &= P(X \leq 20) - P(X \leq 9) \\
+                                            \end{align}
+                                        </div>
+                                        <p>Using the Poisson CDF formula or a calculator:</p>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X \leq 20) &\approx 0.9245 \\
+                                            P(X \leq 9) &\approx 0.0988 \\
+                                            P(10 \leq X \leq 20) &= 0.9245 - 0.0988 \\
+                                            &= 0.8257
+                                            \end{align}
+                                        </div>
+                                        <p>The probability of detecting between 10 and 20 particles in a minute is about 0.8257 or 82.57%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>Example 4: Normal Approximation</h4>
+                            <p>A large website averages 500 visitors per hour. Using the normal approximation to the Poisson distribution, estimate the probability that there will be more than 525 visitors in a particular hour.</p>
+                            
+                            <div class="solution-toggle">
+                                <button class="btn btn-sm btn-outline-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#solution4">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Solution
+                                </button>
+                                <div class="collapse" id="solution4">
+                                    <div class="solution-content">
+                                        <p>Since λ = 500 is large, we can approximate the Poisson distribution with a normal distribution:</p>
+                                        <ul>
+                                            <li>X ~ Poisson(500) can be approximated by X ~ N(500, 500)</li>
+                                            <li>We want P(X > 525)</li>
+                                        </ul>
+                                        <p>Using the Z-score formula:</p>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            Z &= \frac{X - \mu}{\sigma} = \frac{525.5 - 500}{\sqrt{500}} \\
+                                            &= \frac{25.5}{22.36} \\
+                                            &= 1.14
+                                            \end{align}
+                                        </div>
+                                        <p>Note: We use 525.5 for continuity correction since we're approximating a discrete distribution with a continuous one.</p>
+                                        <p>Using the standard normal table or calculator:</p>
+                                        <div class="formula-display">
+                                            \begin{align}
+                                            P(X > 525) &= P(Z > 1.14) \\
+                                            &= 1 - P(Z \leq 1.14) \\
+                                            &= 1 - 0.8729 \\
+                                            &= 0.1271
+                                            \end{align}
+                                        </div>
+                                        <p>The approximate probability of having more than 525 visitors in an hour is about 0.1271 or 12.71%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Test Your Knowledge</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="quiz-card">
+                        <h4>Quick Quiz: Poisson Distribution</h4>
+                        
+                        <div class="quiz-question">
+                            <p>1. A bakery sells an average of 24 loaves of bread per day. What is the probability of selling exactly 20 loaves on a given day?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 0.0605
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> 0.0843
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 0.0758
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 0.1015
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-1"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>2. For a Poisson distribution with parameter λ = 5, what is the variance?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> 5
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> √5
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> 25
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> 1/5
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-2"></div>
+                        
+                        <div class="quiz-question mt-4">
+                            <p>3. Which of the following is NOT a characteristic of a Poisson process?</p>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-value="a">
+                                    <span class="option-label">A.</span> Events occur independently
+                                </div>
+                                <div class="quiz-option" data-value="b">
+                                    <span class="option-label">B.</span> The probability of an event is proportional to the length of the interval
+                                </div>
+                                <div class="quiz-option" data-value="c">
+                                    <span class="option-label">C.</span> The rate of events varies significantly over time
+                                </div>
+                                <div class="quiz-option" data-value="d">
+                                    <span class="option-label">D.</span> Two or more events cannot occur at exactly the same time
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-feedback" id="feedback-3"></div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="button" id="check-answers-btn">
+                                <i class="fas fa-check-circle me-2"></i>Check Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Random Variables & Probability</h5>
+                    <p>A comprehensive calculator for probability theory concepts and distributions.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../pages/basic-probability/sample-space.html">Basic Probability</a></li>
+                        <li><a href="../../pages/discrete-distributions/binomial.html">Discrete Distributions</a></li>
+                        <li><a href="../../pages/continuous-distributions/normal.html">Continuous Distributions</a></li>
+                        <li><a href="../../pages/about.html">About</a></li>
+                        <li><a href="../../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Connect with me</h5>
+                    <div class="social-links">
+                        <a href="mailto:janithmihijaya123@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/janith.deshan.186"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/janithdeshan/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/janiyax35"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/janith_deshan11/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Janith Deshan. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for probability enthusiasts</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- MathJax for Mathematical Notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/utils.js"></script>
+    
+    <!-- Poisson Distribution Calculator JS -->
+    <script type="module">
+        import { calculatePoisson } from '../../js/calculators/discrete.js';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // UI Elements
+            const calculationType = document.getElementById('calculation-type');
+            const pmfInputs = document.getElementById('pmf-inputs');
+            const cdfInputs = document.getElementById('cdf-inputs');
+            const intervalInputs = document.getElementById('interval-inputs');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const showStepsBtn = document.getElementById('show-steps-btn');
+            const resultsContainer = document.getElementById('results');
+            const solutionSteps = document.getElementById('solution-steps');
+            const toggleChartTypeBtn = document.getElementById('toggle-chart-type');
+            
+            // State variables
+            let chartInstance = null;
+            let currentChartType = 'pmf'; // 'pmf' or 'cdf'
+            
+            // Initialize
+            updateInputFields();
+            createInitialChart();
+            
+            // Event Listeners
+            calculationType.addEventListener('change', updateInputFields);
+            calculateBtn.addEventListener('click', performCalculation);
+            resetBtn.addEventListener('click', resetCalculator);
+            showStepsBtn.addEventListener('click', toggleSolutionSteps);
+            toggleChartTypeBtn.addEventListener('click', toggleChartType);
+            
+            // Handle quiz
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionDiv = this.closest('.quiz-question');
+                    questionDiv.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            document.getElementById('check-answers-btn').addEventListener('click', checkQuizAnswers);
+            
+            // Functions
+            function updateInputFields() {
+                const type = calculationType.value;
+                
+                // Hide all input sections
+                pmfInputs.style.display = 'none';
+                cdfInputs.style.display = 'none';
+                intervalInputs.style.display = 'none';
+                
+                // Show relevant input section
+                switch (type) {
+                    case 'pmf':
+                        pmfInputs.style.display = 'block';
+                        break;
+                    case 'cdf':
+                        cdfInputs.style.display = 'block';
+                        break;
+                    case 'interval':
+                        intervalInputs.style.display = 'block';
+                        break;
+                }
+            }
+            
+            function createInitialChart() {
+                const lambda = parseFloat(document.getElementById('lambda').value);
+                
+                updateChart(lambda);
+                updateProbabilityTable(lambda);
+                updateChartParams(lambda);
+            }
+            
+            function performCalculation() {
+                // Get parameters
+                const lambda = parseFloat(document.getElementById('lambda').value);
+                const decimals = parseInt(document.getElementById('decimal-places').value);
+                const calculationType = document.getElementById('calculation-type').value;
+                
+                // Validate parameters
+                if (isNaN(lambda) || lambda <= 0) {
+                    alert('Rate parameter (λ) must be greater than 0.');
+                    return;
+                }
+                
+                // Get specific parameters based on calculation type
+                let params = { lambda, calculationType, decimals };
+                
+                switch (calculationType) {
+                    case 'pmf':
+                        const k = parseInt(document.getElementById('k-value').value);
+                        
+                        if (isNaN(k) || k < 0 || !Number.isInteger(k)) {
+                            alert('Number of events (k) must be a non-negative integer.');
+                            return;
+                        }
+                        params.k = k;
+                        break;
+                        
+                    case 'cdf':
+                        const kCdf = parseInt(document.getElementById('k-value-cdf').value);
+                        
+                        if (isNaN(kCdf) || kCdf < 0 || !Number.isInteger(kCdf)) {
+                            alert('Number of events (k) must be a non-negative integer.');
+                            return;
+                        }
+                        params.k = kCdf;
+                        break;
+                        
+                    case 'interval':
+                        const a = parseInt(document.getElementById('a-value').value);
+                        const b = parseInt(document.getElementById('b-value').value);
+                        
+                        if (isNaN(a) || isNaN(b) || a < 0 || b < 0 || !Number.isInteger(a) || !Number.isInteger(b)) {
+                            alert('Interval bounds must be non-negative integers.');
+                            return;
+                        }
+                        
+                        if (a > b) {
+                            alert('Lower bound (a) must be less than or equal to upper bound (b).');
+                            return;
+                        }
+                        
+                        params.a = a;
+                        params.b = b;
+                        break;
+                }
+                
+                // Calculate
+                const result = calculatePoisson(params);
+                
+                // Check for errors
+                if (result.error) {
+                    alert(result.error);
+                    return;
+                }
+                
+                // Display results
+                displayResults(result, params);
+                
+                // Update chart
+                updateChart(lambda, params);
+                updateProbabilityTable(lambda);
+                updateChartParams(lambda);
+                
+                // Show results container
+                resultsContainer.style.display = 'block';
+            }
+            
+            function displayResults(result, params) {
+                // Display result value
+                document.getElementById('result-value').textContent = result.result;
+                
+                // Display explanation
+                document.getElementById('result-explanation').textContent = result.interpretation;
+                
+                // Display formula
+                document.getElementById('result-formula').innerHTML = `\\[${result.formula}\\]`;
+                
+                // Display distribution properties
+                document.getElementById('mean-value').textContent = result.mean;
+                document.getElementById('variance-value').textContent = result.variance;
+                document.getElementById('std-dev-value').textContent = result.stdDev;
+                document.getElementById('skewness-value').textContent = result.skewness;
+                
+                // Display steps
+                document.getElementById('steps-content').innerHTML = result.steps.map(step => 
+                    `<div class="step-item">${step}</div>`
+                ).join('');
+                
+                // Update MathJax rendering
+                if (window.MathJax) {
+                    MathJax.typesetPromise();
+                }
+            }
+            
+            function updateChart(lambda, params) {
+                // Calculate maxK (show enough values to cover most of the distribution)
+                const maxK = Math.min(30, Math.ceil(lambda + 4 * Math.sqrt(lambda)));
+                
+                // Generate data for PMF
+                const pmfData = [];
+                const cdfData = [];
+                const labels = [];
+                
+                let cumulativeProbability = 0;
+                
+                for (let k = 0; k <= maxK; k++) {
+                    const pmf = poissonPMF(lambda, k);
+                    cumulativeProbability += pmf;
+                    
+                    pmfData.push(pmf);
+                    cdfData.push(cumulativeProbability);
+                    labels.push(k.toString());
+                    
+                    // Stop when we've covered 99.9% of the distribution
+                    if (cumulativeProbability > 0.999 && k >= lambda + 3 * Math.sqrt(lambda)) break;
+                }
+                
+                // Highlight specific values if available in params
+                let highlightIndex = -1;
+                let highlightRange = [];
+                
+                if (params) {
+                    switch (params.calculationType) {
+                        case 'pmf':
+                            highlightIndex = params.k;
+                            break;
+                        case 'cdf':
+                            highlightRange = Array.from({length: params.k + 1}, (_, i) => i);
+                            break;
+                        case 'interval':
+                            highlightRange = Array.from({length: params.b - params.a + 1}, (_, i) => i + params.a);
+                            break;
+                    }
+                }
+                
+                // Create background colors array
+                const pmfBackgroundColors = pmfData.map((_, index) => {
+                    if (highlightIndex === index) {
+                        return 'rgba(255, 99, 132, 0.7)'; // Highlight specific value
+                    } else if (highlightRange.includes(index)) {
+                        return 'rgba(255, 99, 132, 0.7)'; // Highlight range
+                    } else {
+                        return 'rgba(54, 162, 235, 0.7)'; // Default color
+                    }
+                });
+                
+                // Create border colors array
+                const pmfBorderColors = pmfData.map((_, index) => {
+                    if (highlightIndex === index || highlightRange.includes(index)) {
+                        return 'rgba(255, 99, 132, 1)';
+                    } else {
+                        return 'rgba(54, 162, 235, 1)';
+                    }
+                });
+                
+                // Calculate expected value for chart annotation
+                const chartMean = lambda;
+                
+                // Destroy existing chart if any
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                
+                // Create chart
+                const ctx = document.getElementById('distribution-chart').getContext('2d');
+                
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: currentChartType === 'pmf' ? 'PMF: P(X = k)' : 'CDF: P(X ≤ k)',
+                            data: currentChartType === 'pmf' ? pmfData : cdfData,
+                            backgroundColor: pmfBackgroundColors,
+                            borderColor: pmfBorderColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Number of Events (k)',
+                                    color: '#fff'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#fff'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: currentChartType === 'pmf' ? 'Probability P(X = k)' : 'Probability P(X ≤ k)',
+                                    color: '#fff'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#fff'
+                                },
+                                beginAtZero: true,
+                                max: currentChartType === 'pmf' ? Math.max(...pmfData) * 1.1 : 1.05
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#fff'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        return `k = ${tooltipItems[0].label}`;
+                                    },
+                                    label: function(context) {
+                                        if (currentChartType === 'pmf') {
+                                            return `P(X = ${context.label}) = ${context.raw.toFixed(6)}`;
+                                        } else {
+                                            return `P(X ≤ ${context.label}) = ${context.raw.toFixed(6)}`;
+                                        }
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    meanLine: {
+                                        type: 'line',
+                                        xMin: chartMean,
+                                        xMax: chartMean,
+                                        borderColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 2,
+                                        borderDash: [5, 5],
+                                        label: {
+                                            display: true,
+                                            content: `Mean = ${chartMean.toFixed(2)}`,
+                                            position: 'top',
+                                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                            color: '#fff'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function updateProbabilityTable(lambda) {
+                const tableBody = document.getElementById('probability-table').querySelector('tbody');
+                tableBody.innerHTML = '';
+                
+                // Calculate maxK
+                const maxK = Math.min(15, Math.ceil(lambda + 3 * Math.sqrt(lambda)));
+                
+                let cumulativeProbability = 0;
+                
+                for (let k = 0; k <= maxK; k++) {
+                    const pmf = poissonPMF(lambda, k);
+                    cumulativeProbability += pmf;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${k}</td>
+                        <td>${pmf.toFixed(6)}</td>
+                        <td>${cumulativeProbability.toFixed(6)}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                    
+                    // Stop when we've covered 99.9% of the distribution
+                    if (cumulativeProbability > 0.999 && k >= lambda + 2 * Math.sqrt(lambda)) break;
+                }
+            }
+            
+            function updateChartParams(lambda) {
+                document.getElementById('chart-params').textContent = `λ = ${lambda}`;
+            }
+            
+            function toggleChartType() {
+                currentChartType = currentChartType === 'pmf' ? 'cdf' : 'pmf';
+                
+                const lambda = parseFloat(document.getElementById('lambda').value);
+                
+                updateChart(lambda);
+                
+                toggleChartTypeBtn.innerHTML = currentChartType === 'pmf' ? 
+                    '<i class="fas fa-chart-line me-1"></i>PMF/CDF' : 
+                    '<i class="fas fa-chart-bar me-1"></i>CDF/PMF';
+            }
+            
+            function resetCalculator() {
+                // Reset form
+                document.getElementById('lambda').value = '3';
+                document.getElementById('k-value').value = '2';
+                document.getElementById('k-value-cdf').value = '2';
+                document.getElementById('a-value').value = '1';
+                document.getElementById('b-value').value = '4';
+                document.getElementById('decimal-places').value = '4';
+                document.getElementById('calculation-type').value = 'pmf';
+                
+                // Update UI
+                updateInputFields();
+                
+                // Hide results
+                resultsContainer.style.display = 'none';
+                solutionSteps.style.display = 'none';
+                showStepsBtn.innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+                
+                // Reset chart
+                createInitialChart();
+            }
+            
+            function toggleSolutionSteps() {
+                if (solutionSteps.style.display === 'none') {
+                    solutionSteps.style.display = 'block';
+                    showStepsBtn.innerHTML = '<i class="fas fa-list-ol me-2"></i>Hide Steps';
+                } else {
+                    solutionSteps.style.display = 'none';
+                    showStepsBtn.innerHTML = '<i class="fas fa-list-ol me-2"></i>Show Steps';
+                }
+            }
+            
+            function checkQuizAnswers() {
+                // Get selected answers
+                const answer1 = document.querySelector('.quiz-question:nth-child(1) .quiz-option.selected')?.getAttribute('data-value');
+                const answer2 = document.querySelector('.quiz-question:nth-child(3) .quiz-option.selected')?.getAttribute('data-value');
+                const answer3 = document.querySelector('.quiz-question:nth-child(5) .quiz-option.selected')?.getAttribute('data-value');
+                
+                // Check answers and display feedback
+                if (answer1) {
+                    const feedback1 = document.getElementById('feedback-1');
+                    if (answer1 === 'b') {
+                        feedback1.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! P(X = 20) = (e^(-24) × 24^20) / 20! ≈ 0.0843</div>';
+                        feedback1.style.display = 'block';
+                    } else {
+                        feedback1.innerHTML = '<div class="wrong-answer"><i class="fas fa-times-circle"></i> Incorrect. For λ = 24, P(X = 20) = (e^(-24) × 24^20) / 20! ≈ 0.0843</div>';
+                        feedback1.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('feedback-1').innerHTML = '<div class="warning-message"><i class="fas fa-exclamation-circle"></i> Please select an answer for question 1.</div>';
+                    document.getElementById('feedback-1').style.display = 'block';
+                }
+                
+                if (answer2) {
+                    const feedback2 = document.getElementById('feedback-2');
+                    if (answer2 === 'a') {
+                        feedback2.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! For a Poisson distribution, the variance equals the parameter λ = 5</div>';
+                        feedback2.style.display = 'block';
+                    } else {
+                        feedback2.innerHTML = '<div class="wrong-answer"><i class="fas fa-times-circle"></i> Incorrect. For a Poisson distribution, the variance equals the parameter λ = 5</div>';
+                        feedback2.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('feedback-2').innerHTML = '<div class="warning-message"><i class="fas fa-exclamation-circle"></i> Please select an answer for question 2.</div>';
+                    document.getElementById('feedback-2').style.display = 'block';
+                }
+                
+                if (answer3) {
+                    const feedback3 = document.getElementById('feedback-3');
+                    if (answer3 === 'c') {
+                        feedback3.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! A Poisson process requires a constant rate of events over time. If the rate varies significantly, it\'s not a Poisson process.</div>';
+                        feedback3.innerHTML = '<div class="correct-answer"><i class="fas fa-check-circle"></i> Correct! A Poisson process requires a constant rate of events over time. If the rate varies significantly, it\'s not a Poisson process.</div>';
+                        feedback3.style.display = 'block';
+                    } else {
+                        feedback3.innerHTML = '<div class="wrong-answer"><i class="fas fa-times-circle"></i> Incorrect. A Poisson process requires a constant rate of events over time. The rate should not vary significantly.</div>';
+                        feedback3.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('feedback-3').innerHTML = '<div class="warning-message"><i class="fas fa-exclamation-circle"></i> Please select an answer for question 3.</div>';
+                    document.getElementById('feedback-3').style.display = 'block';
+                }
+            }
+            
+            // Helper function for Poisson PMF calculation
+            function poissonPMF(lambda, k) {
+                if (k < 0 || !Number.isInteger(k)) return 0;
+                
+                // For numerical stability, calculate directly using logarithms
+                const logPMF = k * Math.log(lambda) - lambda - logFactorial(k);
+                return Math.exp(logPMF);
+            }
+            
+            // Helper function to calculate log factorial
+            function logFactorial(n) {
+                if (n < 0 || !Number.isInteger(n)) return NaN;
+                if (n <= 1) return 0;
+                
+                let logResult = 0;
+                for (let i = 2; i <= n; i++) {
+                    logResult += Math.log(i);
+                }
+                
+                return logResult;
+            }
+            
+            // Initialize AOS animation library
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+            
+            // Initialize particles.js background if available
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: '#ffffff' },
+                        shape: { type: 'circle' },
+                        opacity: { value: 0.1, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.1, width: 1 },
+                        move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                    },
+                    retina_detect: true
+                });
+            }
+        });
+    </script>
+</body>
+</html>
